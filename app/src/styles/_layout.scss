@@ -1,0 +1,29 @@
+html,
+body,
+#root {
+  height: 100%; /* needed for proper layout */
+}
+
+body {
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 1 auto;
+  padding: 1em;
+  position: relative;/* need this to position inner content */
+  overflow-y: auto;
+}
+
+footer {
+  text-align: center;
+  background-color: var(--footer-bg-color);
+  color: var(--footer-text-color);
+  flex: 0 0 auto;
+  padding: 1em;
+}

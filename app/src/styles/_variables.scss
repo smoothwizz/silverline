@@ -1,0 +1,37 @@
+// COLORS
+$primary-color: #64B6AC;
+
+:root {
+    // TYPOGRAPHY
+    --font-primary: 'Raleway', sans-serif;
+    --font-heading: 'Righteous', cursive;
+
+    /* set base values */
+    --text-base-size: 14px;
+    --text-scale-ratio: 1.2;
+
+    /* type scale */
+    --text-xs: calc(1em / (var(--text-scale-ratio) * var(--text-scale-ratio)));
+    --text-sm: calc(1em / var(--text-scale-ratio));
+    --text-md: calc(1em * var(--text-scale-ratio));
+    --text-lg: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xxxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+
+    /* line-height */
+    --heading-line-height: 1.2;
+    --body-line-height: 1.4;
+
+    /* text color */
+    --light-text: #ffffff;
+    --dark-text: #25283D;
+
+    // LAYOUT
+    --main-bg-color: #FEE9E1;
+    --header-bg-color: #{$primary-color};
+    --header-text-color: var(--light-text);
+    --footer-bg-color: var(--dark-text);
+    --footer-text-color: var(--light-text);
+}
+
