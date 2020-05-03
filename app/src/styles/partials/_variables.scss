@@ -1,5 +1,5 @@
 // COLORS
-$primary-color: #64B6AC;
+$primary-color: #782ecc;
 
 :root {
     // TYPOGRAPHY
@@ -28,8 +28,8 @@ $primary-color: #64B6AC;
     --dark-text: #25283D;
 
     // LAYOUT
-    --main-bg-color: #FEE9E1;
-    --header-bg-color: #{$primary-color};
+    --main-bg-color: #fcfcfc;
+    --header-bg-color: #6328a7;
     --header-text-color: var(--light-text);
     --footer-bg-color: var(--dark-text);
     --footer-text-color: var(--light-text);

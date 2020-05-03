@@ -1,30 +1,25 @@
-import React from "react";
-import { Router } from "@reach/router";
-import Header from "./Header";
+import React from 'react';
+import { Router } from '@reach/router';
+import Header from './components/Header';
+import GameContainer from './game/presentation/GameContainer';
 
 const App = () => (
-  <>
-    <Header />
-    <main>
-      <Router>
-        <Home path="/" />
-        <Dashboard path="dashboard" />
-      </Router>
-    </main>
-    <footer>MP 2020.</footer>
-  </>
+    <>
+        <Header />
+        <main>
+            <Router>
+                <Home path="/" />
+                <GameContainer path="game/*" />
+            </Router>
+        </main>
+        <footer>MP 2020.</footer>
+    </>
 );
 
 const Home = () => (
-  <div>
-    <h2>Welcome</h2>
-  </div>
-);
-
-const Dashboard = () => (
-  <div>
-    <h2>Dashboard</h2>
-  </div>
+    <div>
+        <h2>Welcome</h2>
+    </div>
 );
 
 export default App;

@@ -5,10 +5,12 @@ body,
 }
 
 body {
+  background: var(--main-bg-color);
   overflow: hidden;
 }
 
 #root {
+  color: var(--light-text);
   display: flex;
   flex-direction: column;
 }
@@ -26,4 +28,9 @@ footer {
   color: var(--footer-text-color);
   flex: 0 0 auto;
   padding: 1em;
+}
+
+.container {
+  max-width: 1366px;
+  margin: 0 auto;
 }
