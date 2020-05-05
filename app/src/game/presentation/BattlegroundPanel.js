@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaSpinner } from 'react-icons/fa';
 import LANES from '../constants/lanes';
-import CARD_TYPES from '../constants/cardTypes';
+import CardSelect from './CardSelect';
 
 const BattlegroundPanel = ({
     alert,
@@ -43,13 +43,6 @@ const BattlegroundPanel = ({
                     </option>
                 ))}
             </select>
-            <select value={selectedCard.id} onChange={actions.handleCardSelect}>
-                {CARD_TYPES.map(card => (
-                    <option key={card.id} value={card.id}>
-                        {card.label}
-                    </option>
-                ))}
-            </select>
             <button
                 disabled={conditions.isDeployUnitDisabled}
                 className="btn btn--primary"
@@ -69,6 +62,9 @@ const BattlegroundPanel = ({
         <div className="battleground__panel">
             <h1> Battleground </h1>
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
+            {!conditions.isGameOver && (
+                <CardSelect selectedCard={selectedCard} action={actions.handleCardSelect} />
+            )}
             <div data-test-id="game-bar" className="game-bar">
                 {conditions.isGameOver && (
                     <button

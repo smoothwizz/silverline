@@ -20,7 +20,7 @@ const CARDS_SPRING = [
         type: 'archer'
     },
     {
-        cost: 3,
+        cost: 2,
         label: 'Blossom Knight',
         stats: {
             defence: 2,
@@ -31,20 +31,40 @@ const CARDS_SPRING = [
     },
     {
         cost: 3,
-        label: 'Orchid Knight',
+        label: 'Orchid Archer',
         stats: {
             defence: 1,
-            attack: 2,
+            attack: 3,
             pace: 1
         },
         type: 'knight'
     },
     {
-        cost: 5,
+        cost: 3,
+        label: 'Orchid Knight',
+        stats: {
+            defence: 3,
+            attack: 1,
+            pace: 1
+        },
+        type: 'knight'
+    },
+    {
+        cost: 4,
+        label: 'Tower of Roots',
+        stats: {
+            defence: 4,
+            attack: 0,
+            pace: 0
+        },
+        type: 'structure'
+    },
+    {
+        cost: 4,
         label: 'King Forest',
         stats: {
-            defence: 5,
-            attack: 2,
+            defence: 4,
+            attack: 4,
             pace: 1
         },
         type: 'hero'

@@ -6,7 +6,10 @@ const Unit = ({ unit, team }) => {
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId);
     const unitClass = `unit unit--${team} ${unit.isAlive ? '' : 'unit--dead'}`;
     const unitLabel = (
-        <div data-test-id="unit-label" className="unit__label">
+        <div
+            data-test-id="unit-label"
+            className="unit__label"
+            title={`${unit.defence} / ${unitCard.stats.defence}`}>
             {unitCard.label}
         </div>
     );
@@ -15,8 +18,7 @@ const Unit = ({ unit, team }) => {
     const showStats = true; // lifePercentage < 100;
     const lifeBar = showStats && (
         <div data-test-id="unit-life-bar" className="unit__life-bar">
-            <span className="unit__life-percent" style={{ width: `${lifePercentage}%` }}>
-            </span>
+            <span className="unit__life-percent" style={{ width: `${lifePercentage}%` }}></span>
         </div>
     );
     const unitIcon = <span className="unit__icon" title={`#${unit.id}`}></span>;

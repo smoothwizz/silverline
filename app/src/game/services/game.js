@@ -180,19 +180,39 @@ const selectCpuUnits = () => {
  */
 const moveUnits = team => {
     team = team || 'user';
-    gameState.units[team] = gameState.units[team]
-        .filter(unit => unit.isAlive)
-        .map(unit => {
-            return {
-                ...unit,
-                row: team === 'user' ? unit.row + unit.pace : unit.row - unit.pace
-            };
-        });
+
+    const getUpdatedUnit = unit => {
+        if (!unit.isAlive) {
+            return unit;
+        }
+
+        return {
+            ...unit,
+            row: team === 'user' ? unit.row + unit.pace : unit.row - unit.pace
+        };
+    };
+
+    gameState.units[team] = gameState.units[team].map(unit => {
+        return getUpdatedUnit(unit);
+    });
 };
 
 const markUnitAsDead = (unit, team) => {
     gameState.units[team] = gameState.units[team].map(el =>
-        el.id === unit.id ? { ...el, isAlive: false } : el
+        el.id === unit.id ? { ...el, defence: -1, isAlive: false } : el
+    );
+};
+
+/**
+ * Update unit defence
+ *
+ * @param {object} unit
+ * @param {number} defence
+ * @param {string} team
+ */
+const updateUnitDefence = (unit, defence, team) => {
+    gameState.units[team] = gameState.units[team].map(el =>
+        el.id === unit.id ? { ...el, defence: defence } : el
     );
 };
 
@@ -230,22 +250,35 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
     let text = '';
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId);
     const opposingCard = CARD_TYPES.find(card => card.id === opposingUnit.cardId);
+    let stats = {
+        unitAttack: unit.attack,
+        unitDefence: unit.defence,
+        opposingUnitAttack: opposingUnit.attack,
+        opposingUnitDefence: opposingUnit.defence
+    };
 
     text =
         ` (${LANES[unit.lane].label})` +
         ` (${team} #${unit.id}) ${unitCard.label} ${unit.attack}, ${unit.defence} fought` +
         ` (${opposingTeam} #${opposingUnit.id}) ${opposingCard.label} ${opposingUnit.attack}, ${opposingUnit.defence}.`;
 
-    opposingUnit.defence -= unit.attack;
-    unit.defence -= opposingUnit.attack;
+    while (stats.unitDefence >= 0 && stats.opposingUnitDefence >= 0) {
+        console.log(
+            `${team}, AD: ${stats.unitAttack} ${stats.unitDefence} vs AD: ${stats.opposingUnitAttack} ${stats.opposingUnitDefence}`
+        );
+        stats.opposingUnitDefence -= stats.unitAttack;
+        stats.unitDefence -= stats.opposingUnitAttack;
+    }
 
-    if (unit.defence <= 0) {
+    if (stats.unitDefence < 0) {
         markUnitAsDead(unit, team);
+        updateUnitDefence(opposingUnit, stats.opposingUnitDefence, opposingTeam);
         text += `| ${team} unit died.`;
     }
 
-    if (opposingUnit.defence <= 0) {
+    if (stats.opposingUnitDefence < 0) {
         markUnitAsDead(opposingUnit, opposingTeam);
+        updateUnitDefence(unit, stats.unitDefence, team);
         text += `| ${opposingTeam} unit died.`;
     }
 
@@ -279,7 +312,9 @@ const getTeamUnitOnTile = (team, lane, row) => {
 const fight = team => {
     const opposingTeam = team === 'user' ? 'cpu' : 'user';
     const baseRow = team === 'user' ? NO_OF_ROWS : -1;
-    const activeUnits = gameState.units[team].filter(unit => unit.isAlive);
+    const activeUnits = gameState.units[team].filter(unit => {
+        return unit.isAlive;
+    });
     let opposingUnit, isAttackingBase;
 
     activeUnits.forEach(unit => {
@@ -302,12 +337,22 @@ const increaseMana = team => {
     gameState.mana[team] += manaIncrease;
 };
 
+const cleanField = () => {
+    gameState.units.user = gameState.units.user.filter(unit => {
+        return unit.isAlive;
+    });
+    gameState.units.cpu = gameState.units.cpu.filter(unit => {
+        return unit.isAlive;
+    });
+};
+
 /**
  * Play user turn
  *
  * @returns {object} gameState
  */
 const playUserTurn = () => {
+    cleanField();
     moveUnits('user');
     fight('user');
     increaseMana('user');
