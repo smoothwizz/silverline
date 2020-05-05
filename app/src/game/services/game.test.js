@@ -25,8 +25,14 @@ test('GameService: getDefaultCard() returns a card object', () => {
     expect(typeof card).toBe('object');
 });
 
-test('GameService: playTurn() returns a state object', () => {
-    let gameState = gameService.playTurn();
+test('GameService: playUserTurn() returns a state object', () => {
+    let gameState = gameService.playUserTurn();
+
+    expect(typeof gameState).toBe('object');
+});
+
+test('GameService: playEnemyTurn() returns a state object', () => {
+    let gameState = gameService.playEnemyTurn();
 
     expect(typeof gameState).toBe('object');
 });
@@ -34,7 +40,7 @@ test('GameService: playTurn() returns a state object', () => {
 test('GameService: createUnitFromCard() returns an unit object', () => {
     let unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'user');
 
-    expect(unit.attack).toBe(CARD_TYPES[0].attack);
+    expect(unit.attack).toBe(CARD_TYPES[0].stats.attack);
 });
 
 test('GameService: createUnitFromCard() for user a card on first row', () => {
@@ -44,7 +50,7 @@ test('GameService: createUnitFromCard() for user a card on first row', () => {
 });
 
 test('GameService: createUnitFromCard() for cpu a card on last row', () => {
-    let unit = gameService.createUnitFromCard(CARD_TYPES[0], LAST_ROW_INDEX, 'cpu');
+    let unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'cpu');
 
     expect(unit.row).toBe(LAST_ROW_INDEX);
 });

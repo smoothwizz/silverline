@@ -1,36 +1,13 @@
+import CARDS_AUTUMN from './cardTypes/cardsAutumn';
+import CARDS_SPRING from './cardTypes/cardsSpring';
+import CARDS_SUMMER from './cardTypes/cardsSummer';
+import CARDS_WINTER from './cardTypes/cardsWinter';
+
 const CARD_TYPES = [
-    {
-        id: 0,
-        type: 'minion',
-        label: 'Minions',
-        defence: 1,
-        attack: 1,
-        cost: 1
-    },
-    {
-        id: 1,
-        type: 'archer',
-        label: 'Archer',
-        defence: 0,
-        attack: 2,
-        cost: 1
-    },
-    {
-        id: 2,
-        type: 'knight',
-        label: 'Knight',
-        defence: 2,
-        attack: 1,
-        cost: 2
-    },
-    {
-        id: 3,
-        label: 'Hero',
-        type: 'hero',
-        defence: 4,
-        attack: 4,
-        cost: 4
-    }
+    ...CARDS_AUTUMN,
+    ...CARDS_SPRING,
+    ...CARDS_SUMMER,
+    ...CARDS_WINTER
 ];
 
 export default CARD_TYPES;

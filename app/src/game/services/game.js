@@ -1,16 +1,24 @@
 import CARD_TYPES from '../constants/cardTypes';
+import LANES from '../constants/lanes';
+
 import utilsService from './utils';
-import { INITIAL_MANA_PER_TURN, INITIAL_BASE_STRENGTH, LAST_ROW_INDEX } from '../constants/turn';
+import {
+    INITIAL_MANA_PER_TURN,
+    INITIAL_BASE_STRENGTH,
+    NO_OF_ROWS,
+    LAST_ROW_INDEX
+} from '../constants/turn';
 
 let events = [];
-
 let nextId = {
+    event: 0,
     user: 0,
     cpu: 0
 };
 
 let gameState = {
     events: [],
+    turns: 0,
     mana: {
         user: INITIAL_MANA_PER_TURN,
         cpu: INITIAL_MANA_PER_TURN
@@ -26,6 +34,45 @@ let gameState = {
 };
 
 /**
+ * Add event
+ *
+ * @param {string} text
+ */
+const addEvent = text => {
+    const event = {
+        id: nextId.event,
+        text: text
+    };
+
+    gameState.events.push(event);
+    nextId.event++;
+};
+
+/**
+ * Buff Card Stats according to the faction
+ *
+ * @param {object} stats
+ * @param {string} faction
+ */
+const buffCardStats = (stats, faction) => {
+    if (['sum', 'spr'].indexOf(faction) > -1) {
+        return {
+            attack: stats.attack + 1,
+            defence: stats.defence,
+            pace: stats.pace
+        };
+    }
+
+    if (['win', 'aut'].indexOf(faction) > -1) {
+        return {
+            attack: stats.attack,
+            defence: stats.defence + 1,
+            pace: stats.pace
+        };
+    }
+};
+
+/**
  * Create unit
  *
  * @param {string} type
@@ -34,15 +81,27 @@ let gameState = {
  * @returns {object}
  */
 const createUnitFromCard = (card, laneId, team) => {
-    const cardRow = team === 'user' ? 0 : 4;
+    const cardRow = team === 'user' ? 0 : LAST_ROW_INDEX;
+    let cardStats = utilsService.copyObject(card.stats);
+    if (card.faction === LANES[laneId].value) {
+        cardStats = buffCardStats(cardStats, card.faction);
+    }
+
     const unit = {
         id: nextId[team],
         lane: laneId,
-        attack: card.attack,
-        defence: card.defence,
+        attack: cardStats.attack,
+        defence: cardStats.defence,
+        pace: cardStats.pace,
         row: cardRow,
-        type: card.type
+        type: card.type,
+        faction: card.faction,
+        label: card.label,
+        isAlive: true,
+        isFighting: false
     };
+
+    nextId[team]++;
 
     return unit;
 };
@@ -56,103 +115,233 @@ const createUnitFromCard = (card, laneId, team) => {
 const deployUnit = (lane, card) => {
     const unit = createUnitFromCard(card, lane.id, 'user');
 
-    nextId.user++;
     gameState.units.user.push(unit);
 
     return unit;
 };
 
 const selectCpuUnits = () => {
-    let availableMana = gameState.mana.cpu;
+    let hasMoves = true,
+        availableMana = 2, //gameState.mana.cpu,
+        availableLanes = LANES.slice(0).filter(lane => {
+            const unitExistsOnLane =
+                getTeamUnitOnTile('user', lane.id, LAST_ROW_INDEX) ||
+                getTeamUnitOnTile('cpu', lane.id, LAST_ROW_INDEX - 1);
+
+            return unitExistsOnLane ? false : true;
+        }),
+        availableCards = CARD_TYPES.filter(card => card.cost <= availableMana),
+        unit,
+        cardLaneId,
+        selectedCard;
+
+    if (availableLanes.length === 0 || availableCards.length === 0) {
+        return;
+    }
+
+    /**
+     * Get available lane id
+     *
+     * @returns {number}
+     */
+    const getAvailableLaneId = () => {
+        let laneIndex = utilsService.getRandomInteger(0, availableLanes.length - 1);
+        let laneId = availableLanes[laneIndex].id;
+
+        return laneId;
+    };
+
+    const getAvailableCard = () => {
+        availableCards = CARD_TYPES.filter(card => card.cost <= availableMana);
+
+        let cardIndex = utilsService.getRandomInteger(0, availableCards.length - 1);
+        let selectedCard = availableCards[cardIndex];
+
+        return selectedCard;
+    };
 
     do {
-        const cardType = utilsService.getRandomInteger(0, CARD_TYPES.length - 1);
-        const cardLane = utilsService.getRandomInteger(0, 2);
-        const selectedCard = CARD_TYPES[cardType];
-        const unit = createUnitFromCard(selectedCard, cardLane, 'cpu');
-
-        availableMana = availableMana - selectedCard.cost;
-        nextId.cpu++;
-        gameState.units.cpu.push(unit);
-    } while (availableMana >= 0);
-};
-
-const moveUnits = team => {
-    team = team || 'user';
-
-    gameState.units[team] = gameState.units[team].map(unit => ({
-        ...unit,
-        row: team === 'user' ? unit.row + 1 : unit.row - 1
-    }));
-};
-
-const removeUnit = (unitToRemove, team) => {
-    let unitIndex = gameState.units[team].findIndex(
-        unit => unit.row === unitToRemove.row && unit.lane === unitToRemove.lane
-    );
-
-    gameState.events.push({
-        text: `DESTROYED: ${unitToRemove.type} from ${unitToRemove.lane}|${unitToRemove.row} for ${team}`
-    });
-    gameState.units[team].splice(unitIndex, 1);
-};
-
-const fight = () => {
-    let cpuUnitIndex, cpuUnit, hasEnemyOnSameTile;
-    const cpuUnitsAttackingUserBase = gameState.units.cpu.filter(unit => unit.row === -1);
-    cpuUnitsAttackingUserBase.forEach(unit => {
-        gameState.baseStrength.user = gameState.baseStrength.user - unit.attack;
-        removeUnit(unit, 'cpu');
-    });
-
-    gameState.units.user.forEach(userUnit => {
-        if (userUnit.row === LAST_ROW_INDEX + 1) {
-            gameState.baseStrength.cpu--;
-            removeUnit(userUnit, 'user');
-        }
-
-        cpuUnitIndex = gameState.units.cpu.findIndex(
-            cpuUnit => cpuUnit.row === userUnit.row && cpuUnit.lane === userUnit.lane
-        );
-
-        hasEnemyOnSameTile = cpuUnitIndex > -1;
-
-        if (!hasEnemyOnSameTile) {
+        cardLaneId = getAvailableLaneId();
+        selectedCard = getAvailableCard();
+        if (!selectedCard) {
             return;
         }
 
-        cpuUnit = gameState.units.cpu[cpuUnitIndex];
-        userUnit.defence -= cpuUnit.attack;
-        cpuUnit.defence -= userUnit.attack;
-
-        if (userUnit.defence < 0) {
-            removeUnit(userUnit, 'user');
-        }
-
-        if (cpuUnit.defence < 0) {
-            removeUnit(cpuUnit, 'cpu');
-        }
-    });
+        unit = createUnitFromCard(selectedCard, cardLaneId, 'cpu');
+        availableMana -= selectedCard.cost;
+        gameState.units.cpu.push(unit);
+        hasMoves = availableCards.length > 0;
+    } while (hasMoves);
 };
 
 /**
- * Play turn
+ * Move Units
  *
- * @param {number} lane
- * @param {object} card
- *
- * @returns {object} event
+ * @param {string} team
  */
-const playTurn = () => {
-    selectCpuUnits();
-    moveUnits('cpu');
-    moveUnits('user');
-    console.log('user:' + JSON.stringify(gameState.units.user.map(unit => `${unit.lane}, ${unit.row}`)));
-    console.log('cpu:' + JSON.stringify(gameState.units.cpu.map(unit => `${unit.lane}, ${unit.row}`)));
-    fight();
+const moveUnits = team => {
+    team = team || 'user';
 
-    gameState.mana.user++;
-    gameState.mana.cpu++;
+    /**
+     *
+     * @param {object} unit
+     *
+     * @returns {object}
+     */
+    const getMovedUnit = unit => {
+        const movedUnit = {
+            ...unit,
+            row: team === 'user' ? unit.row + unit.pace : unit.row - unit.pace
+        };
+        return movedUnit;
+    };
+
+    gameState.units[team] = gameState.units[team]
+        .filter(unit => unit.isAlive)
+        .map(unit => (unit.isFighting ? unit : getMovedUnit(unit)));
+};
+
+const markUnitAsDead = (unit, team) => {
+    gameState.units[team] = gameState.units[team].map(el =>
+        el.id === unit.id ? { ...el, isAlive: false } : el
+    );
+};
+
+const updateUnitFighting = (isFighting, unit, team) => {
+    gameState.units[team] = gameState.units[team].map(el =>
+        el.id === unit.id ? { ...el, isFighting } : el
+    );
+};
+
+/**
+ * Update unit stat after a base attack
+ *
+ * @param {object} unit
+ * @param {string} team
+ * @param {string} opposingTeam
+ */
+const updateUnitAfterBaseAttack = (unit, team, opposingTeam) => {
+    let text = '';
+
+    gameState.baseStrength[opposingTeam] -= unit.attack;
+    text = `(${LANES[unit.lane].label}) ${unit.type} (#${unit.id}) attacked ${opposingTeam} base.`;
+    markUnitAsDead(unit, team);
+    addEvent(text);
+};
+
+/**
+ * Update units stat after fight between them
+ *
+ * @param {object} unit
+ * @param {object} opposingUnit
+ * @param {string} team
+ * @param {string} opposingTeam
+ */
+const updateUnitsAfterFight = (unit, opposingUnit, team, opposingTeam) => {
+    let text = '';
+
+    text =
+        ` (${LANES[unit.lane].label})` +
+        ` (${team} #${unit.id}) ${unit.type} attacked` +
+        ` (${opposingTeam} #${opposingUnit.id}) ${opposingUnit.type}.`;
+
+    opposingUnit.defence -= unit.attack;
+    unit.defence -= opposingUnit.attack;
+
+    updateUnitFighting(true, unit, team);
+    updateUnitFighting(true, opposingUnit, opposingTeam);
+
+    if (unit.defence <= 0) {
+        markUnitAsDead(unit, team);
+        updateUnitFighting(false, opposingUnit, opposingTeam);
+        text += `| ${team} unit dies. | A${opposingUnit.attack} vs  D${unit.defence}`;
+    }
+
+    if (opposingUnit.defence <= 0) {
+        markUnitAsDead(opposingUnit, opposingTeam);
+        updateUnitFighting(false, unit, team);
+        text += `| ${opposingTeam} unit dies. | A${unit.attack} vs  D${opposingUnit.defence}`;
+    }
+
+    addEvent(text);
+};
+
+/**
+ * Get team unit on given tile coordinates
+ *
+ * @param {string} team
+ * @param {number} lane
+ * @param {number} row
+ *
+ * @returns {object | false}
+ */
+const getTeamUnitOnTile = (team, lane, row) => {
+    let foundUnit = gameState.units[team].find(
+        unit => unit.isAlive && unit.row === row && unit.lane === lane
+    );
+
+    return foundUnit ? foundUnit : false;
+};
+
+/**
+ * Start fight for give team
+ *
+ * @param {string} team
+ *
+ * @returns {function}
+ */
+const fight = team => {
+    const opposingTeam = team === 'user' ? 'cpu' : 'user';
+    const baseRow = team === 'user' ? NO_OF_ROWS : -1;
+    let opposingUnit, isAttackingBase;
+    let activeUnits = gameState.units[team].filter(unit => unit.isAlive);
+
+    activeUnits.forEach(unit => {
+        isAttackingBase = team === 'user' ? unit.row >= baseRow : unit.row <= baseRow;
+        if (isAttackingBase) {
+            return updateUnitAfterBaseAttack(unit, team, opposingTeam);
+        }
+        opposingUnit = getTeamUnitOnTile(opposingTeam, unit.lane, unit.row);
+        if (!opposingUnit) {
+            return;
+        }
+
+        return updateUnitsAfterFight(unit, opposingUnit, team, opposingTeam);
+    });
+};
+
+const increaseMana = team => {
+    const manaIncrease = 4; //gameState.turns % 2 === 0 ? 1 : 0;
+
+    gameState.mana[team] += manaIncrease;
+};
+
+/**
+ * Play user turn
+ *
+ * @returns {object} gameState
+ */
+const playUserTurn = () => {
+    moveUnits('user');
+    fight('user');
+    selectCpuUnits();
+    increaseMana('user');
+
+    return gameState;
+};
+
+/**
+ * Play enemy turn
+ *
+ * @returns {object} gameState
+ */
+
+const playEnemyTurn = () => {
+    moveUnits('cpu');
+    fight('cpu');
+
+    increaseMana('cpu');
+    gameState.turns++;
 
     return gameState;
 };
@@ -191,7 +380,8 @@ const gameService = {
     getEvents,
     getDefaultCard,
     createUnitFromCard,
-    playTurn,
+    playUserTurn,
+    playEnemyTurn,
     deployUnit
 };
 

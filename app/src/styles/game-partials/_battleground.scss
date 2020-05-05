@@ -1,0 +1,149 @@
+$animation-duration: 2s;
+$tile-size: 96px;
+
+$spring-tile-bg: #A0C1B9;
+$winter-tile-bg: #70A0AF;
+$summer-tile-bg: #F4E8C1;
+$autumn-tile-bg: #706993;
+
+.battleground {
+    display: flex;
+    color: var(--dark-text);
+
+    &__panel {
+        flex: 1;
+        margin-left: 64px;
+    }
+
+    &__field {
+        flex: 0 0 $tile-size * 4
+    }
+
+    .events-list {
+        display: flex;
+        flex-direction: column;
+        overflow: scroll;
+    }
+
+    .map {
+        display: grid;
+        grid-template-columns: $tile-size $tile-size $tile-size $tile-size;
+        margin-top: 8px;
+
+        .tile {
+            background: #cccccc;
+            border: 1px solid white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: $tile-size;
+            width: $tile-size;
+
+            span {
+                margin: 4px;
+                color: var(--light-text);
+            }
+
+            &:nth-child(4n + 1) {
+                background: $winter-tile-bg;
+            }
+
+            &:nth-child(4n + 2) {
+                background: $spring-tile-bg;
+            }
+
+            &:nth-child(4n + 3) {
+                background: $summer-tile-bg;
+            }
+
+            &:nth-child(4n) {
+                background: $autumn-tile-bg;
+            }
+        }
+
+        .unit {
+            border: 1px solid white;
+            padding: 4px;
+
+            &--cpu {
+                animation: translateCpuTile $animation-duration forwards;
+                animation-iteration-count: 1;
+                background: #b13434;
+            }
+
+            &--user {
+                animation: translateUserTile $animation-duration forwards;
+                animation-iteration-count: 1;
+                background: royalblue;
+            }
+
+            &--dead {
+                height: 1px;
+
+                &.unit--user,
+                &.unit--cpu {
+                    animation: none;
+                }
+
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes translateUserTile {
+    0% {
+        transform: translate(0, -64px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes translateCpuTile {
+    0% {
+        transform: translate(0, 64px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes deadTile {
+
+    0%,
+    10%,
+    20%,
+    30%,
+    40% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    5%,
+    15%,
+    25%,
+    35% {
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    41% {
+        opacity: 1;
+    }
+
+    100% {
+        display: none;
+        opacity: 0;
+    }
+}

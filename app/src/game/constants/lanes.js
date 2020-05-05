@@ -1,17 +1,22 @@
 const LANES = [{
     id: 0,
-    value: 'top',
-    label: 'Top'
+    value: 'win',
+    label: 'Winter'
 },
 {
     id: 1,
-    value: 'mid',
-    label: 'Middle'
+    value: 'spr',
+    label: 'Spring'
 },
 {
     id: 2,
-    value: 'bot',
-    label: 'Bottom'
+    value: 'sum',
+    label: 'Summer'
+},
+{
+    id: 3,
+    value: 'aut',
+    label: 'Autumn'
 }];
 
 export default LANES;

@@ -5,12 +5,12 @@ body,
 }
 
 body {
-  background: var(--main-bg-color);
+  background: linear-gradient(to right, #ece9e6, #ffffff);
   overflow: hidden;
 }
 
 #root {
-  color: var(--light-text);
+  color: var(--dark-text);
   display: flex;
   flex-direction: column;
 }
