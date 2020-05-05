@@ -1,49 +1,50 @@
 const CARDS_SPRING = [
     {
         cost: 1,
-        faction: 'spr',
-        id: 0,
-        label: 'Minions',
+        label: 'Spring Minion',
         stats: {
             defence: 1,
             attack: 1,
             pace: 1
         },
         type: 'minion'
-
     },
     {
-        cost: 1,
-        faction: 'spr',
-        id: 1,
-        label: 'Archer',
+        cost: 2,
+        label: 'Orchid Archer',
         stats: {
-            defence: 1,
-            attack: 1,
+            defence: 0,
+            attack: 2,
             pace: 1
         },
         type: 'archer'
     },
     {
-        id: 2,
-        cost: 2,
-        faction: 'spr',
-        label: 'Knight',
+        cost: 3,
+        label: 'Blossom Knight',
         stats: {
-            defence: 1,
+            defence: 2,
             attack: 1,
             pace: 1
         },
         type: 'knight'
     },
     {
-        id: 3,
-        cost: 4,
-        faction: 'spr',
-        label: 'Spring Forester',
+        cost: 3,
+        label: 'Orchid Knight',
         stats: {
-            defence: 10,
-            attack: 10,
+            defence: 1,
+            attack: 2,
+            pace: 1
+        },
+        type: 'knight'
+    },
+    {
+        cost: 5,
+        label: 'King Forest',
+        stats: {
+            defence: 5,
+            attack: 2,
             pace: 1
         },
         type: 'hero'

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import LANES from '../constants/lanes';
 import { NO_OF_ROWS } from '../constants/turn';
 
+import Unit from './Unit';
+
 const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) => {
     const createField = () => {
         let field = [];
@@ -17,6 +19,19 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) =>
     };
 
     const getTile = (lane, row) => {
+        const isAliveUnit = unit => {
+            return unit.isAlive && unit.lane === lane && unit.row === 0;
+        };
+
+        const isOwnUnitOnNextLineTile = unit => {
+            return unit.isAlive && unit.lane === lane && unit.row === 1;
+        };
+
+        const isTileRestricted =
+            row < 1 &&
+            (userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
+                cpuUnits.filter(isAliveUnit).length > 0);
+
         const userUnit = userUnits.find(unit => {
             return unit.lane === lane && unit.row === row;
         });
@@ -26,22 +41,12 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) =>
         });
 
         const tileId = `tile-${lane}${row}`;
-        const getUnitText = unit => {
-            return `${unit.id} ${unit.type} A:${unit.attack} D:${unit.defence}`;
-        };
+        const tileClass = `tile${isTileRestricted ? ' tile--restricted' : ''}`;
 
         return (
-            <div key={tileId} className="tile" data-test-id={tileId}>
-                {userUnit && (
-                    <span className={`unit unit--user ${userUnit.isAlive ? '' : 'unit--dead'}`}>
-                        {userUnit.isAlive && getUnitText(userUnit)}
-                    </span>
-                )}
-                {cpuUnit && (
-                    <span className={`unit unit--cpu ${cpuUnit.isAlive ? '' : 'unit--dead'}`}>
-                        {cpuUnit.isAlive && getUnitText(cpuUnit)}
-                    </span>
-                )}
+            <div key={tileId} className={tileClass} data-test-id={tileId}>
+                {userUnit && <Unit unit={userUnit} team="user" />}
+                {cpuUnit && <Unit unit={cpuUnit} team="cpu" />}
             </div>
         );
     };

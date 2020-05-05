@@ -4,7 +4,7 @@ import BattlegroundPanel from './BattlegroundPanel';
 import LANES from '../constants/lanes';
 import CARD_TYPES from '../constants/cardTypes';
 
-test('renders panel', () => {
+describe('BattlegroundPanel', () => {
     const actions = {
         handleCardSelect: () => {
             return;
@@ -25,21 +25,41 @@ test('renders panel', () => {
         isDeployUnitDisabled: false,
         isEndTurnDisabled: false,
         isEnemyTurn: false,
-        isLoading: false
+        isLoading: false,
+        isGameOver: false
     };
 
-    const { container } = render(
-        <BattlegroundPanel
-            error={''}
-            lane={LANES[0]}
-            card={CARD_TYPES[0]}
-            events={[]}
-            mana={1}
-            conditions={conditions}
-            actions={actions}
-        />
-    );
-    const elem = container.querySelector('[data-test-id="game-bar"]');
+    test('container renders', () => {
+        const { container } = render(
+            <BattlegroundPanel
+                alert={{ text: '', type: 'error' }}
+                selectedLane={LANES[0]}
+                selectedCard={CARD_TYPES[0]}
+                events={[]}
+                mana={1}
+                conditions={conditions}
+                actions={actions}
+            />
+        );
+        const elem = container.querySelector('[data-test-id="game-bar"]');
 
-    expect(elem).toBeInTheDocument();
+        expect(elem).toBeInTheDocument();
+    });
+
+    test('if game is over show restart button', () => {
+        const { container } = render(
+            <BattlegroundPanel
+                alert={{ text: '', type: 'error' }}
+                selectedLane={LANES[0]}
+                selectedCard={CARD_TYPES[0]}
+                events={[]}
+                mana={1}
+                conditions={{...conditions, isGameOver: true}}
+                actions={actions}
+            />
+        );
+        const elem = container.querySelector('[data-test-id="restart-game"]');
+
+        expect(elem).toBeInTheDocument();
+    });
 });

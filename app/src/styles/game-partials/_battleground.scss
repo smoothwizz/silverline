@@ -1,9 +1,12 @@
 $animation-duration: 2s;
 $tile-size: 96px;
 
-$spring-tile-bg: #A0C1B9;
-$winter-tile-bg: #70A0AF;
-$summer-tile-bg: #F4E8C1;
+$user-bg: #4169e1;
+$enemy-bg: #b13434;
+
+$spring-tile-bg: #a0c1b9;
+$winter-tile-bg: #70a0af;
+$summer-tile-bg: #f4e8c1;
 $autumn-tile-bg: #706993;
 
 .battleground {
@@ -13,13 +16,68 @@ $autumn-tile-bg: #706993;
     &__panel {
         flex: 1;
         margin-left: 64px;
+
+        .game-bar {
+            margin: 1em 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .mana-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-text);
+            width: 32px;
+            height: 32px;
+            background-color: rgb(0, 102, 255);
+            transform: rotate(45deg);
+            margin: 16px;
+
+            span {
+                font-size: 1.5em;
+                transform: rotate(-45deg);
+            }
+        }
+        .turn-indicator {
+            text-align: center;
+            background: $user-bg;
+            box-shadow: 0 15px $user-bg;
+            width: 160px;
+            padding-top: 8px;
+            padding-bottom: 5px;
+            position: relative;
+            margin-bottom: 20px;
+            display: block;
+            color: var(--light-text);
+
+            &:before {
+                content: "";
+                position: absolute;
+                bottom: -15px;
+                border-left: 80px solid transparent;
+                border-right: 80px solid transparent;
+                border-bottom: 10px solid #fff;
+                left: 50%;
+                position: absolute;
+                transform: translateX(-50%);
+            }
+
+            &--enemy {
+                background: $enemy-bg;
+                box-shadow: 0 15px $enemy-bg;
+            }
+        }
     }
 
     &__field {
-        flex: 0 0 $tile-size * 4
+        flex: 0 0 $tile-size * 4;
     }
 
     .events-list {
+        background: wheat;
+        padding: 1em;
+        line-height: 1.5em;
         display: flex;
         flex-direction: column;
         overflow: scroll;
@@ -29,65 +87,6 @@ $autumn-tile-bg: #706993;
         display: grid;
         grid-template-columns: $tile-size $tile-size $tile-size $tile-size;
         margin-top: 8px;
-
-        .tile {
-            background: #cccccc;
-            border: 1px solid white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: $tile-size;
-            width: $tile-size;
-
-            span {
-                margin: 4px;
-                color: var(--light-text);
-            }
-
-            &:nth-child(4n + 1) {
-                background: $winter-tile-bg;
-            }
-
-            &:nth-child(4n + 2) {
-                background: $spring-tile-bg;
-            }
-
-            &:nth-child(4n + 3) {
-                background: $summer-tile-bg;
-            }
-
-            &:nth-child(4n) {
-                background: $autumn-tile-bg;
-            }
-        }
-
-        .unit {
-            border: 1px solid white;
-            padding: 4px;
-
-            &--cpu {
-                animation: translateCpuTile $animation-duration forwards;
-                animation-iteration-count: 1;
-                background: #b13434;
-            }
-
-            &--user {
-                animation: translateUserTile $animation-duration forwards;
-                animation-iteration-count: 1;
-                background: royalblue;
-            }
-
-            &--dead {
-                height: 1px;
-
-                &.unit--user,
-                &.unit--cpu {
-                    animation: none;
-                }
-
-                opacity: 0.5;
-            }
-        }
     }
 }
 

@@ -7,10 +7,10 @@ $alert-success-bg: #457e37;
     top: 5%;
     width: fit-content;
     max-width: 50%;
-    padding:20px;
-    border-left-width:5px;
+    padding: 20px;
+    border-left-width: 5px;
     border-radius: 3px;
-    margin:10px auto;
+    margin: 10px auto;
     z-index: 1;
 
     &--error {
@@ -23,5 +23,14 @@ $alert-success-bg: #457e37;
         background-color: $alert-success-bg;
         border: 1px solid darken($alert-success-bg, 5%);
         color: var(--light-text);
+    }
+}
+
+.loading-icon {
+    font-size: 0.8em;
+    margin: 0 4px;
+
+    svg {
+        animation: rotate 1.2s linear infinite;
     }
 }

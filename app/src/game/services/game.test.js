@@ -15,7 +15,7 @@ test('GamService: deployUnit() adds an unit', () => {
     unitsLength.after = gameService.getUnits('user').length;
 
     expect(typeof unit).toBe('object');
-    expect(unit.type).toBe(CARD_TYPES[0].type);
+    expect(unit.cardId).toBe(CARD_TYPES[0].id);
     expect(unitsLength.after).toBe(unitsLength.before + 1);
 });
 

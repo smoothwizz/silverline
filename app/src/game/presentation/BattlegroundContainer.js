@@ -10,6 +10,7 @@ import LANES from '../constants/lanes';
 
 import gameService from '../services/game';
 import Battleground from './Battleground';
+import utilsService from '../services/utils';
 
 const ANIMATION_DURATION = 2000;
 const defaultCard = CARD_TYPES[0];
@@ -20,8 +21,8 @@ const defaultBaseStrength = {
 };
 const BattlegroundContainer = () => {
     const [events, setEvents] = useState([]),
-        [userUnits, setUserUnits] = useState([]),
-        [cpuUnits, setCpuUnits] = useState([]),
+        [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
+        [cpuUnits, setCpuUnits] = useState(utilsService.copyObject(gameService.getUnits('cpu'))),
         [isGameOver, setGameOver] = useState(false),
         [isLoading, setIsLoading] = useState(false),
         [isEnemyTurn, setIsEnemyTurn] = useState(false),
@@ -41,7 +42,7 @@ const BattlegroundContainer = () => {
      */
     const showAlert = (text, type) => {
         type = type || 'error';
-        console.dir({ text, type });
+
         setAlert({
             text: text,
             type: type
@@ -81,7 +82,7 @@ const BattlegroundContainer = () => {
             cpuUnits.filter(isAliveUnit).length > 0;
 
         if (unitExistsOnLane) {
-            showAlert('There can only be one card on each tile.');
+            showAlert('You can not deploy a card on that lane..', 'error');
 
             return false;
         }
@@ -106,7 +107,7 @@ const BattlegroundContainer = () => {
      */
     const updateBaseStrength = baseStrength => {
         setBaseStrength(baseStrength);
-        console.dir(baseStrength);
+
         const userBaseStrength = parseInt(baseStrength.user);
         const cpuBaseStrength = parseInt(baseStrength.cpu);
 
@@ -136,10 +137,10 @@ const BattlegroundContainer = () => {
         setCpuUnits(gameState.units.cpu);
         setEvents(gameState.events);
         setMana(gameState.mana.user);
+        setIsEnemyTurn(true);
 
         setTimeout(() => {
             playEnemyTurn();
-            setIsEnemyTurn(true);
         }, ENEMY_TURN_DURATION);
     };
 
@@ -155,6 +156,27 @@ const BattlegroundContainer = () => {
             setIsEnemyTurn(false);
             setIsLoading(false);
         }, ANIMATION_DURATION);
+    };
+
+    /**
+     * Reset Game State
+     */
+    const resetGame = () => {
+        gameService.reset();
+        setEvents([]);
+        setUserUnits([]);
+        setCpuUnits([]);
+        setGameOver(false);
+        setIsLoading(false);
+        setIsEnemyTurn(false);
+        setAlert({
+            text: '',
+            type: 'success'
+        });
+        setMana(INITIAL_MANA_PER_TURN);
+        setLane(defaultLane);
+        setCard(defaultCard);
+        setBaseStrength(defaultBaseStrength);
     };
 
     const handleLaneSelect = event => {
@@ -179,7 +201,8 @@ const BattlegroundContainer = () => {
         handleCardSelect,
         handleLaneSelect,
         deployUnit,
-        endTurn
+        endTurn,
+        resetGame
     };
 
     const conditions = {
