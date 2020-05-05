@@ -1,0 +1,17 @@
+.table {
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+
+    th,
+    td {
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #7691ab;
+        color: white;
+    }
+
+}

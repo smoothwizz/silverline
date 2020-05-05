@@ -7,7 +7,6 @@ import {
     INITIAL_BASE_STRENGTH
 } from '../constants/turn';
 import LANES from '../constants/lanes';
-
 import gameService from '../services/game';
 import Battleground from './Battleground';
 import utilsService from '../services/utils';
@@ -186,10 +185,9 @@ const BattlegroundContainer = () => {
         setLane(selectedLane);
     };
 
-    const handleCardSelect = event => {
-        const selectedCardId = event.target.value;
-        const card = CARD_TYPES.find(({ id }) => id === parseInt(selectedCardId));
-
+    const handleCardSelect = selectedCardId => {
+        const card = CARD_TYPES.find(({ id }) => parseInt(id) === parseInt(selectedCardId));
+        console.dir(card);
         setCard(card);
     };
 

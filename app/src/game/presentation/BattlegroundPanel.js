@@ -63,7 +63,7 @@ const BattlegroundPanel = ({
             <h1> Battleground </h1>
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
             {!conditions.isGameOver && (
-                <CardSelect selectedCard={selectedCard} action={actions.handleCardSelect} />
+                <CardSelect mana={mana} selectedCard={selectedCard} action={actions.handleCardSelect} />
             )}
             <div data-test-id="game-bar" className="game-bar">
                 {conditions.isGameOver && (

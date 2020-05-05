@@ -1,12 +1,24 @@
+$tile-size: 96px;
+
+$user-bg: #4169e1;
+$enemy-bg: #b13434;
+
+$spring-tile-bg: #a0c1b9;
+$winter-tile-bg: #70a0af;
+$summer-tile-bg: #f4e8c1;
+$autumn-tile-bg: #706993;
+
 @import './partials/variables';
 @import './game-partials/battleground';
 @import './game-partials/units';
+@import './game-partials/card-select';
 
 $game-menu-bg: darken($primary-color, 5%);
 
 .game-menu {
     position: fixed;
-    top: 128px;
+    top: 64px;
+    z-index: 1;
     right: 64px;
 
     a {

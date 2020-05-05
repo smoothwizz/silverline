@@ -1,7 +1,8 @@
 html,
 body,
 #root {
-  height: 100%; /* needed for proper layout */
+  height: 100%;
+  /* needed for proper layout */
 }
 
 body {
@@ -18,7 +19,8 @@ body {
 main {
   flex: 1 1 auto;
   padding: 1em;
-  position: relative;/* need this to position inner content */
+  position: relative;
+  /* need this to position inner content */
   overflow-y: auto;
 }
 
