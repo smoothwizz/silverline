@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import gameService from '../services/game';
-import CARD_TYPES from '../constants/cardTypes';
+import {CARD_TYPES} from '../constants/cards';
 
 import Unit from './Unit';
 
@@ -14,13 +14,13 @@ describe('Unit:', () => {
         expect(elem).toBeInTheDocument();
     });
 
-    test('show life bar if card lost stats', () => {
+    test('show health bar if card lost stats', () => {
         let unitWithLostStats = {
             ...unitMock,
-            defence: unitMock.defence - 1
+            life: unitMock.life - 1
         };
         const { container } = render(<Unit unit={unitWithLostStats} team="user" />);
-        const elem = container.querySelector('[data-test-id="unit-life-bar"]');
+        const elem = container.querySelector('[data-test-id="unit-health-bar"]');
 
         expect(elem).toBeInTheDocument();
     });

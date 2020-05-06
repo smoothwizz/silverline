@@ -3,7 +3,7 @@ const CARDS_AUTUMN = [
         cost: 1,
         label: 'Autumn Minion',
         stats: {
-            defence: 1,
+            life: 1,
             attack: 1,
             pace: 1
         },
@@ -13,48 +13,48 @@ const CARDS_AUTUMN = [
         cost: 2,
         label: 'Leaf Archer',
         stats: {
-            defence: 0,
-            attack: 2,
+            life: 1,
+            attack: 3,
             pace: 1
         },
-        type: 'archer'
+        type: 'damage'
     },
     {
         cost: 2,
         label: 'Leaf Knight',
         stats: {
-            defence: 2,
+            life: 3,
             attack: 1,
             pace: 1
         },
-        type: 'knight'
+        type: 'tank'
     },
     {
         cost: 3,
         label: 'Red Archer',
         stats: {
-            defence: 1,
-            attack: 3,
+            life: 2,
+            attack: 6,
             pace: 1
         },
-        type: 'knight'
+        type: 'damage'
     },
     {
         cost: 3,
         label: 'Red Knight',
         stats: {
-            defence: 3,
-            attack: 1,
+            life: 6,
+            attack: 2,
             pace: 1
         },
-        type: 'knight'
+        type: 'tank'
     },
     {
-        cost: 4,
+        cost: 5,
         label: 'Tower of Leafs',
         stats: {
-            defence: 4,
-            attack: 0,
+            life: 24,
+            attack: 1,
             pace: 0
         },
         type: 'structure'
@@ -63,11 +63,31 @@ const CARDS_AUTUMN = [
         cost: 4,
         label: 'King of the Fall',
         stats: {
-            defence: 4,
+            life: 8,
             attack: 4,
             pace: 1
         },
         type: 'hero'
+    },
+    {
+        cost: 5,
+        label: 'Scout Red Pigeon',
+        stats: {
+            life: 2,
+            attack: 1,
+            pace: 2
+        },
+        type: 'flying'
+    },
+    {
+        cost: 7,
+        label: 'Red Eagle',
+        stats: {
+            life: 4,
+            attack: 4,
+            pace: 2
+        },
+        type: 'flying'
     }
 ];
 

@@ -1,5 +1,6 @@
 // COLORS
-$primary-color: #ad5389;
+$primary-color: #3A6EA5;
+$container-width: 1366px;
 
 :root {
     // TYPOGRAPHY
@@ -17,7 +18,6 @@ $primary-color: #ad5389;
     --text-lg: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio));
     --text-xl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
     --text-xxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
-    --text-xxxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
 
     /* line-height */
     --heading-line-height: 1.2;
@@ -26,12 +26,5 @@ $primary-color: #ad5389;
     /* text color */
     --light-text: #ffffff;
     --dark-text: #25283D;
-
-    // LAYOUT
-    --main-bg-color: #fcfcfc;
-    --header-bg-color: #6328a7;
-    --header-text-color: var(--light-text);
-    --footer-bg-color: var(--dark-text);
-    --footer-text-color: var(--light-text);
 }
 

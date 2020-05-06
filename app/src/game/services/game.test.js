@@ -1,5 +1,5 @@
 import gameService from './game';
-import CARD_TYPES from '../constants/cardTypes';
+import {CARD_TYPES} from '../constants/cards';
 import LANES from '../constants/lanes';
 import { LAST_ROW_INDEX } from '../constants/turn';
 

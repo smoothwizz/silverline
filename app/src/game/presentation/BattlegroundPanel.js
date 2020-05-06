@@ -22,7 +22,7 @@ const BattlegroundPanel = ({
     const turnIndicator = (
         <div className={`turn-indicator ${conditions.isEnemyTurn ? 'turn-indicator--enemy' : ''}`}>
             {!conditions.isLoading ? '' : loadingIcon}
-            {conditions.isEnemyTurn ? 'Enemy' : 'User'} Turn
+            {conditions.isEnemyTurn ? 'Enemy' : 'Your'} Turn
         </div>
     );
 
@@ -51,7 +51,7 @@ const BattlegroundPanel = ({
             </button>
             <button
                 disabled={conditions.isEndTurnDisabled}
-                className="btn btn--primary"
+                className="btn btn--success"
                 onClick={actions.endTurn}>
                 End Turn
             </button>
@@ -63,7 +63,11 @@ const BattlegroundPanel = ({
             <h1> Battleground </h1>
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
             {!conditions.isGameOver && (
-                <CardSelect mana={mana} selectedCard={selectedCard} action={actions.handleCardSelect} />
+                <CardSelect
+                    mana={mana}
+                    selectedCard={selectedCard}
+                    action={actions.handleCardSelect}
+                />
             )}
             <div data-test-id="game-bar" className="game-bar">
                 {conditions.isGameOver && (
@@ -76,13 +80,19 @@ const BattlegroundPanel = ({
                 )}
                 {!conditions.isGameOver && activeGameBar}
             </div>
-            <div className="events-list">
-                {events
-                    .sort((a, b) => a.id - b.id)
-                    .map(event => {
-                        return <span key={event.id}>{event.text}</span>;
-                    })}
-            </div>
+            {events.length > 0 && (
+                <div className="events-list">
+                    {events
+                        .sort((a, b) => b.id - a.id)
+                        .map(event => {
+                            return (
+                                <span className="event" key={event.id}>
+                                    {event.text}
+                                </span>
+                            );
+                        })}
+                </div>
+            )}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Router } from '@reach/router';
-import CardsContainer from './CardsContainer';
+import CardsShowcase from './CardsShowcase';
 import BattlegroundContainer from './BattlegroundContainer';
 import '../../styles/game.scss';
 
@@ -18,7 +18,7 @@ const GameContainer = () => (
             </ul>
         </nav>
         <Router>
-            <CardsContainer path="cards" />
+            <CardsShowcase path="cards" />
             <BattlegroundContainer path="battleground" />
         </Router>
     </>

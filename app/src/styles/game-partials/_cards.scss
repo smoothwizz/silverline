@@ -1,0 +1,185 @@
+$card-width: 150px;
+$card-select-container-width: ($card-width + 16px) * 5;
+$cards-container-bg: #fff;
+$card-per-row: ceil($card-select-container-width / $card-width);
+
+.cards-with-search {
+    background: $cards-container-bg;
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+    padding: 1em;
+}
+
+.cards-select {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    margin: 8px 0;
+    max-width: $card-select-container-width;
+
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar {
+        width: 2px;
+        height: 10px;
+
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #a0a0a0;
+    }
+
+    .card+.card {
+        margin-left: 8px;
+    }
+}
+
+.cards-showcase {
+    background: $cards-container-bg;
+    display: grid;
+    grid-template-columns: repeat($card-per-row, 1fr);
+    align-items: center;
+    padding: 0 1em;
+
+    .card {
+        transform: none;
+        cursor: default;
+    }
+}
+
+.card {
+    background: darken($cards-container-bg, 5%);
+    border: 1px solid darken($cards-container-bg, 10%);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 8px;
+    min-width: $card-width;
+    padding: 4px;
+    transform: scale(.8);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    width: $card-width;
+
+    &--unavailable {
+        cursor: not-allowed;
+        opacity: .5;
+    }
+
+    &--selected {
+        border: 1px solid wheat;
+        transform: scale(1);
+    }
+
+    .btn-card-select {
+        width: 50%;
+        margin: 4px auto;
+    }
+
+    .card-title {
+        background: var(--dark-text);
+        color: var(--light-text);
+        flex: 1;
+        padding: 4px;
+        text-align: center;
+
+        &--win {
+            background: $winter-tile-bg;
+        }
+
+        &--spr {
+            background: $winter-tile-bg;
+        }
+
+        &--sum {
+            background: $summer-tile-bg;
+            color: var(--dark-text);
+        }
+
+        &--aut {
+            background: $autumn-tile-bg;
+            color: var(--dark-text);
+        }
+    }
+
+    .stats {
+        display: flex;
+        flex-direction: column;
+        font-size: 1em;
+        margin: 8px 0;
+
+        .stat {
+            margin: 4px;
+            padding: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+
+            &--mana {
+                .stat__value {
+                    background-color: $mana-bg;
+                }
+            }
+
+            &__label {
+                text-transform: uppercase;
+                font-size: .8em;
+                vertical-align: middle;
+
+                svg {
+                    margin-left: 4px;
+                }
+            }
+
+            &__value {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--light-text);
+                width: 1.5em;
+                height: 1.5em;
+                background-color: var(--dark-text);
+                transition: background-color 1s ease-out;
+                transform: rotate(45deg);
+                margin-left: auto;
+
+                span {
+                    font-size: 1em;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+
+
+    }
+
+    .mana-cost {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light-text);
+        width: 1.5em;
+        height: 1.5em;
+        background-color: $mana-bg;
+        transition: background-color 1s ease-out;
+        transform: rotate(45deg);
+        margin: 4px 0;
+
+        &--empty {
+            background-color: $mana-bg--empty;
+            color: var(--dark-text);
+        }
+
+        span {
+            font-size: 1.2em;
+            transform: rotate(-45deg);
+        }
+    }
+}

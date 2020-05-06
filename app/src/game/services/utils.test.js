@@ -21,3 +21,12 @@ test('UtilsService: copyObject() returns a copied object', () => {
     expect(typeof copyObject).toBe('object');
     expect(copyObject.test).toBe('initial');
 });
+
+test('UtilsService: getPercentage() returns an integer', () => {
+    const part = 40,
+          total= 80,
+          percent = utilsService.getPercentage(part, total);
+
+    expect(Number.isInteger(percent)).toBe(true);
+    expect(percent).toBe(50);
+});

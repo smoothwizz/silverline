@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import CARD_TYPES from '../constants/cardTypes';
+import {CARD_TYPES} from '../constants/cards';
 import {
     ENEMY_TURN_DURATION,
     INITIAL_MANA_PER_TURN,
@@ -22,7 +22,7 @@ const BattlegroundContainer = () => {
     const [events, setEvents] = useState([]),
         [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
         [cpuUnits, setCpuUnits] = useState(utilsService.copyObject(gameService.getUnits('cpu'))),
-        [isGameOver, setGameOver] = useState(false),
+        [isGameOver, setGameOver] = useState(gameService.getGameOverState()),
         [isLoading, setIsLoading] = useState(false),
         [isEnemyTurn, setIsEnemyTurn] = useState(false),
         [alert, setAlert] = useState({
@@ -76,7 +76,7 @@ const BattlegroundContainer = () => {
             return unit.isAlive && unit.lane === selectedLane.id && unit.row <= 1;
         };
 
-        const unitExistsOnLane =
+        let unitExistsOnLane =
             userUnits.filter(isOwnUnitOnSameTileLine).length > 0 ||
             cpuUnits.filter(isAliveUnit).length > 0;
 
@@ -187,7 +187,7 @@ const BattlegroundContainer = () => {
 
     const handleCardSelect = selectedCardId => {
         const card = CARD_TYPES.find(({ id }) => parseInt(id) === parseInt(selectedCardId));
-        console.dir(card);
+
         setCard(card);
     };
 

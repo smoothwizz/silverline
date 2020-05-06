@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CARD_TYPES from '../constants/cardTypes';
+import { CARD_TYPES, MAX_CARD_HEALTH } from '../constants/cards';
+import utilsService from '../services/utils';
 
 const Unit = ({ unit, team }) => {
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId);
@@ -9,16 +10,22 @@ const Unit = ({ unit, team }) => {
         <div
             data-test-id="unit-label"
             className="unit__label"
-            title={`${unit.defence} / ${unitCard.stats.defence}`}>
+            title={`D:${unit.life} / A:${unit.attack}`}>
             {unitCard.label}
         </div>
     );
 
-    const lifePercentage = (unit.defence * 100) / unitCard.stats.defence;
-    const showStats = true; // lifePercentage < 100;
-    const lifeBar = showStats && (
-        <div data-test-id="unit-life-bar" className="unit__life-bar">
-            <span className="unit__life-percent" style={{ width: `${lifePercentage}%` }}></span>
+    const healthFromMaxPercent = utilsService.getPercentage(unit.life, MAX_CARD_HEALTH);
+    const healthPercentage = utilsService.getPercentage(unit.life, unitCard.stats.life);
+    const showStats = true; // healthPercentage < 100;
+    const healthBar = showStats && (
+        <div className="health-bar-container">
+            <div
+                data-test-id="unit-health-bar"
+                className="health-bar"
+                style={{ width: `${healthFromMaxPercent < 10 ? 10 : healthFromMaxPercent}%` }}>
+                <span className="health-percent" style={{ width: `${healthPercentage}%` }}></span>
+            </div>
         </div>
     );
     const unitIcon = <span className="unit__icon" title={`#${unit.id}`}></span>;
@@ -27,7 +34,7 @@ const Unit = ({ unit, team }) => {
         <div className={unitClass}>
             {unitLabel}
             {unitIcon}
-            {lifeBar}
+            {healthBar}
         </div>
     );
 };

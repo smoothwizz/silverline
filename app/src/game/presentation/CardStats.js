@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GiBroadsword, GiRunningNinja } from 'react-icons/gi';
+import { GiBroadsword, GiStandingPotion, GiRunningNinja } from 'react-icons/gi';
 import { BsFillShieldFill } from 'react-icons/bs';
 
-const CardStats = ({ stats }) => {
+const CardStats = ({ stats, mana }) => {
     return (
         <div className="stats">
             <div className="stat">
@@ -12,16 +12,16 @@ const CardStats = ({ stats }) => {
                     <GiBroadsword />
                 </span>
                 <span className="stat__value" data-test-id="stat-attack">
-                    {stats.attack}
+                    <span>{stats.attack}</span>
                 </span>
             </div>
             <div className="stat">
                 <span className="stat__label">
-                    Defence
+                    Life
                     <BsFillShieldFill />
                 </span>
-                <span className="stat__value" data-test-id="stat-defence">
-                    {stats.defence}
+                <span className="stat__value" data-test-id="stat-life">
+                    <span>{stats.life}</span>
                 </span>
             </div>
             <div className="stat">
@@ -30,7 +30,16 @@ const CardStats = ({ stats }) => {
                     <GiRunningNinja />
                 </span>
                 <span className="stat__value" data-test-id="stat-pace">
-                    {stats.pace}
+                    <span>{stats.pace}</span>
+                </span>
+            </div>
+            <div className="stat stat--mana">
+                <span className="stat__label">
+                    Mana
+                    <GiStandingPotion />
+                </span>
+                <span className="stat__value" data-test-id="stat-pace">
+                    <span>{mana}</span>
                 </span>
             </div>
         </div>
@@ -38,7 +47,8 @@ const CardStats = ({ stats }) => {
 };
 
 CardStats.propTypes = {
-    stats: PropTypes.object
+    stats: PropTypes.object,
+    mana: PropTypes.number
 };
 
 export default CardStats;

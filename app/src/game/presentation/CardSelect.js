@@ -1,30 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CARD_TYPES from '../constants/cardTypes';
-import CardStats from './CardStats';
+import { CARD_TYPES } from '../constants/cards';
+import Card from './Card';
+
 const CardSelect = ({ selectedCard, mana, action }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const getCard = card => {
-        const cardClass =
-            'card' +
-            (selectedCard.id === card.id ? ' card--selected' : '') +
-            (card.cost > mana ? ' card--unavailable' : '');
+        const isSelected = card.id === selectedCard.id;
 
         return (
-            <div key={card.id} className={cardClass}>
-                <div className={`card-title card-title--${card.faction}`}>
-                    <h3>{card.label}</h3>
-                    <span className="mana-cost">costs {card.cost}mana</span>
-                </div>
-                <CardStats stats={card.stats} />
-                <button
-                    disabled={card.cost > mana}
-                    className="btn btn--primary btn-card-select"
-                    onClick={() => action(card.id)}>
-                    Select
-                </button>
-            </div>
+            <Card
+                key={card.id}
+                card={card}
+                mana={mana}
+                isSelected={isSelected}
+                action={action}></Card>
         );
     };
 
@@ -48,7 +39,7 @@ const CardSelect = ({ selectedCard, mana, action }) => {
     };
 
     return (
-        <div>
+        <div className="cards-with-search">
             <div className="form-field">
                 <input
                     className="input"
@@ -58,7 +49,7 @@ const CardSelect = ({ selectedCard, mana, action }) => {
                     onChange={handleSearchChange}
                 />
             </div>
-            <div data-test-id="card-select" className="card-select">
+            <div data-test-id="cards-select" className="cards-select">
                 {CARD_TYPES.filter(filterBySearchTerm)
                     .sort((a, b) => a.cost - b.cost)
                     .map(card => getCard(card))}

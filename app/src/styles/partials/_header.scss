@@ -1,11 +1,17 @@
 header {
-    align-items: center;
-    background: linear-gradient(to right, #ad5389, #3c1053);
-    color: var(--header-text-color);
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: space-between;
-    padding: 1em;
+    background: #71778a; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #626879, #71778a); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #626879, #71778a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color: var(--light-text);
+
+    .container {
+        align-items: center;
+        display: flex;
+        flex: 0 0 auto;
+        justify-content: space-between;
+        padding: 1em;
+    }
 
     h1 {
         margin: 0;
