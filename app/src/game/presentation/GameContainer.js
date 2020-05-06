@@ -7,13 +7,15 @@ import '../../styles/game.scss';
 const GameContainer = () => (
     <>
         <nav className="game-menu">
-            <span className="game-menu__toggle">MENU</span>
+            <span className="game-menu__toggle" data-test-id="game-menu">
+                MENU
+            </span>
             <ul className="game-menu__dropdown">
                 <li>
-                    <Link to="cards">My Cards</Link>
+                    <Link to="cards">All Cards</Link>
                 </li>
                 <li>
-                    <Link to="battleground">Battle</Link>
+                    <Link to="battleground">Battleground</Link>
                 </li>
             </ul>
         </nav>

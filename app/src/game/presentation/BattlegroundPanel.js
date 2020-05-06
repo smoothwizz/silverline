@@ -62,13 +62,6 @@ const BattlegroundPanel = ({
         <div className="battleground__panel">
             <h1> Battleground </h1>
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
-            {!conditions.isGameOver && (
-                <CardSelect
-                    mana={mana}
-                    selectedCard={selectedCard}
-                    action={actions.handleCardSelect}
-                />
-            )}
             <div data-test-id="game-bar" className="game-bar">
                 {conditions.isGameOver && (
                     <button
@@ -80,6 +73,13 @@ const BattlegroundPanel = ({
                 )}
                 {!conditions.isGameOver && activeGameBar}
             </div>
+            {!conditions.isGameOver && (
+                <CardSelect
+                    mana={mana}
+                    selectedCard={selectedCard}
+                    action={actions.handleCardSelect}
+                />
+            )}
             {events.length > 0 && (
                 <div className="events-list">
                     {events

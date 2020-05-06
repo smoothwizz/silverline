@@ -29,7 +29,7 @@ const CardsShowcase = () => {
 
     return (
         <>
-            <h2>MyCards</h2>
+            <h2>All Cards</h2>
             <div data-test-id="cards-list" className="cards-with-search">
                 <div className="form-field">
                     <input

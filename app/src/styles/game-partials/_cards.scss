@@ -15,7 +15,6 @@ $card-per-row: ceil($card-select-container-width / $card-width);
     display: flex;
     flex-direction: row;
     overflow: auto;
-    margin: 8px 0;
     max-width: $card-select-container-width;
 
     &::-webkit-scrollbar-track {

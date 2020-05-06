@@ -14,7 +14,8 @@ $autumn-tile-bg: #d3bda7;
 @import './game-partials/units';
 @import './game-partials/cards';
 
-$game-menu-bg: darken($primary-color, 5%);
+$game-menu-bg: darken($primary-color, 2%);
+$game-menu-border: darken($primary-color, 5%);
 
 .game-menu {
     position: absolute;
@@ -54,6 +55,7 @@ $game-menu-bg: darken($primary-color, 5%);
         a {
             display: block;
             padding: 1em;
+            border: 1px solid $game-menu-border;
             background-color: $game-menu-bg;
             text-align: center;
             text-decoration: none;
