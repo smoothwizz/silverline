@@ -8,41 +8,60 @@
  */
 const processFight = (unit, opposingUnit) => {
     let fightLog = '',
-        stats = {
-            unit: {
-                life: unit.life,
-                attack: unit.attack
-            },
-            opposingUnit: {
-                life: opposingUnit.life,
-                attack: opposingUnit.attack
-            }
-        };
+        unitLife = unit.life,
+        unitAttack = unit.attack,
+        opposingUnitLife = opposingUnit.life,
+        opposingUnitAttack = opposingUnit.attack;
 
     const addToLog = text => {
+        console.log(text);
         fightLog += text;
     };
 
-    while ((stats.unit.life > 0) & (stats.opposingUnit.life > 0)) {
+    while (unitLife > 0 && opposingUnitLife > 0) {
         addToLog(
-            `Unit (${stats.unit.attack} ATK) attacks Opposing Unit (${stats.opposingUnit.life} HP)`
+            `Unit (${unitAttack} ATK -> ${unitAttack -
+                1} ATK) attacks Opposing Unit (${opposingUnitLife} HP `
         );
-        stats.opposingUnit.life -= stats.unit.attack;
-        addToLog(`remains with ${stats.opposingUnit.life} HP. `);
-        if (stats.unit.attack > 1) {
-            stats.unit.attack--;
+        opposingUnitLife -= unitAttack;
+        addToLog(`-> ${opposingUnitLife} HP.) `);
+        if (unitAttack > 1) {
+            unitAttack--;
         }
+        if (opposingUnitLife <= 0) {
+            addToLog('Opposing Unit died. ');
+
+            break;
+        }
+
         addToLog(
-            `Unit now has ${stats.unit.attack} ATK. ` +
-                `Opposing Unit (${stats.opposingUnit.attack} ATK) strikes back Unit (${stats.unit.life} HP) `
+            `Opposing Unit (${opposingUnitAttack} ATK -> ${opposingUnitAttack -
+                1} ATK) strikes back Unit (${unitLife} HP `
         );
-        stats.unit.life -= stats.opposingUnit.attack;
-        addToLog(`remains with ${stats.unit.life} HP. `);
-        if (stats.opposingUnit.attack > 1) {
-            stats.opposingUnit.attack--;
+
+        unitLife -= opposingUnitAttack;
+        addToLog(`-> ${unitLife} HP.) `);
+        if (opposingUnitAttack > 1) {
+            opposingUnitAttack--;
         }
-        addToLog(`Opposing Unit now has ${stats.opposingUnit.attack} ATK.`);
+
+        if (unitLife <= 0) {
+            addToLog('Unit died. ');
+
+            break;
+        }
     }
+
+    const stats = {
+        unit: {
+            life: unitLife,
+            attack: unitAttack
+        },
+        opposingUnit: {
+            life: opposingUnitLife,
+            attack: opposingUnitAttack
+        }
+    };
 
     return { stats, fightLog };
 };

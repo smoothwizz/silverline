@@ -11,7 +11,7 @@ const Card = ({ card, mana, isSelected, action }) => {
 
     if (action) {
         containerProps = {
-            onClick: () => action(card.id),
+            onClick: () => action(card),
             key: card.id,
             className: cardClass
         };
@@ -32,7 +32,7 @@ const Card = ({ card, mana, isSelected, action }) => {
                 <button
                     disabled={card.cost > mana}
                     className="btn btn--primary btn-card-select"
-                    onClick={() => action(card.id)}>
+                    onClick={() => action(card)}>
                     Select
                 </button>
             )}

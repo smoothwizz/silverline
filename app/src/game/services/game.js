@@ -108,8 +108,6 @@ const createUnitFromCard = (card, laneId, team) => {
         isAlive: true
     };
 
-    nextId[team]++;
-
     return unit;
 };
 
@@ -120,8 +118,10 @@ const createUnitFromCard = (card, laneId, team) => {
  * @param {object} card
  */
 const deployUnit = (lane, card) => {
-    const unit = createUnitFromCard(card, lane.id, 'user');
+    const team = 'user';
+    const unit = createUnitFromCard(card, lane.id, team);
 
+    nextId[team]++;
     gameState.units.user.push(unit);
 
     return unit;
@@ -175,6 +175,7 @@ const selectCpuUnits = () => {
         }
 
         unit = createUnitFromCard(selectedCard, cardLaneId, 'cpu');
+        nextId.cpu++;
         availableMana -= selectedCard.cost;
         gameState.units.cpu.push(unit);
         hasMoves = availableCards.length > 0;
@@ -235,13 +236,13 @@ const attackBase = (unit, team, opposingTeam) => {
     let text = '',
         isBaseDestroyed;
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId),
-        opposingTeamLabel = opposingTeam === 'user' ? 'Enemy' : 'Your';
+        opposingTeamLabel = opposingTeam === 'user' ? 'Your' : 'Enemy';
 
     gameState.baseStrength[opposingTeam] -= unit.attack;
     isBaseDestroyed = gameState.baseStrength[opposingTeam] < 0;
     text = `(${LANES[unit.lane].label}) ${unitCard.label} (#${unit.id})
             ${isBaseDestroyed ? 'destroyed' : 'attacked'}
-            ${opposingTeamLabel} base.`;
+            ${opposingTeamLabel} base. (-${unit.attack}HP)`;
 
     markUnitAsDead(unit, team);
     addEvent(text);

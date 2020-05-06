@@ -8,7 +8,7 @@ const CardSelect = ({ selectedCard, mana, action }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const getCard = card => {
-        const isSelected = card.id === selectedCard.id;
+        const isSelected = selectedCard ? card.id === selectedCard.id : false;
 
         return (
             <Card

@@ -182,9 +182,7 @@ const BattlegroundContainer = () => {
         setLane(lane);
     };
 
-    const handleCardSelect = selectedCardId => {
-        const card = CARD_TYPES.find(({ id }) => parseInt(id) === parseInt(selectedCardId));
-
+    const handleCardSelect = card => {
         setCard(card);
     };
 

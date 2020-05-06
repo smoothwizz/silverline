@@ -13,7 +13,7 @@ const CARDS_AUTUMN = [
         cost: 2,
         label: 'Leaf Archer',
         stats: {
-            life: 1,
+            life: 2,
             attack: 3,
             pace: 1
         },
@@ -23,7 +23,7 @@ const CARDS_AUTUMN = [
         cost: 2,
         label: 'Leaf Knight',
         stats: {
-            life: 3,
+            life: 4,
             attack: 1,
             pace: 1
         },

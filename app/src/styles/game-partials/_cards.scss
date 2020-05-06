@@ -3,6 +3,11 @@ $card-select-container-width: ($card-width + 16px) * 5;
 $cards-container-bg: #fff;
 $card-per-row: ceil($card-select-container-width / $card-width);
 
+.fight-sim {
+    display: flex;
+    flex-direction: row;
+}
+
 .cards-with-search {
     background: $cards-container-bg;
     display: flex;
