@@ -178,11 +178,8 @@ const BattlegroundContainer = () => {
         setBaseStrength(defaultBaseStrength);
     };
 
-    const handleLaneSelect = event => {
-        const laneType = event.target.value;
-        const selectedLane = LANES.find(lane => lane.value === laneType);
-
-        setLane(selectedLane);
+    const handleLaneSelect = lane => {
+        setLane(lane);
     };
 
     const handleCardSelect = selectedCardId => {

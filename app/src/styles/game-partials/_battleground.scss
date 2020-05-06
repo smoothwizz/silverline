@@ -1,7 +1,7 @@
 $animation-duration: 2s;
-$mana-bg: #0066ff;
-$mana-bg--empty: #d8d8d8;
-$game-bar-bg: #fefefe;
+$mana-bg: linear-gradient(to right, #00c6ff, #0072ff);
+$mana-bg--empty: linear-gradient(to right, #c9d6ff, #e2e2e2);
+$game-bar-bg: hsl(0, 0%, 100%);
 
 .battleground {
     display: flex;
@@ -10,56 +10,6 @@ $game-bar-bg: #fefefe;
         flex: 1;
         overflow: hidden;
         margin-left: 64px;
-
-        .game-bar {
-            width: fit-content;
-            background: $game-bar-bg;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            padding: 8px 16px;
-        }
-
-        .mana-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light-text);
-            width: 1.5em;
-            height: 1.5em;
-            background-color: $mana-bg;
-            transition: background-color 1s ease-out;
-            transform: rotate(45deg);
-            margin: 16px;
-
-            &--empty {
-                background-color: $mana-bg--empty;
-                color: var(--dark-text);
-            }
-
-            span {
-                font-size: 1.2em;
-                transform: rotate(-45deg);
-            }
-        }
-
-        .turn-indicator {
-            animation: turnIndicator 1.5s forwards;
-            border-radius: 8px;
-            background: linear-gradient(to right, $user-bg, darken($user-bg, 5%));
-            position: fixed;
-            top: 5%;
-            max-width: 50%;
-            padding: 10px 20px;
-            border-radius: 3px;
-            margin: 10px auto;
-            color: var(--light-text);
-
-            &--enemy {
-                animation: none;
-                background: linear-gradient(to right, $enemy-bg, darken($enemy-bg, 5%));
-            }
-        }
     }
 
     &__field {

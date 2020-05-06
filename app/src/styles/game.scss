@@ -12,6 +12,7 @@ $autumn-tile-bg: #d3bda7;
 @import './partials/variables';
 @import './game-partials/battleground';
 @import './game-partials/units';
+@import './game-partials/game-bar';
 @import './game-partials/cards';
 
 $game-menu-bg: darken($primary-color, 2%);

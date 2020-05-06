@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaSpinner } from 'react-icons/fa';
-import LANES from '../constants/lanes';
+
 import CardSelect from './CardSelect';
+import LaneSelect from './LaneSelect';
 
 const BattlegroundPanel = ({
     alert,
@@ -26,6 +27,8 @@ const BattlegroundPanel = ({
         </div>
     );
 
+    const laneSelect = <LaneSelect selectedLane={selectedLane} action={actions.handleLaneSelect} />;
+
     const manaIndicator = (
         <div className={`mana-indicator${mana === 0 ? ' mana-indicator--empty' : ''}`}>
             <span>{mana}</span>
@@ -36,13 +39,7 @@ const BattlegroundPanel = ({
         <>
             {turnIndicator}
             {manaIndicator}
-            <select value={selectedLane.value} onChange={actions.handleLaneSelect}>
-                {LANES.map(lane => (
-                    <option key={lane.id} value={lane.value}>
-                        {lane.label}
-                    </option>
-                ))}
-            </select>
+            {laneSelect}
             <button
                 disabled={conditions.isDeployUnitDisabled}
                 className="btn btn--primary"
@@ -51,7 +48,7 @@ const BattlegroundPanel = ({
             </button>
             <button
                 disabled={conditions.isEndTurnDisabled}
-                className="btn btn--success"
+                className={`btn btn--success ${mana === 0 ? 'btn--jumping' : ''}`}
                 onClick={actions.endTurn}>
                 End Turn
             </button>

@@ -9,6 +9,10 @@ $card-per-row: ceil($card-select-container-width / $card-width);
     flex-direction: column;
     margin: 8px 0;
     padding: 1em;
+
+    .search-bar {
+        width: 50%;
+    }
 }
 
 .cards-select {
@@ -123,7 +127,19 @@ $card-per-row: ceil($card-select-container-width / $card-width);
 
             &--mana {
                 .stat__value {
-                    background-color: $mana-bg;
+                    background: $mana-bg;
+                }
+            }
+
+            &--mana {
+                .stat__value {
+                    background: $mana-bg;
+                }
+            }
+
+            &--mana {
+                .stat__value {
+                    background: $mana-bg;
                 }
             }
 
@@ -166,13 +182,13 @@ $card-per-row: ceil($card-select-container-width / $card-width);
         color: var(--light-text);
         width: 1.5em;
         height: 1.5em;
-        background-color: $mana-bg;
+        background: $mana-bg;
         transition: background-color 1s ease-out;
         transform: rotate(45deg);
         margin: 4px 0;
 
         &--empty {
-            background-color: $mana-bg--empty;
+            background: $mana-bg--empty;
             color: var(--dark-text);
         }
 

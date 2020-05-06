@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CARD_TYPES } from '../constants/cards';
 import Card from './Card';
+import CardSearchBar from './CardSearchBar';
 
 const CardsShowcase = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -31,15 +32,7 @@ const CardsShowcase = () => {
         <>
             <h2>All Cards</h2>
             <div data-test-id="cards-list" className="cards-with-search">
-                <div className="form-field">
-                    <input
-                        className="input"
-                        placeholder="Search for cards"
-                        type="text"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                    />
-                </div>
+                <CardSearchBar term={searchTerm} action={handleSearchChange} />
                 <div className="cards-showcase">
                     {CARD_TYPES.filter(filterBySearchTerm)
                         .sort((a, b) => a.cost - b.cost)
