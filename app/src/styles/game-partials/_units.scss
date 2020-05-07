@@ -8,6 +8,12 @@
     height: $tile-height;
     position: relative;
     width: $tile-width;
+    transition: $game-transition;
+
+    &--lane-selected {
+        transform: scale(1.1);
+        z-index: 2;
+    }
 
     &--restricted {
         &:after {
@@ -50,7 +56,7 @@
     align-items: center;
     position: relative;
     padding: 4px;
-    z-index: 2;
+    z-index: 3;
     margin: 4px;
     font-size: 0.8em;
 
@@ -94,8 +100,13 @@
     &__label {
         background: #3d3d3d;
         border-radius: 4px;
+        display: flex;
         padding: 4px;
         text-align: center;
+
+        span {
+            margin-right: 4px;
+        }
     }
 
     .health-bar-container {

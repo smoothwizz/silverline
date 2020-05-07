@@ -5,7 +5,7 @@ import { NO_OF_ROWS } from '../../constants/turn';
 
 import Unit from './Unit';
 
-const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) => {
+const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver, selectedLane }) => {
     const createField = () => {
         let field = [];
 
@@ -27,6 +27,7 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) =>
             return unit.isAlive && unit.lane === lane && unit.row === 1;
         };
 
+        const isTileLaneSelected = lane === selectedLane.id;
         const isTileRestricted =
             row < 1 &&
             (userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
@@ -41,7 +42,9 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) =>
         });
 
         const tileId = `tile-${lane}${row}`;
-        const tileClass = `tile${isTileRestricted ? ' tile--restricted' : ''}`;
+        const tileClass = `tile${isTileRestricted ? ' tile--restricted' : ''}${
+            isTileLaneSelected ? ' tile--lane-selected' : ''
+        }`;
 
         return (
             <div key={tileId} className={tileClass} data-test-id={tileId}>
@@ -59,7 +62,7 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver }) =>
                         {baseStrength.user <= 0 && 'CPU WINS'}
                         {baseStrength.cpu <= 0 && 'USER WINS'}
                     </h1>
-                    Destroyed Field
+                    <div className="map map--destroyed">{createField()}</div>
                 </div>
             ) : (
                 <>
@@ -80,7 +83,8 @@ BattlegroundField.propTypes = {
     baseStrength: PropTypes.object,
     userUnits: PropTypes.array,
     cpuUnits: PropTypes.array,
-    isGameOver: PropTypes.bool
+    isGameOver: PropTypes.bool,
+    selectedLane: PropTypes.object
 };
 
 export default BattlegroundField;

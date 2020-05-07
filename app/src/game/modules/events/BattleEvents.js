@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import BattleEvent from './BattleEvent';
 
 const BattleEvents = ({ events }) => {
     return (
-        <div className="events-list">
+        <div data-test-id="events-list" className="events-list">
             {events
                 .sort((a, b) => b.id - a.id)
                 .map(event => {
                     return (
-                        <span className="event" key={event.id}>
-                            {event.text}
-                        </span>
+                        <BattleEvent key={event.id} event={event} />
                     );
                 })}
         </div>

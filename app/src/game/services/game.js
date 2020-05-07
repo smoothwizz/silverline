@@ -133,7 +133,6 @@ const deployUnit = (lane, card) => {
 
 const selectCpuUnits = () => {
     let hasMoves = true,
-        availableMana = gameState.mana.cpu,
         availableLanes = LANES.slice(0).filter(lane => {
             const unitExistsOnLane =
                 getTeamUnitsOnTile('user', lane.id, LAST_ROW_INDEX).length > 0 ||
@@ -141,7 +140,7 @@ const selectCpuUnits = () => {
 
             return unitExistsOnLane ? false : true;
         }),
-        availableCards = CARD_TYPES.filter(card => card.cost <= availableMana),
+        availableCards = CARD_TYPES.filter(card => card.cost <= gameState.mana.cpu),
         unit,
         cardLaneId,
         selectedCard;
@@ -163,7 +162,7 @@ const selectCpuUnits = () => {
     };
 
     const getAvailableCard = () => {
-        availableCards = CARD_TYPES.filter(card => card.cost <= availableMana);
+        availableCards = CARD_TYPES.filter(card => card.cost <= gameState.mana.cpu);
 
         let cardIndex = utilsService.getRandomInteger(0, availableCards.length - 1);
         let selectedCard = availableCards[cardIndex];
@@ -174,13 +173,14 @@ const selectCpuUnits = () => {
     do {
         cardLaneId = getAvailableLaneId();
         selectedCard = getAvailableCard();
+
         if (!selectedCard) {
             return;
         }
 
+        gameState.mana.cpu -= selectedCard.cost;
         unit = createUnitFromCard(selectedCard, cardLaneId, 'cpu');
         nextId.cpu++;
-        availableMana -= selectedCard.cost;
         gameState.units.cpu.push(unit);
         hasMoves = availableCards.length > 0;
     } while (hasMoves);
@@ -257,7 +257,7 @@ const attackBase = (unit, team, opposingTeam) => {
 };
 
 /**
- * Update units stat after fight between them
+ * Update units stat after fight between them and log the fight
  *
  * @param {object} unit
  * @param {object} opposingUnit
@@ -273,7 +273,7 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
 
     const { stats, log } = fightService.processFight(unit, opposingUnit);
 
-    text = `fight #${nextId.event}:
+    text = `Fight #${nextId.event}:
             ${teamLabel} ${unitCard.label} (#${unit.id}) vs ${opposingTeamLabel} ${opposingCard.label} (#${opposingUnit.id})`;
 
     if (stats.unit.life <= 0) {
@@ -417,6 +417,15 @@ const getDefaultCard = () => {
 };
 
 /**
+ * Check if game is over
+ *
+ * @returns {boolean}
+ */
+const getGameOverState = () => {
+    return gameState.isGameOver;
+};
+
+/**
  * Reset game state
  */
 const reset = () => {
@@ -429,15 +438,6 @@ const reset = () => {
     };
 
     return;
-};
-
-/**
- * Check if game is over
- *
- * @returns {boolean}
- */
-const getGameOverState = () => {
-    return gameState.isGameOver;
 };
 
 const gameService = {

@@ -16,9 +16,7 @@ $autumn-tile-bg: #d3bda7;
 @import './game-partials/fight-sim';
 @import './game-partials/game-bar';
 @import './game-partials/units';
-
-$game-menu-bg: darken($primary-color, 2%);
-$game-menu-border: darken($primary-color, 5%);
+@import './game-partials/events';
 
 .game-menu {
     position: absolute;

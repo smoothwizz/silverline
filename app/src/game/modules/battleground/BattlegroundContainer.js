@@ -219,6 +219,7 @@ const BattlegroundContainer = () => {
 
     const battleFieldProps = {
         isGameOver,
+        selectedLane,
         baseStrength,
         userUnits,
         cpuUnits

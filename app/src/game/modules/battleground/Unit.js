@@ -2,16 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CARD_TYPES, MAX_CARD_HEALTH } from '../../constants/cards';
 import utilsService from '../../services/utils';
+import Tooltip from '../../widgets/Tooltip';
 
 const Unit = ({ unit, team }) => {
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId);
     const unitClass = `unit unit--${team} ${unit.isAlive ? '' : 'unit--dead'}`;
     const unitLabel = (
-        <div
-            data-test-id="unit-label"
-            className="unit__label"
-            title={`D:${unit.life} / A:${unit.attack}`}>
-            {unitCard.label}
+        <div data-test-id="unit-label" className="unit__label">
+            <Tooltip
+                text={`${unit.life} HP / ${unit.attack} ATK`}
+                toggleText={unitCard.label}
+                isIconVisible={false}
+                type="game"
+            />
         </div>
     );
 

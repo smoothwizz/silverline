@@ -1,0 +1,32 @@
+.events-list {
+    background: wheat;
+    padding: 1em;
+    line-height: 1.5em;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+
+    .event {
+        animation: fadeIn 1.5s forwards;
+
+        &+.event {
+            margin-top: 4px;
+        }
+
+        &__log {
+            background: darken(wheat, 5%);
+            margin: 4px 16px;
+        }
+
+        .event-toggle {
+            padding: 0;
+            margin: 0;
+            position: relative;
+
+            svg {
+                position: relative;
+                top: 4px;
+            }
+        }
+    }
+}

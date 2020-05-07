@@ -1,6 +1,7 @@
 // COLORS
 $primary-color: #1A8FE3;
 $container-width: 1366px;
+$game-transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 
 :root {
     // TYPOGRAPHY
@@ -24,6 +25,7 @@ $container-width: 1366px;
     --body-line-height: 1.4;
 
     /* text color */
+    --link-text: #173d69;
     --light-text: #ffffff;
     --dark-text: #25283D;
 }
