@@ -1,8 +1,8 @@
 // THIS IS A TESTING FILE FOR BALANCING HEROES
 import React, { useState } from 'react';
-import CardSelect from './CardSelect';
-import fightService from '../services/fight';
-import gameService from '../services/game';
+import CardSelect from '../battleground/CardSelect';
+import fightService from '../../services/fight';
+import gameService from '../../services/game';
 
 const FightSim = () => {
     const [cardA, setCardA] = useState(null);

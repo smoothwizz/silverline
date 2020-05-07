@@ -4,6 +4,7 @@ import { FaSpinner } from 'react-icons/fa';
 
 import CardSelect from './CardSelect';
 import LaneSelect from './LaneSelect';
+import BattleEvents from '../events/BattleEvents';
 
 const BattlegroundPanel = ({
     alert,
@@ -35,6 +36,8 @@ const BattlegroundPanel = ({
         </div>
     );
 
+    const noMovesLeft = mana === 0;
+
     const activeGameBar = (
         <>
             {turnIndicator}
@@ -48,7 +51,7 @@ const BattlegroundPanel = ({
             </button>
             <button
                 disabled={conditions.isEndTurnDisabled}
-                className={`btn btn--success ${mana === 0 ? 'btn--jumping' : ''}`}
+                className={`btn btn--success ${noMovesLeft ? 'btn--jumping' : ''}`}
                 onClick={actions.endTurn}>
                 End Turn
             </button>
@@ -76,6 +79,7 @@ const BattlegroundPanel = ({
                 )}
                 {!conditions.isGameOver && activeGameBar}
             </div>
+
             {!conditions.isGameOver && (
                 <CardSelect
                     mana={mana}
@@ -83,19 +87,8 @@ const BattlegroundPanel = ({
                     action={actions.handleCardSelect}
                 />
             )}
-            {events.length > 0 && (
-                <div className="events-list">
-                    {events
-                        .sort((a, b) => b.id - a.id)
-                        .map(event => {
-                            return (
-                                <span className="event" key={event.id}>
-                                    {event.text}
-                                </span>
-                            );
-                        })}
-                </div>
-            )}
+
+            {events.length > 0 && <BattleEvents events={events} />}
         </div>
     );
 };

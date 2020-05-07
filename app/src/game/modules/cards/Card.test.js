@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Card from './Card';
-import {CARD_TYPES} from '../constants/cards';
+import Card from '../cards/Card';
+import {CARD_TYPES} from '../../constants/cards';
 
 describe('Card', () => {
     const selectedCard = CARD_TYPES[0];

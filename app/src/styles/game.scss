@@ -43,13 +43,13 @@ $game-menu-border: darken($primary-color, 5%);
         cursor: pointer;
 
         .game-menu__dropdown {
-            visibility: visible;
+            display: block;
             opacity: 1;
         }
     }
 
     &__dropdown {
-        visibility: hidden;
+        display: none;
         opacity: 0;
         list-style-type: none;
         margin-top: 8px;

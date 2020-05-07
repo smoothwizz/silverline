@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, Router } from '@reach/router';
-import CardsShowcase from './CardsShowcase';
-import BattlegroundContainer from './BattlegroundContainer';
-import FightSim from './FightSim';
+import CardsShowcase from '../modules/cards/CardsShowcase';
+import BattlegroundContainer from '../modules/battleground/BattlegroundContainer';
+import FightSim from '../modules/fight-sim/FightSim';
 import '../../styles/game.scss';
 
 const GameContainer = () => (

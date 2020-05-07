@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import LaneSelect from './LaneSelect';
-import LANES from '../constants/lanes';
+import LANES from '../../constants/lanes';
 
 describe('LaneSelect', () => {
     const selectedLane = LANES[0];

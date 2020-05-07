@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-import {CARD_TYPES} from '../constants/cards';
+import {CARD_TYPES} from '../../constants/cards';
 import {
     ENEMY_TURN_DURATION,
     INITIAL_MANA_PER_TURN,
     INITIAL_BASE_STRENGTH
-} from '../constants/turn';
-import LANES from '../constants/lanes';
-import gameService from '../services/game';
+} from '../../constants/turn';
+import LANES from '../../constants/lanes';
+import gameService from '../../services/game';
 import Battleground from './Battleground';
-import utilsService from '../services/utils';
+import utilsService from '../../services/utils';
 
 const ANIMATION_DURATION = 2000;
 const defaultCard = CARD_TYPES[0];

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LANES from '../constants/lanes';
+import LANES from '../../constants/lanes';
 
 const LaneSelect = ({ selectedLane, action }) => {
     const getLane = lane => {

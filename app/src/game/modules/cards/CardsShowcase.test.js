@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import CardsShowcase from './CardsShowcase';
+import CardsShowcase from '../cards/CardsShowcase';
 
 describe('CardsShowcase', () => {
     test('it renders the cards-list', () => {

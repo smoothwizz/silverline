@@ -11,7 +11,7 @@ $alert-success-bg: #457e37;
     border-left-width: 5px;
     border-radius: 3px;
     margin: 10px auto;
-    z-index: 1;
+    z-index: 5;
 
     &--error {
         background-color: $alert-error-bg;

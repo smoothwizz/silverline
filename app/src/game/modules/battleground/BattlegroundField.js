@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LANES from '../constants/lanes';
-import { NO_OF_ROWS } from '../constants/turn';
+import LANES from '../../constants/lanes';
+import { NO_OF_ROWS } from '../../constants/turn';
 
 import Unit from './Unit';
 

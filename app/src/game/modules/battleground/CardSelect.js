@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { CARD_TYPES } from '../constants/cards';
-import Card from './Card';
-import CardSearchBar from './CardSearchBar';
+import { CARD_TYPES } from '../../constants/cards';
+import Card from '../cards/Card';
+import CardSearchBar from '../cards/CardSearchBar';
 
 const CardSelect = ({ selectedCard, mana, action }) => {
     const [searchTerm, setSearchTerm] = useState('');

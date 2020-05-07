@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import gameService from '../services/game';
-import {CARD_TYPES} from '../constants/cards';
+import gameService from '../../services/game';
+import {CARD_TYPES} from '../../constants/cards';
 
 import Unit from './Unit';
 

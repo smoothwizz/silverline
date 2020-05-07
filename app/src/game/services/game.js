@@ -42,11 +42,14 @@ const initialGameState = utilsService.copyObject(gameState);
  * Add event
  *
  * @param {string} text
+ * @param {string} log
  */
-const addEvent = text => {
+const addEvent = (text, log) => {
+    log = log || '';
     const event = {
         id: nextId.event,
-        text: text
+        text: text,
+        log: log
     };
 
     if (gameState.isGameOver) {
@@ -122,6 +125,7 @@ const deployUnit = (lane, card) => {
     const unit = createUnitFromCard(card, lane.id, team);
 
     nextId[team]++;
+    gameState.mana.user -= card.cost;
     gameState.units.user.push(unit);
 
     return unit;
@@ -267,7 +271,7 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
     const teamLabel = team === 'user' ? 'Your' : 'Enemy';
     const opposingTeamLabel = team === 'user' ? 'Enemy' : 'Your';
 
-    const { stats } = fightService.processFight(unit, opposingUnit);
+    const { stats, log } = fightService.processFight(unit, opposingUnit);
 
     text = `fight #${nextId.event}:
             ${teamLabel} ${unitCard.label} (#${unit.id}) vs ${opposingTeamLabel} ${opposingCard.label} (#${opposingUnit.id})`;
@@ -286,7 +290,7 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
         updateUnitLife(opposingUnit, stats.opposingUnit.life, opposingTeam);
     }
 
-    addEvent(text);
+    addEvent(text, log);
 };
 
 /**
@@ -339,8 +343,7 @@ const fight = team => {
 };
 
 const increaseMana = team => {
-    const manaIncrease = gameState.turns % 2 === 0 ? 1 : 0;
-
+    const manaIncrease = 1 + parseInt(gameState.turns / 2);
     gameState.mana[team] += manaIncrease;
 };
 

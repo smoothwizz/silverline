@@ -7,15 +7,14 @@
  * @returns {object}
  */
 const processFight = (unit, opposingUnit) => {
-    let fightLog = '',
+    let log = '',
         unitLife = unit.life,
         unitAttack = unit.attack,
         opposingUnitLife = opposingUnit.life,
         opposingUnitAttack = opposingUnit.attack;
 
     const addToLog = text => {
-        console.log(text);
-        fightLog += text;
+        log += text;
     };
 
     while (unitLife > 0 && opposingUnitLife > 0) {
@@ -61,7 +60,7 @@ const processFight = (unit, opposingUnit) => {
         }
     };
 
-    return { stats, fightLog };
+    return { stats, log };
 };
 
 const fightService = {

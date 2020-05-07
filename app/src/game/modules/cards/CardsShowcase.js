@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CARD_TYPES } from '../constants/cards';
-import Card from './Card';
-import CardSearchBar from './CardSearchBar';
+import { CARD_TYPES } from '../../constants/cards';
+import Card from '../cards/Card';
+import CardSearchBar from '../cards/CardSearchBar';
 
 const CardsShowcase = () => {
     const [searchTerm, setSearchTerm] = useState('');

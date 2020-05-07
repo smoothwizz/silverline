@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from '@reach/router';
 import Header from './components/Header';
-import GameContainer from './game/presentation/GameContainer';
+import GameContainer from './game/modules/GameContainer';
 
 const App = () => (
     <>

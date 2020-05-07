@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import BattlegroundPanel from './BattlegroundPanel';
-import LANES from '../constants/lanes';
-import {CARD_TYPES} from '../constants/cards';
+import LANES from '../../constants/lanes';
+import {CARD_TYPES} from '../../constants/cards';
 
 describe('BattlegroundPanel', () => {
     const actions = {
