@@ -52,6 +52,12 @@ const BattlegroundPanel = ({
                 onClick={actions.endTurn}>
                 End Turn
             </button>
+            <button
+                data-test-id="restart-game"
+                className="btn btn--primary restart-game"
+                onClick={actions.resetGame}>
+                Restart Game
+            </button>
         </>
     );
 

@@ -15,6 +15,6 @@ const CARD_TYPES = [
     };
 });
 
-const MAX_CARD_HEALTH = 14;
+const MAX_CARD_HEALTH = 10;
 
 export {CARD_TYPES, MAX_CARD_HEALTH};

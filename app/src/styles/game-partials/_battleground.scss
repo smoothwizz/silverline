@@ -1,8 +1,3 @@
-$animation-duration: 2s;
-$mana-bg: linear-gradient(to right, #00c6ff, #0072ff);
-$mana-bg--empty: linear-gradient(to right, #c9d6ff, #e2e2e2);
-$game-bar-bg: hsl(0, 0%, 100%);
-
 .battleground {
     display: flex;
 
@@ -10,6 +5,11 @@ $game-bar-bg: hsl(0, 0%, 100%);
         flex: 1;
         overflow: hidden;
         margin-left: 64px;
+        width: 100%;
+
+        .restart-game {
+            align-self: flex-end;
+        }
     }
 
     &__field {

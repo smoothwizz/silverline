@@ -10,10 +10,12 @@ $summer-tile-bg: #f4e8c1;
 $autumn-tile-bg: #d3bda7;
 
 @import './partials/variables';
+@import './game-partials/game-variables';
 @import './game-partials/battleground';
-@import './game-partials/units';
-@import './game-partials/game-bar';
 @import './game-partials/cards';
+@import './game-partials/fight-sim';
+@import './game-partials/game-bar';
+@import './game-partials/units';
 
 $game-menu-bg: darken($primary-color, 2%);
 $game-menu-border: darken($primary-color, 5%);

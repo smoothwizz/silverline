@@ -1,0 +1,32 @@
+.fight-sim {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__card-select {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        .cards-with-search {
+            flex: 1;
+            width: calc(50% - 48px);
+
+            &+.cards-with-search {
+                margin-left: 16px;
+            }
+
+            .cards-select {
+                max-width: 100%;
+            }
+        }
+    }
+
+    .fight-log {
+        background: #2c3e50;
+        border-radius: 2px;
+        color: #fefefe;
+        font-family: monospace;
+        padding: 1em;
+    }
+}

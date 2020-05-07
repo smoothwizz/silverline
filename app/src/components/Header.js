@@ -5,6 +5,11 @@ const isActive = ({ isCurrent }) => {
     return isCurrent ? { className: 'active' } : {};
 };
 
+const isPartiallyActive = ({ isPartiallyCurrent }) => {
+    return isPartiallyCurrent ? { className: 'active' } : {};
+};
+
+const PartialNavLink = props => <Link getProps={isPartiallyActive} {...props} />;
 const NavLink = props => <Link getProps={isActive} {...props} />;
 
 const Header = () => {
@@ -14,7 +19,7 @@ const Header = () => {
                 <h1>Silverlight</h1>
                 <nav className="nav-links">
                     <NavLink to="/">Home</NavLink>
-                    <NavLink to="game">Game</NavLink>
+                    <PartialNavLink to="game">Game</PartialNavLink>
                 </nav>
             </div>
         </header>

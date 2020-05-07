@@ -418,7 +418,7 @@ const getDefaultCard = () => {
  */
 const reset = () => {
     gameState = utilsService.copyObject(initialGameState);
-    events = [];
+    events.length = 0;
     nextId = {
         event: 0,
         user: 0,

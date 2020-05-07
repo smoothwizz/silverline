@@ -20,11 +20,10 @@ const processFight = (unit, opposingUnit) => {
 
     while (unitLife > 0 && opposingUnitLife > 0) {
         addToLog(
-            `Unit (${unitAttack} ATK -> ${unitAttack -
-                1} ATK) attacks Opposing Unit (${opposingUnitLife} HP `
+            `Unit (${unitAttack} ATK) attacks Opposing Unit (${opposingUnitLife}HP `
         );
         opposingUnitLife -= unitAttack;
-        addToLog(`-> ${opposingUnitLife} HP.) `);
+        addToLog(`-> ${opposingUnitLife} HP). `);
         if (unitAttack > 1) {
             unitAttack--;
         }
@@ -35,12 +34,11 @@ const processFight = (unit, opposingUnit) => {
         }
 
         addToLog(
-            `Opposing Unit (${opposingUnitAttack} ATK -> ${opposingUnitAttack -
-                1} ATK) strikes back Unit (${unitLife} HP `
+            `Opposing Unit (${opposingUnitAttack} ATK) -> strikes back Unit (${unitLife} HP `
         );
 
         unitLife -= opposingUnitAttack;
-        addToLog(`-> ${unitLife} HP.) `);
+        addToLog(`-> ${unitLife} HP). `);
         if (opposingUnitAttack > 1) {
             opposingUnitAttack--;
         }
