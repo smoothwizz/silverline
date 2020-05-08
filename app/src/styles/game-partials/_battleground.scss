@@ -1,12 +1,11 @@
 .battleground {
     animation: fadeIn .8s ease-in;
     display: flex;
+    width: 100%;
 
     &__panel {
         flex: 1;
-        overflow: hidden;
-        margin-left: 64px;
-        width: 100%;
+        margin-left: 32px;
     }
 
     &__field {
@@ -21,7 +20,7 @@
 
         &--destroyed {
             animation-fill-mode: forwards;
-            animation-name: destroyedBase;
+            animation-name: destroy;
             animation-duration: 5s;
             transform-origin: 50% 50%;
             animation-iteration-count: 1;

@@ -5,9 +5,10 @@
 
     &--game {
         .tooltip__text {
-            margin-left: -32px;
-            padding: 5px 4px;
-            width: 64px;
+            font-size: 0.8em;
+            margin-left: -35px;
+            padding: 4px 0px;
+            width: 70px;
         }
     }
 
@@ -17,14 +18,14 @@
         bottom: 100%;
         color: var(--light-text);
         left: 50%;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         margin-left: -60px;
         padding: 5px 0;
         position: absolute;
         text-align: center;
         visibility: hidden;
         width: 120px;
-        z-index: 1;
+        z-index: 4;
     }
 
     &:hover &__text,

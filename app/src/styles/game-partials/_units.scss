@@ -18,13 +18,11 @@
     &--restricted {
         &:after {
             content: ' ';
-            background-image: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 8px,
-                rgba(255, 255, 255, 0.3) 8px,
-                rgba(255, 255, 255, 0.3) 16px
-            );
+            background-image: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 8px,
+                    rgba(255, 255, 255, 0.3) 8px,
+                    rgba(255, 255, 255, 0.3) 16px);
             height: 100%;
             position: absolute;
             width: 100%;
@@ -127,5 +125,25 @@
             transition: width 1s ease-out;
             width: 100%;
         }
+    }
+}
+
+@keyframes translateCpuTile {
+    0% {
+        transform: translate(0, 64px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes translateUserTile {
+    0% {
+        transform: translate(0, -64px);
+    }
+
+    100% {
+        transform: translate(0, 0);
     }
 }

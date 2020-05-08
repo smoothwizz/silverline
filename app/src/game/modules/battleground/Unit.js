@@ -26,7 +26,7 @@ const Unit = ({ unit, team }) => {
             <div
                 data-test-id="unit-health-bar"
                 className="health-bar"
-                style={{ width: `${healthFromMaxPercent < 10 ? 10 : healthFromMaxPercent}%` }}>
+                style={{ width: `${healthFromMaxPercent}%` }}>
                 <span className="health-percent" style={{ width: `${healthPercentage}%` }}></span>
             </div>
         </div>

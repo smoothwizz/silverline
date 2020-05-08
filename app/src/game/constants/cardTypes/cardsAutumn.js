@@ -23,7 +23,7 @@ const CARDS_AUTUMN = [
         cost: 2,
         label: 'Leaf Knight',
         stats: {
-            life: 2,
+            life: 3,
             attack: 1,
             pace: 1
         },
@@ -43,7 +43,7 @@ const CARDS_AUTUMN = [
         cost: 3,
         label: 'Red Knight',
         stats: {
-            life: 4,
+            life: 5,
             attack: 2,
             pace: 1
         },

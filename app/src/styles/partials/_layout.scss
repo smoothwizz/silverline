@@ -9,8 +9,7 @@ body {
   background: #BDBBB0;
   background: -webkit-linear-gradient(to right, #EAF2EF, #BDBBB0);
   background: linear-gradient(to right, #EAF2EF, #BDBBB0);
-
-  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 #root {

@@ -59,7 +59,7 @@ const BattlegroundPanel = ({
                 data-test-id="restart-game"
                 className="btn btn--primary restart-game"
                 onClick={actions.resetGame}>
-                Restart Game
+                Restart
             </button>
         </>
     );

@@ -8,8 +8,8 @@ const CardStats = ({ stats, mana }) => {
         <div className="stats">
             <div className="stat">
                 <span className="stat__label">
-                    Attack
                     <GiBroadsword />
+                    Attack
                 </span>
                 <span className="stat__value" data-test-id="stat-attack">
                     <span>{stats.attack}</span>
@@ -17,8 +17,8 @@ const CardStats = ({ stats, mana }) => {
             </div>
             <div className="stat">
                 <span className="stat__label">
-                    Life
                     <BsFillShieldFill />
+                    Life
                 </span>
                 <span className="stat__value" data-test-id="stat-life">
                     <span>{stats.life}</span>
@@ -26,8 +26,8 @@ const CardStats = ({ stats, mana }) => {
             </div>
             <div className="stat">
                 <span className="stat__label">
-                    Pace
                     <GiRunningNinja />
+                    Pace
                 </span>
                 <span className="stat__value" data-test-id="stat-pace">
                     <span>{stats.pace}</span>
@@ -35,8 +35,8 @@ const CardStats = ({ stats, mana }) => {
             </div>
             <div className="stat stat--mana">
                 <span className="stat__label">
-                    Mana
                     <GiStandingPotion />
+                    Mana
                 </span>
                 <span className="stat__value" data-test-id="stat-pace">
                     <span>{mana}</span>
