@@ -21,8 +21,7 @@ const FightSim = () => {
         const unitA = gameService.createUnitFromCard(cardA, 0, 'user');
         const unitB = gameService.createUnitFromCard(cardB, '0', 'cpu');
         const outcome = fightService.processFight(unitA, unitB);
-        console.dir(outcome);
-        setFightLog(outcome.fightLog);
+        setFightLog(outcome.log);
     };
 
     return (
