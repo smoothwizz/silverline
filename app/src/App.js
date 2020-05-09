@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router } from '@reach/router';
+import Home from './components/Home';
 import Header from './components/Header';
 import GameContainer from './game/modules/GameContainer';
 
@@ -14,12 +15,6 @@ const App = () => (
         </main>
         <footer>MP 2020.</footer>
     </>
-);
-
-const Home = () => (
-    <div>
-        <h2>Welcome</h2>
-    </div>
 );
 
 export default App;

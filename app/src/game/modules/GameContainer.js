@@ -13,20 +13,20 @@ const GameContainer = () => (
             </span>
             <ul className="game-menu__dropdown">
                 <li>
-                    <Link to="./">All Cards</Link>
+                    <Link to="cards">All Cards</Link>
                 </li>
                 <li>
                     <Link to="sim">Fight Sim</Link>
                 </li>
                 <li>
-                    <Link to="battleground">Battleground</Link>
+                    <Link to="./">Battleground</Link>
                 </li>
             </ul>
         </nav>
         <Router>
-            <CardsShowcase path="/" />
+            <BattlegroundContainer path="/" />
+            <CardsShowcase path="cards" />
             <FightSim path="sim"></FightSim>
-            <BattlegroundContainer path="battleground" />
         </Router>
     </>
 );
