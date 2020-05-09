@@ -16,7 +16,7 @@ const Header = () => {
     return (
         <header>
             <div className="container">
-                <h1>Silverlight</h1>
+                <h1>SeasonFight</h1>
                 <nav className="nav-links">
                     <NavLink to="/">Home</NavLink>
                     <PartialNavLink to="game">Game</PartialNavLink>
