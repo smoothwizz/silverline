@@ -47,7 +47,7 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver, sele
         }`;
 
         return (
-            <div key={tileId} className={tileClass} data-test-id={tileId}>
+            <div key={tileId} className={tileClass} data-testid={tileId}>
                 {userUnit && <Unit unit={userUnit} team="user" />}
                 {cpuUnit && <Unit unit={cpuUnit} team="cpu" />}
             </div>
@@ -66,11 +66,11 @@ const BattlegroundField = ({ baseStrength, cpuUnits, userUnits, isGameOver, sele
                 </div>
             ) : (
                 <>
-                    <h2 data-test-id="base-strength-user">
+                    <h2 data-testid="base-strength-user">
                         USER {baseStrength.user < 0 ? 0 : baseStrength.user}
                     </h2>
                     <div className="map">{createField()}</div>
-                    <h2 data-test-id="base-strength-cpu">
+                    <h2 data-testid="base-strength-cpu">
                         CPU {baseStrength.cpu < 0 ? 0 : baseStrength.cpu}
                     </h2>
                 </>

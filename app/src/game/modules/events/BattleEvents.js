@@ -4,7 +4,7 @@ import BattleEvent from './BattleEvent';
 
 const BattleEvents = ({ events }) => {
     return (
-        <div data-test-id="events-list" className="events-list">
+        <div data-testid="events-list" className="events-list">
             {events
                 .sort((a, b) => b.id - a.id)
                 .map(event => {

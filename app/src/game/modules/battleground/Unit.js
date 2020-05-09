@@ -8,7 +8,7 @@ const Unit = ({ unit, team }) => {
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId);
     const unitClass = `unit unit--${team} ${unit.isAlive ? '' : 'unit--dead'}`;
     const unitLabel = (
-        <div data-test-id="unit-label" className="unit__label">
+        <div data-testid="unit-label" className="unit__label">
             <Tooltip
                 text={`${unit.life} HP / ${unit.attack} ATK`}
                 toggleText={unitCard.label}
@@ -24,7 +24,7 @@ const Unit = ({ unit, team }) => {
     const healthBar = showStats && (
         <div className="health-bar-container">
             <div
-                data-test-id="unit-health-bar"
+                data-testid="unit-health-bar"
                 className="health-bar"
                 style={{ width: `${healthFromMaxPercent}%` }}>
                 <span className="health-percent" style={{ width: `${healthPercentage}%` }}></span>

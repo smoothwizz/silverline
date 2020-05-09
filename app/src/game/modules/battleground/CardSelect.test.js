@@ -7,8 +7,8 @@ describe('CardSelect', () => {
     const selectedCard = CARD_TYPES[0];
 
     test('container renders', () => {
-        const { container } = render(<CardSelect selectedCard={selectedCard} action={() => {}} />);
-        const elem = container.querySelector('[data-test-id="cards-select"]');
+        const { getByTestId } = render(<CardSelect selectedCard={selectedCard} action={() => {}} />);
+        const elem = getByTestId('cards-select');
 
         expect(elem).toBeInTheDocument();
     });

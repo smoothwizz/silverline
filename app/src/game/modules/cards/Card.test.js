@@ -12,8 +12,8 @@ describe('Card', () => {
             mana: Infinity
         };
 
-        const { container } = render(<Card {...props} />);
-        const elem = container.querySelector('[data-test-id="card"]');
+        const { getByTestId } = render(<Card {...props} />);
+        const elem = getByTestId('card');
 
         expect(elem).toBeInTheDocument();
     });

@@ -18,7 +18,7 @@ const LaneSelect = ({ selectedLane, action }) => {
     return (
         <div className="game-bar-container">
             <span className="label">Select a lane</span>
-            <div data-test-id="lane-select" className="lane-select">
+            <div data-testid="lane-select" className="lane-select">
                 {LANES.map(lane => getLane(lane))}
             </div>
         </div>

@@ -8,8 +8,8 @@ import Unit from './Unit';
 describe('Unit:', () => {
     const unitMock = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'user');
     test('renders learn react link', () => {
-        const { container } = render(<Unit unit={unitMock} team="user" />);
-        const elem = container.querySelector('[data-test-id="unit-label"]');
+        const { getByTestId } = render(<Unit unit={unitMock} team="user" />);
+        const elem = getByTestId('unit-label');
 
         expect(elem).toBeInTheDocument();
     });
@@ -19,8 +19,8 @@ describe('Unit:', () => {
             ...unitMock,
             life: unitMock.life - 1
         };
-        const { container } = render(<Unit unit={unitWithLostStats} team="user" />);
-        const elem = container.querySelector('[data-test-id="unit-health-bar"]');
+        const { getByTestId } = render(<Unit unit={unitWithLostStats} team="user" />);
+        const elem = getByTestId('unit-health-bar');
 
         expect(elem).toBeInTheDocument();
     });

@@ -31,7 +31,7 @@ const CardsShowcase = () => {
     return (
         <>
             <h2>All Cards</h2>
-            <div data-test-id="cards-list" className="cards-with-search">
+            <div data-testid="cards-list" className="cards-with-search">
                 <CardSearchBar term={searchTerm} action={handleSearchChange} />
                 <div className="cards-showcase">
                     {CARD_TYPES.filter(filterBySearchTerm)

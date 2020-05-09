@@ -10,13 +10,15 @@ describe('CardStats', () => {
     }
 
     test('it renders all stats', () => {
-        const { container } = render(<CardStats stats={mockStats} />);
-        const statAttack = container.querySelector('[data-test-id="stat-attack"]');
-        const statLife = container.querySelector('[data-test-id="stat-life"]');
-        const statPace = container.querySelector('[data-test-id="stat-pace"]');
+        const { getByTestId } = render(<CardStats stats={mockStats} />);
+        const statAttack = getByTestId('stat-attack');
+        const statLife = getByTestId('stat-life');
+        const statPace = getByTestId('stat-pace');
+        const statMana = getByTestId('stat-mana');
 
         expect(statAttack).toBeInTheDocument();
         expect(statLife).toBeInTheDocument();
         expect(statPace).toBeInTheDocument();
+        expect(statMana).toBeInTheDocument();
     });
 });

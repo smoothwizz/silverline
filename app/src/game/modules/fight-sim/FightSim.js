@@ -25,7 +25,7 @@ const FightSim = () => {
     };
 
     return (
-        <div data-test-id="fight-sim" className="fight-sim">
+        <div data-testid="fight-sim" className="fight-sim">
             <h2>Fight Sim</h2>
 
             <div className="fight-sim__card-select">

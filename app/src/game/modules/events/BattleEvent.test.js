@@ -9,11 +9,11 @@ describe('FightSim:', () => {
             log: 'some log'
         };
         const { getByText, container } = render(<BattleEvent event={event} />);
-        const eventElement = container.querySelector('[data-test-id="event"]');
+        const eventElement = container.querySelector('[data-testid="event"]');
         expect(eventElement).toBeInTheDocument();
         const textElement = getByText(/some text/i);
         expect(textElement).toBeInTheDocument();
-        const logTrigger = container.querySelector('[data-test-id="log-toggle"]');
+        const logTrigger = container.querySelector('[data-testid="log-toggle"]');
         expect(logTrigger).toBeInTheDocument();
     });
 });

@@ -5,7 +5,7 @@ import BattlegroundPanel from './BattlegroundPanel';
 
 const Battleground = ({ battlePanelProps, battleFieldProps }) => {
     return (
-        <div className="battleground" data-test-id="battleground">
+        <div className="battleground" data-testid="battleground">
             <BattlegroundField {...battleFieldProps} />
             <BattlegroundPanel {...battlePanelProps} />
         </div>

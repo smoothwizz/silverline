@@ -11,7 +11,7 @@ const BattleEvent = ({ event }) => {
 
     const logToggle = (
         <button
-            data-test-id="log-toggle"
+            data-testid="log-toggle"
             className="btn btn--text event-toggle"
             onClick={toggleLog}>
             {isLogVisible ? <FaCaretDown /> : <FaCaretRight />}
@@ -21,7 +21,7 @@ const BattleEvent = ({ event }) => {
     const log = isLogVisible && <p className="event__log">{event.log}</p>;
 
     return (
-        <div data-test-id="event" className="event">
+        <div data-testid="event" className="event">
             {event.log.length > 0 && logToggle}
             {event.text}
             {event.log.length > 0 && log}

@@ -42,7 +42,7 @@ const CardSelect = ({ selectedCard, mana, action }) => {
     return (
         <div className="cards-with-search">
             <CardSearchBar term={searchTerm} action={handleSearchChange} />
-            <div data-test-id="cards-select" className="cards-select">
+            <div data-testid="cards-select" className="cards-select">
                 {CARD_TYPES.filter(filterBySearchTerm)
                     .sort((a, b) => a.cost - b.cost)
                     .map(card => getCard(card))}

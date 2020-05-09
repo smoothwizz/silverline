@@ -56,7 +56,7 @@ const BattlegroundPanel = ({
                 End Turn
             </button>
             <button
-                data-test-id="restart-game"
+                data-testid="restart-game"
                 className="btn btn--primary restart-game"
                 onClick={actions.resetGame}>
                 Restart
@@ -68,10 +68,10 @@ const BattlegroundPanel = ({
         <div className="battleground__panel">
             <h1> Battleground </h1>
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
-            <div data-test-id="game-bar" className="game-bar">
+            <div data-testid="game-bar" className="game-bar">
                 {conditions.isGameOver && (
                     <button
-                        data-test-id="restart-game"
+                        data-testid="restart-game"
                         className="btn btn--primary"
                         onClick={actions.resetGame}>
                         Restart Game

@@ -5,9 +5,8 @@ import FightSim from './FightSim';
 describe('FightSim:', () => {
 
   test('renders the fight sim', () => {
-    const { container } = render(<FightSim />);
-    const fightSim = container.querySelector('[data-test-id="fight-sim"]');
-
+    const { getByTestId } = render(<FightSim />);
+    const fightSim = getByTestId('fight-sim');
     expect(fightSim).toBeInTheDocument();
   });
 });

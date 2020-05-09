@@ -24,7 +24,7 @@ const Card = ({ card, mana, isSelected, action }) => {
 
     return (
         <div {...containerProps}>
-            <div data-test-id="card" className={`card-title card-title--${card.faction}`}>
+            <div data-testid="card" className={`card-title card-title--${card.faction}`}>
                 <span className="text--md">{card.label}</span>
             </div>
             <CardStats stats={card.stats} mana={card.cost} />

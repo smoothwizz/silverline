@@ -30,7 +30,7 @@ describe('BattlegroundPanel', () => {
     };
 
     test('container renders', () => {
-        const { container } = render(
+        const { getByTestId } = render(
             <BattlegroundPanel
                 alert={{ text: '', type: 'error' }}
                 selectedLane={LANES[0]}
@@ -41,13 +41,13 @@ describe('BattlegroundPanel', () => {
                 actions={actions}
             />
         );
-        const elem = container.querySelector('[data-test-id="game-bar"]');
+        const elem = getByTestId('game-bar');
 
         expect(elem).toBeInTheDocument();
     });
 
     test('if game is over show restart button', () => {
-        const { container } = render(
+        const { getByTestId } = render(
             <BattlegroundPanel
                 alert={{ text: '', type: 'error' }}
                 selectedLane={LANES[0]}
@@ -58,7 +58,7 @@ describe('BattlegroundPanel', () => {
                 actions={actions}
             />
         );
-        const elem = container.querySelector('[data-test-id="restart-game"]');
+        const elem = getByTestId('restart-game');
 
         expect(elem).toBeInTheDocument();
     });
