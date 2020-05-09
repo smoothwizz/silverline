@@ -7,7 +7,7 @@ import Unit from './Unit';
 
 describe('Unit:', () => {
     const unitMock = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'user');
-    test('renders learn react link', () => {
+    test('renders unit label', () => {
         const { getByTestId } = render(<Unit unit={unitMock} team="user" />);
         const elem = getByTestId('unit-label');
 

@@ -16,12 +16,12 @@ const defaultCard = CARD_TYPES[0];
 const defaultLane = LANES[0];
 const defaultBaseStrength = {
     user: INITIAL_BASE_STRENGTH,
-    cpu: INITIAL_BASE_STRENGTH
+    enemy: INITIAL_BASE_STRENGTH
 };
 const BattlegroundContainer = () => {
     const [events, setEvents] = useState([]),
         [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
-        [cpuUnits, setCpuUnits] = useState(utilsService.copyObject(gameService.getUnits('cpu'))),
+        [enemyUnits, setEnemyUnits] = useState(utilsService.copyObject(gameService.getUnits('enemy'))),
         [isGameOver, setGameOver] = useState(gameService.getGameOverState()),
         [isLoading, setIsLoading] = useState(false),
         [isEnemyTurn, setIsEnemyTurn] = useState(false),
@@ -78,7 +78,7 @@ const BattlegroundContainer = () => {
 
         let unitExistsOnLane =
             userUnits.filter(isOwnUnitOnSameTileLine).length > 0 ||
-            cpuUnits.filter(isAliveUnit).length > 0;
+            enemyUnits.filter(isAliveUnit).length > 0;
 
         if (unitExistsOnLane) {
             showAlert('You can not deploy a card on that lane..', 'error');
@@ -108,13 +108,13 @@ const BattlegroundContainer = () => {
         setBaseStrength(baseStrength);
 
         const userBaseStrength = parseInt(baseStrength.user);
-        const cpuBaseStrength = parseInt(baseStrength.cpu);
+        const enemyBaseStrength = parseInt(baseStrength.enemy);
 
-        if (userBaseStrength <= 0 || cpuBaseStrength <= 0) {
+        if (userBaseStrength <= 0 || enemyBaseStrength <= 0) {
             setGameOver(true);
         }
 
-        if (userBaseStrength <= 0 && cpuBaseStrength <= 0) {
+        if (userBaseStrength <= 0 && enemyBaseStrength <= 0) {
             return showAlert('Draw', 'success');
         }
 
@@ -122,7 +122,7 @@ const BattlegroundContainer = () => {
             return showAlert('You lost', 'error');
         }
 
-        if (cpuBaseStrength <= 0) {
+        if (enemyBaseStrength <= 0) {
             return showAlert('You Win', 'success');
         }
     };
@@ -133,7 +133,7 @@ const BattlegroundContainer = () => {
         setIsLoading(true);
         updateBaseStrength(gameState.baseStrength);
         setUserUnits(gameState.units.user);
-        setCpuUnits(gameState.units.cpu);
+        setEnemyUnits(gameState.units.enemy);
         setEvents(gameState.events);
         setMana(gameState.mana.user);
         setIsEnemyTurn(true);
@@ -148,7 +148,7 @@ const BattlegroundContainer = () => {
 
         updateBaseStrength(gameState.baseStrength);
         setUserUnits(gameState.units.user);
-        setCpuUnits(gameState.units.cpu);
+        setEnemyUnits(gameState.units.enemy);
         setEvents(gameState.events);
 
         setTimeout(() => {
@@ -164,7 +164,7 @@ const BattlegroundContainer = () => {
         gameService.reset();
         setEvents([]);
         setUserUnits([]);
-        setCpuUnits([]);
+        setEnemyUnits([]);
         setGameOver(false);
         setIsLoading(false);
         setIsEnemyTurn(false);
@@ -187,8 +187,8 @@ const BattlegroundContainer = () => {
     };
 
     const isDeployUnitDisabled =
-        isLoading || baseStrength.user < 0 || baseStrength.cpu < 0 || mana <= 0;
-    const isEndTurnDisabled = isLoading || baseStrength.user < 0 || baseStrength.cpu < 0;
+        isLoading || baseStrength.user < 0 || baseStrength.enemy < 0 || mana <= 0;
+    const isEndTurnDisabled = isLoading || baseStrength.user < 0 || baseStrength.enemy < 0;
 
     const actions = {
         handleCardSelect,
@@ -222,7 +222,7 @@ const BattlegroundContainer = () => {
         selectedLane,
         baseStrength,
         userUnits,
-        cpuUnits
+        enemyUnits
     };
 
     return <Battleground battlePanelProps={battlePanelProps} battleFieldProps={battleFieldProps} />;

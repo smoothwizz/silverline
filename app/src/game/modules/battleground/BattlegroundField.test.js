@@ -6,8 +6,8 @@ test('renders tile', () => {
     const { getByTestId } = render(
         <BattlegroundField
             userUnits={[]}
-            cpuUnits={[]}
-            baseStrength={{ user: 10, cpu: 10 }}
+            enemyUnits={[]}
+            baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
         />
     );
@@ -20,12 +20,14 @@ test('renders base strength', () => {
     const { getByTestId } = render(
         <BattlegroundField
             userUnits={[]}
-            cpuUnits={[]}
-            baseStrength={{ user: 10, cpu: 10 }}
+            enemyUnits={[]}
+            baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
         />
     );
-    const elem = getByTestId('base-strength-user');
+    const userBase = getByTestId('team-base--user');
+    const enemyBase = getByTestId('team-base--enemy');
 
-    expect(elem).toBeInTheDocument();
+    expect(userBase).toBeInTheDocument();
+    expect(enemyBase).toBeInTheDocument();
 });

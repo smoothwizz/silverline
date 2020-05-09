@@ -50,15 +50,13 @@ describe('service:GameService ', () => {
         expect(unit.row).toBe(0);
     });
 
-    test('createUnitFromCard() for cpu a card on last row', () => {
-        const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'cpu');
+    test('createUnitFromCard() for enemy a card on last row', () => {
+        const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'enemy');
 
         expect(unit.row).toBe(LAST_ROW_INDEX);
     });
 
-    test('reset() for cpu a card on last row', () => {
-        const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'cpu');
-
-        expect(unit.row).toBe(LAST_ROW_INDEX);
+    test('reset() is defined', () => {
+        expect(typeof gameService.reset).toBe('function');
     });
 });

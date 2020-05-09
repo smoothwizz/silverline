@@ -11,20 +11,4 @@
     &__field {
         flex: 0 0 ($tile-width * 4);
     }
-
-    .map {
-        box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.125);
-        display: grid;
-        grid-template-columns: $tile-width $tile-width $tile-width $tile-width;
-        margin-top: 8px;
-
-        &--destroyed {
-            animation-fill-mode: forwards;
-            animation-name: destroy;
-            animation-duration: 5s;
-            transform-origin: 50% 50%;
-            animation-iteration-count: 1;
-            animation-timing-function: ease-in;
-        }
-    }
 }

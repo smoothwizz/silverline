@@ -5,7 +5,7 @@ import {CARD_TYPES} from '../constants/cards';
 describe('service:FightService ', () => {
     test('fightService: processFight() returns a stats object and a log', () => {
         const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'user');
-        const opposingUnit = gameService.createUnitFromCard(CARD_TYPES[1], 0, 'cpu');
+        const opposingUnit = gameService.createUnitFromCard(CARD_TYPES[1], 0, 'enemy');
         const {stats, log} = fightService.processFight(unit, opposingUnit);
 
         expect(typeof stats).toBe('object');

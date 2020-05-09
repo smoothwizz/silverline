@@ -19,7 +19,7 @@ const FightSim = () => {
 
     const simFight = () => {
         const unitA = gameService.createUnitFromCard(cardA, 0, 'user');
-        const unitB = gameService.createUnitFromCard(cardB, '0', 'cpu');
+        const unitB = gameService.createUnitFromCard(cardB, 0, 'enemy');
         const outcome = fightService.processFight(unitA, unitB);
         setFightLog(outcome.log);
     };

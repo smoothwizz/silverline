@@ -58,8 +58,8 @@
     margin: 4px;
     font-size: 0.8em;
 
-    &--cpu {
-        animation: translateCpuTile 2s forwards;
+    &--enemy {
+        animation: translateEnemyTile 2s forwards;
         animation-iteration-count: 1;
 
         .unit__icon {
@@ -80,7 +80,7 @@
         font-size: 0.6em;
 
         &.unit--user,
-        &.unit--cpu {
+        &.unit--enemy {
             animation: none;
         }
 
@@ -122,13 +122,13 @@
 
         .health-percent {
             background: $health-bar-bg;
-            transition: width 1s ease-out;
+            transition: $health-bar-transition;
             width: 100%;
         }
     }
 }
 
-@keyframes translateCpuTile {
+@keyframes translateEnemyTile {
     0% {
         transform: translate(0, 64px);
     }

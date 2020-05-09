@@ -1,22 +1,12 @@
-$tile-height: 96px;
-$tile-width: 128px;
-
-$user-bg: #4169e1;
-$enemy-bg: #b13434;
-
-$spring-tile-bg: #a0c1b9;
-$winter-tile-bg: #70a0af;
-$summer-tile-bg: #f4e8c1;
-$autumn-tile-bg: #d3bda7;
-
 @import './partials/variables';
 @import './game-partials/game-variables';
 @import './game-partials/battleground';
 @import './game-partials/cards';
+@import './game-partials/events';
+@import './game-partials/field';
 @import './game-partials/fight-sim';
 @import './game-partials/game-bar';
 @import './game-partials/units';
-@import './game-partials/events';
 
 .game-menu {
     position: absolute;

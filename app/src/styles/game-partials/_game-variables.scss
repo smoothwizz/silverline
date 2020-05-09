@@ -3,6 +3,8 @@ $card-select-container-width: ($card-width + 8px) * 5;
 $cards-container-bg: #fff;
 $card-per-row: ceil($card-select-container-width / $card-width);
 
+$health-bar-transition: width 1s ease-out;
+$health-bar-long-bg: #34804d; //linear-gradient(to right, #11998e, #38ef7d);
 $health-bar-bg: #34804d;
 $health-missing-bg: #ffffff;
 $mana-bg: linear-gradient(to right, #00c6ff, #0072ff);
@@ -11,3 +13,14 @@ $mana-bg--empty: linear-gradient(to right, #c9d6ff, #e2e2e2);
 $game-bar-bg: hsl(0, 0%, 100%);
 $game-menu-bg: darken($primary-color, 2%);
 $game-menu-border: darken($primary-color, 5%);
+
+$tile-height: 96px;
+$tile-width: 128px;
+
+$spring-tile-bg: #a0c1b9;
+$winter-tile-bg: #70a0af;
+$summer-tile-bg: #f4e8c1;
+$autumn-tile-bg: #d3bda7;
+
+$user-bg: #3772FF;
+$enemy-bg: #b13434;
