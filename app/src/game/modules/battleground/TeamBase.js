@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { INITIAL_BASE_STRENGTH } from '../../constants/turn';
 import utilsService from '../../services/utils';
-import Castle from './Castle';
 import Tooltip from '../../widgets/Tooltip';
 
 const TeamBase = ({ life, team, isGameOver }) => {
@@ -25,7 +24,6 @@ const TeamBase = ({ life, team, isGameOver }) => {
                     type="game"
                 />
             </h3>
-            <Castle team={team} />
             <div className="team-base__health">
                 <span
                     className="team-base__health-percentage"

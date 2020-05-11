@@ -383,6 +383,7 @@ const playEnemyTurn = () => {
     fight('enemy');
     increaseMana('enemy');
     gameState.turns++;
+    addEvent(`Turn #${gameState.turns}`);
 
     return gameState;
 };
