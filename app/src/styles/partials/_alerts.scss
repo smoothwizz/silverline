@@ -24,6 +24,10 @@ $alert-success-bg: #457e37;
         border: 1px solid darken($alert-success-bg, 5%);
         color: var(--light-text);
     }
+
+    &--permanent {
+        animation: none;
+    }
 }
 
 .loading-icon {
