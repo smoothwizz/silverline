@@ -3,62 +3,9 @@ import LANES from '../constants/lanes';
 
 import utilsService from './utils';
 import fightService from './fight';
+import { currentState, actions } from './gameState';
 
-import {
-    INITIAL_MANA_PER_TURN,
-    INITIAL_BASE_STRENGTH,
-    NO_OF_ROWS,
-    LAST_ROW_INDEX
-} from '../constants/turn';
-
-let events = [];
-let nextId = {
-    event: 0,
-    user: 0,
-    enemy: 0
-};
-
-let gameState = {
-    events: [],
-    turns: 0,
-    mana: {
-        user: INITIAL_MANA_PER_TURN,
-        enemy: INITIAL_MANA_PER_TURN
-    },
-    units: {
-        user: [],
-        enemy: []
-    },
-    baseStrength: {
-        user: INITIAL_BASE_STRENGTH,
-        enemy: INITIAL_BASE_STRENGTH
-    },
-    isGameOver: false
-};
-
-const initialGameState = utilsService.copyObject(gameState);
-
-/**
- * Add event
- *
- * @param {string} text
- * @param {string} log
- */
-const addEvent = (text, log) => {
-    log = log || '';
-    const event = {
-        id: nextId.event,
-        text: text,
-        log: log
-    };
-
-    if (gameState.isGameOver) {
-        return;
-    }
-
-    gameState.events.push(event);
-    nextId.event++;
-};
+import { NO_OF_ROWS, LAST_ROW_INDEX } from '../constants/turn';
 
 /**
  * Buff Card Stats according to the faction
@@ -101,7 +48,6 @@ const createUnitFromCard = (card, laneId, team) => {
     }
 
     const unit = {
-        id: nextId[team],
         lane: laneId,
         attack: cardStats.attack,
         life: cardStats.life,
@@ -124,11 +70,27 @@ const deployUnit = (lane, card) => {
     const team = 'user';
     const unit = createUnitFromCard(card, lane.id, team);
 
-    nextId[team]++;
-    gameState.mana.user -= card.cost;
-    gameState.units.user.push(unit);
+    actions.setMana(currentState.mana.user - card.cost, 'user');
+    actions.addUnit(unit, 'user');
 
     return unit;
+};
+
+/**
+ * Get team unit on given tile coordinates
+ *
+ * @param {string} team
+ * @param {number} lane
+ * @param {number} row
+ *
+ * @returns {array}
+ */
+const getTeamUnitsOnTile = (team, lane, row) => {
+    let units = currentState.units[team].filter(
+        unit => unit.isAlive && unit.row === row && unit.lane === lane
+    );
+
+    return units;
 };
 
 const selectEnemyUnits = () => {
@@ -140,7 +102,7 @@ const selectEnemyUnits = () => {
 
             return unitExistsOnLane ? false : true;
         }),
-        availableCards = CARD_TYPES.filter(card => card.cost <= gameState.mana.enemy),
+        availableCards = CARD_TYPES.filter(card => card.cost <= currentState.mana.enemy),
         unit,
         cardLaneId,
         selectedCard;
@@ -162,7 +124,7 @@ const selectEnemyUnits = () => {
     };
 
     const getAvailableCard = () => {
-        availableCards = CARD_TYPES.filter(card => card.cost <= gameState.mana.enemy);
+        availableCards = CARD_TYPES.filter(card => card.cost <= currentState.mana.enemy);
 
         let cardIndex = utilsService.getRandomInteger(0, availableCards.length - 1);
         let selectedCard = availableCards[cardIndex];
@@ -178,55 +140,11 @@ const selectEnemyUnits = () => {
             return;
         }
 
-        gameState.mana.enemy -= selectedCard.cost;
+        actions.setMana(currentState.mana.enemy - selectedCard.cost, 'enemy');
         unit = createUnitFromCard(selectedCard, cardLaneId, 'enemy');
-        nextId.enemy++;
-        gameState.units.enemy.push(unit);
+        actions.addUnit(unit, 'enemy');
         hasMoves = availableCards.length > 0;
     } while (hasMoves);
-};
-
-/**
- * Move Units
- *
- * @param {string} team
- */
-const moveUnits = team => {
-    team = team || 'user';
-
-    const getUpdatedUnit = unit => {
-        if (!unit.isAlive) {
-            return unit;
-        }
-
-        return {
-            ...unit,
-            row: team === 'user' ? unit.row + unit.pace : unit.row - unit.pace
-        };
-    };
-
-    gameState.units[team] = gameState.units[team].map(unit => {
-        return getUpdatedUnit(unit);
-    });
-};
-
-const markUnitAsDead = (unit, team) => {
-    gameState.units[team] = gameState.units[team].map(el =>
-        el.id === unit.id ? { ...el, life: -1, isAlive: false } : el
-    );
-};
-
-/**
- * Update unit life
- *
- * @param {object} unit
- * @param {number} life
- * @param {string} team
- */
-const updateUnitLife = (unit, life, team) => {
-    gameState.units[team] = gameState.units[team].map(el =>
-        el.id === unit.id ? { ...el, life: life } : el
-    );
 };
 
 /**
@@ -242,17 +160,17 @@ const attackBase = (unit, team, opposingTeam) => {
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId),
         opposingTeamLabel = opposingTeam === 'user' ? 'Your' : 'Enemy';
 
-    gameState.baseStrength[opposingTeam] -= unit.attack;
-    isBaseDestroyed = gameState.baseStrength[opposingTeam] <= 0;
+    actions.setBaseStrength(currentState.baseStrength[opposingTeam] - unit.attack);
+    isBaseDestroyed = currentState.baseStrength[opposingTeam] <= 0;
     text = `(${LANES[unit.lane].label}) ${unitCard.label} (#${unit.id})
             ${isBaseDestroyed ? 'destroyed' : 'attacked'}
             ${opposingTeamLabel} base. ${isBaseDestroyed ? '' : `-${unit.attack} HP`}`;
 
-    markUnitAsDead(unit, team);
-    addEvent(text);
+    actions.markUnitAsDead(unit, team);
+    actions.addEvent(text);
 
     if (isBaseDestroyed) {
-        gameState.isGameOver = true;
+        actions.setGameOver(true);
     }
 };
 
@@ -273,41 +191,24 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
 
     const { stats, log } = fightService.processFight(unit, opposingUnit);
 
-    text = `Fight #${nextId.event}:
+    text = `Fight:
             (${LANES[unit.lane].label}) ${teamLabel} ${unitCard.label} (#${unit.id}) vs ${opposingTeamLabel} ${opposingCard.label} (#${opposingUnit.id})`;
 
     if (stats.unit.life <= 0) {
-        markUnitAsDead(unit, team);
+        actions.markUnitAsDead(unit, team);
         text += ` | ${teamLabel} unit died.`;
     } else {
-        updateUnitLife(unit, stats.unit.life, team);
+        actions.updateUnitLife(unit, stats.unit.life, team);
     }
 
     if (stats.opposingUnit.life <= 0) {
-        markUnitAsDead(opposingUnit, opposingTeam);
+        actions.markUnitAsDead(opposingUnit, opposingTeam);
         text += ` | ${opposingTeamLabel} unit died.`;
     } else {
-        updateUnitLife(opposingUnit, stats.opposingUnit.life, opposingTeam);
+        actions.updateUnitLife(opposingUnit, stats.opposingUnit.life, opposingTeam);
     }
 
-    addEvent(text, log);
-};
-
-/**
- * Get team unit on given tile coordinates
- *
- * @param {string} team
- * @param {number} lane
- * @param {number} row
- *
- * @returns {array}
- */
-const getTeamUnitsOnTile = (team, lane, row) => {
-    let units = gameState.units[team].filter(
-        unit => unit.isAlive && unit.row === row && unit.lane === lane
-    );
-
-    return units;
+    actions.addEvent(text, log);
 };
 
 /**
@@ -320,7 +221,7 @@ const getTeamUnitsOnTile = (team, lane, row) => {
 const fight = team => {
     const opposingTeam = team === 'user' ? 'enemy' : 'user';
     const baseRow = team === 'user' ? NO_OF_ROWS : -1;
-    const activeUnits = gameState.units[team].filter(unit => {
+    const activeUnits = currentState.units[team].filter(unit => {
         return unit.isAlive;
     });
     let opposingUnits, isAttackingBase;
@@ -343,57 +244,43 @@ const fight = team => {
 };
 
 const increaseMana = team => {
-    const manaIncrease = 1 + parseInt(gameState.turns / 2);
-    gameState.mana[team] += manaIncrease;
-};
+    const manaIncrease = 1 + parseInt(currentState.turns / 3);
+    const updatedMana = currentState.mana[team] + manaIncrease;
 
-const cleanField = () => {
-    gameState.units.user = gameState.units.user.filter(unit => {
-        return unit.isAlive;
-    });
-    gameState.units.enemy = gameState.units.enemy.filter(unit => {
-        return unit.isAlive;
-    });
+    actions.setMana(updatedMana, team);
 };
 
 /**
  * Play user turn
  *
- * @returns {object} gameState
+ * @returns {object} currentState
  */
 const playUserTurn = () => {
-    cleanField();
-    moveUnits('user');
+    actions.removeDeadUnits();
+    actions.moveUnits('user');
     fight('user');
     increaseMana('user');
     selectEnemyUnits();
 
-    return gameState;
+    return currentState;
 };
 
 /**
  * Play enemy turn
  *
- * @returns {object} gameState
+ * @returns {object} currentState
  */
 
 const playEnemyTurn = () => {
-    cleanField();
-    moveUnits('enemy');
+    actions.removeDeadUnits();
+    actions.moveUnits('enemy');
     fight('enemy');
     increaseMana('enemy');
-    gameState.turns++;
-    addEvent(`Turn #${gameState.turns}`);
+    actions.incrementTurn();
+    actions.addEvent(`Turn #${currentState.turns}`);
 
-    return gameState;
+    return currentState;
 };
-
-/**
- * Get the events
- *
- * @returns {array}
- */
-const getEvents = () => events;
 
 /**
  * Get the units
@@ -405,7 +292,7 @@ const getEvents = () => events;
 const getUnits = team => {
     team = team || 'user';
 
-    return gameState.units[team];
+    return currentState.units[team];
 };
 
 /**
@@ -423,27 +310,18 @@ const getDefaultCard = () => {
  * @returns {boolean}
  */
 const getGameOverState = () => {
-    return gameState.isGameOver;
+    return actions.isGameOver();
 };
 
 /**
  * Reset game state
  */
 const reset = () => {
-    gameState = utilsService.copyObject(initialGameState);
-    events.length = 0;
-    nextId = {
-        event: 0,
-        user: 0,
-        enemy: 0
-    };
-
-    return;
+    return actions.resetState();
 };
 
 const gameService = {
     getUnits,
-    getEvents,
     getDefaultCard,
     getGameOverState,
     createUnitFromCard,

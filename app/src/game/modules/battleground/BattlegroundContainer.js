@@ -128,14 +128,14 @@ const BattlegroundContainer = () => {
     };
 
     const endTurn = () => {
-        const gameState = gameService.playUserTurn();
+        const currentState = gameService.playUserTurn();
 
         setIsLoading(true);
-        updateBaseStrength(gameState.baseStrength);
-        setUserUnits(gameState.units.user);
-        setEnemyUnits(gameState.units.enemy);
-        setEvents(gameState.events);
-        setMana(gameState.mana.user);
+        updateBaseStrength(currentState.baseStrength);
+        setUserUnits(currentState.units.user);
+        setEnemyUnits(currentState.units.enemy);
+        setEvents(currentState.events);
+        setMana(currentState.mana.user);
         setIsEnemyTurn(true);
 
         setTimeout(() => {
@@ -144,12 +144,12 @@ const BattlegroundContainer = () => {
     };
 
     const playEnemyTurn = () => {
-        const gameState = gameService.playEnemyTurn();
+        const currentState = gameService.playEnemyTurn();
 
-        updateBaseStrength(gameState.baseStrength);
-        setUserUnits(gameState.units.user);
-        setEnemyUnits(gameState.units.enemy);
-        setEvents(gameState.events);
+        updateBaseStrength(currentState.baseStrength);
+        setUserUnits(currentState.units.user);
+        setEnemyUnits(currentState.units.enemy);
+        setEvents(currentState.events);
 
         setTimeout(() => {
             setIsEnemyTurn(false);

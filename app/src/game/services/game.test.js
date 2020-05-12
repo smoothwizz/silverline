@@ -27,15 +27,15 @@ describe('service:GameService ', () => {
     });
 
     test('playUserTurn() returns a state object', () => {
-        const gameState = gameService.playUserTurn();
+        const currentState = gameService.playUserTurn();
 
-        expect(typeof gameState).toBe('object');
+        expect(typeof currentState).toBe('object');
     });
 
     test('playEnemyTurn() returns a state object', () => {
-        const gameState = gameService.playEnemyTurn();
+        const currentState = gameService.playEnemyTurn();
 
-        expect(typeof gameState).toBe('object');
+        expect(typeof currentState).toBe('object');
     });
 
     test('createUnitFromCard() returns an unit object', () => {
