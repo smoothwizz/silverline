@@ -17,14 +17,6 @@ const Tile = ({ lane, row, selectedLane, enemyUnits, userUnits, action }) => {
         (userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
             enemyUnits.filter(isAliveUnit).length > 0);
 
-    const userUnit = userUnits.find(unit => {
-        return unit.lane === lane && unit.row === row;
-    });
-
-    const enemyUnit = enemyUnits.find(unit => {
-        return unit.lane === lane && unit.row === row;
-    });
-
     const tileId = `tile-${lane}${row}`;
     const tileClass = `tile${isTileRestricted ? ' tile--restricted' : ''}${
         isTileLaneSelected ? ' tile--lane-selected' : ''
@@ -32,8 +24,12 @@ const Tile = ({ lane, row, selectedLane, enemyUnits, userUnits, action }) => {
 
     return (
         <div onClick={() => action(lane)} key={tileId} className={tileClass} data-testid={tileId}>
-            {userUnit && <Unit unit={userUnit} team="user" />}
-            {enemyUnit && <Unit unit={enemyUnit} team="enemy" />}
+            {userUnits.map(unit => (
+                <Unit key={unit.id} unit={unit} team="user" />
+            ))}
+            {enemyUnits.map(unit => (
+                <Unit key={unit.id} unit={unit} team="enemy" />
+            ))}
         </div>
     );
 };

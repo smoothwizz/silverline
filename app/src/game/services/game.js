@@ -95,57 +95,85 @@ const getTeamUnitsOnTile = (team, lane, row) => {
 };
 
 const selectEnemyUnits = () => {
-    let hasMoves = true,
-        availableLanes = LANES.slice(0).filter(lane => {
-            const unitExistsOnLane =
-                getTeamUnitsOnTile('user', lane.id, LAST_ROW_INDEX).length > 0 ||
-                getTeamUnitsOnTile('enemy', lane.id, LAST_ROW_INDEX - 1).length > 0;
-
-            return unitExistsOnLane ? false : true;
-        }),
-        availableCards = CARD_TYPES.filter(card => card.cost <= currentState.mana.enemy),
-        unit,
+    let leftMana = currentState.mana.enemy,
+        hasMoves = true,
         cardLaneId,
         selectedCard;
 
-    if (availableLanes.length === 0 || availableCards.length === 0) {
-        return;
-    }
+    /**
+     * Get available lanes
+     *
+     * @returns {array}
+     */
+    const getAvailableLanes = () => {
+        return LANES.slice(0).filter(lane => {
+            const unitExistsOnLane =
+                getTeamUnitsOnTile('user', lane.id, LAST_ROW_INDEX).length > 0 ||
+                getTeamUnitsOnTile('enemy', lane.id, LAST_ROW_INDEX).length > 0 ||
+                getTeamUnitsOnTile('enemy', lane.id, LAST_ROW_INDEX - 1).length > 0;
+
+            return unitExistsOnLane ? false : true;
+        });
+    };
+
+    /**
+     * Get available cards to select
+     *
+     * @returns {array}
+     */
+
+    const getAvailableCards = () => {
+        return CARD_TYPES.filter(card => card.cost <= leftMana);
+    };
 
     /**
      * Get available lane id
-     *
-     * @returns {number}
      */
     const getAvailableLaneId = () => {
-        let laneIndex = utilsService.getRandomInteger(0, availableLanes.length - 1);
-        let laneId = availableLanes[laneIndex].id;
+        const availableLanes = getAvailableLanes();
 
-        return laneId;
+        if (availableLanes.length === 0) {
+            return false;
+        }
+
+        let laneIndex = utilsService.getRandomInteger(0, availableLanes.length - 1);
+
+        return availableLanes[laneIndex].id;
     };
 
+    /**
+     * Get available card
+     *
+     * @returns {object}
+     */
     const getAvailableCard = () => {
-        availableCards = CARD_TYPES.filter(card => card.cost <= currentState.mana.enemy);
+        const availableCards = getAvailableCards();
 
-        let cardIndex = utilsService.getRandomInteger(0, availableCards.length - 1);
-        let selectedCard = availableCards[cardIndex];
+        if (availableCards.length === 0) {
+            return false;
+        }
 
-        return selectedCard;
+        const cardIndex = utilsService.getRandomInteger(0, availableCards.length - 1);
+
+        return availableCards[cardIndex];
     };
 
     do {
         cardLaneId = getAvailableLaneId();
         selectedCard = getAvailableCard();
 
-        if (!selectedCard) {
+        if (!selectedCard || !cardLaneId) {
+            hasMoves = false;
+
             return;
         }
 
-        actions.setMana(currentState.mana.enemy - selectedCard.cost, 'enemy');
-        unit = createUnitFromCard(selectedCard, cardLaneId, 'enemy');
+        leftMana -= selectedCard.cost;
+        const unit = createUnitFromCard(selectedCard, cardLaneId, 'enemy');
         actions.addUnit(unit, 'enemy');
-        hasMoves = availableCards.length > 0;
     } while (hasMoves);
+
+    actions.setMana(leftMana, 'enemy');
 };
 
 /**

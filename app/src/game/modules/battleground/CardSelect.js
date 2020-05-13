@@ -4,7 +4,7 @@ import { CARD_TYPES } from '../../constants/cards';
 import Card from '../cards/Card';
 import CardSearchBar from '../cards/CardSearchBar';
 
-const CardSelect = ({ selectedCard, mana, action }) => {
+const CardSelect = ({ selectedCard, mana, selectCard, deployCard }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const getCard = card => {
@@ -16,7 +16,8 @@ const CardSelect = ({ selectedCard, mana, action }) => {
                 card={card}
                 mana={mana}
                 isSelected={isSelected}
-                action={action}></Card>
+                selectCard={selectCard}
+                deployCard={deployCard}></Card>
         );
     };
 
@@ -35,6 +36,7 @@ const CardSelect = ({ selectedCard, mana, action }) => {
 
         return (
             card.label.toLowerCase().indexOf(term) > -1 ||
+            card.type.toLowerCase().indexOf(term) > -1 ||
             card.faction.toLowerCase().indexOf(term) > -1
         );
     };
@@ -54,7 +56,8 @@ const CardSelect = ({ selectedCard, mana, action }) => {
 CardSelect.propTypes = {
     selectedCard: PropTypes.object,
     mana: PropTypes.number,
-    action: PropTypes.func
+    selectCard: PropTypes.func,
+    deployCard: PropTypes.func
 };
 
 export default CardSelect;

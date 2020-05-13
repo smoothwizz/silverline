@@ -25,7 +25,8 @@
         position: absolute;
         text-align: center;
         visibility: hidden;
-        width: 120px;
+        width: fit-content;
+        max-width: 200px;
         z-index: 4;
     }
 

@@ -22,7 +22,6 @@ describe('BattlegroundPanel', () => {
 
     const conditions = {
         isAddValid: false,
-        isDeployUnitDisabled: false,
         isEndTurnDisabled: false,
         isEnemyTurn: false,
         isLoading: false,

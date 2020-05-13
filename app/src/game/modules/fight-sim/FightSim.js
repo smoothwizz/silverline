@@ -32,13 +32,13 @@ const FightSim = () => {
                 <CardSelect
                     mana={Infinity}
                     selectedCard={cardA}
-                    action={card => handleCardSelect(card, 'cardA')}
+                    selectCard={card => handleCardSelect(card, 'cardA')}
                 />
 
                 <CardSelect
                     mana={Infinity}
                     selectedCard={cardB}
-                    action={card => handleCardSelect(card, 'cardB')}
+                    selectCard={card => handleCardSelect(card, 'cardB')}
                 />
             </div>
             <button

@@ -10,7 +10,7 @@ const Unit = ({ unit, team }) => {
     const unitLabel = (
         <div data-testid="unit-label" className="unit__label">
             <Tooltip
-                text={`${unit.life} HP / ${unit.attack} ATK`}
+                text={`#${unit.id}: ${unit.life} HP / ${unit.attack} ATK`}
                 toggleText={unitCard.label}
                 isIconVisible={false}
                 type="game"

@@ -16,16 +16,25 @@ const BattlegroundField = ({
     const createField = () => {
         let field = [];
 
-        for (let i = 0; i < NO_OF_ROWS; i++) {
-            for (let j = 0; j < LANES.length; j++) {
+        for (let rowIndex = 0; rowIndex < NO_OF_ROWS; rowIndex++) {
+            for (let laneIndex = 0; laneIndex < LANES.length; laneIndex++) {
+
+                const tileUserUnits = userUnits.filter(
+                    unit => unit.isAlive && unit.row === rowIndex && unit.lane === laneIndex
+                );
+
+                const tileEnemyUnits = enemyUnits.filter(
+                    unit => unit.isAlive && unit.row === rowIndex && unit.lane === laneIndex
+                );
+
                 field.push(
                     <Tile
-                        key={`tile--${i}${j}`}
-                        lane={j}
-                        row={i}
+                        key={`tile--${rowIndex}${laneIndex}`}
+                        lane={laneIndex}
+                        row={rowIndex}
                         selectedLane={selectedLane}
-                        enemyUnits={enemyUnits}
-                        userUnits={userUnits}
+                        enemyUnits={tileEnemyUnits}
+                        userUnits={tileUserUnits}
                         action={actions.selectLane}></Tile>
                 );
             }

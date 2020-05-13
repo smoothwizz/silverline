@@ -6,25 +6,11 @@ import CardSelect from './CardSelect';
 import LaneSelect from './LaneSelect';
 import BattleEvents from '../events/BattleEvents';
 
-const BattlegroundPanel = ({
-    alert,
-    selectedLane,
-    selectedCard,
-    mana,
-    conditions,
-    actions
-}) => {
+const BattlegroundPanel = ({ alert, selectedLane, selectedCard, mana, conditions, actions }) => {
     const loadingIcon = (
         <span className="loading-icon">
             <FaSpinner />
         </span>
-    );
-
-    const turnIndicator = (
-        <div className={`turn-indicator ${conditions.isEnemyTurn ? 'turn-indicator--enemy' : ''}`}>
-            {!conditions.isLoading ? '' : loadingIcon}
-            {conditions.isEnemyTurn ? 'Enemy' : 'Your'} Turn
-        </div>
     );
 
     const laneSelect = <LaneSelect selectedLane={selectedLane} action={actions.handleLaneSelect} />;
@@ -45,21 +31,21 @@ const BattlegroundPanel = ({
                 onClick={actions.resetGame}>
                 Restart
             </button>
-            {turnIndicator}
             {manaIndicator}
             {laneSelect}
-            <button
-                disabled={conditions.isDeployUnitDisabled}
-                className="btn btn--primary"
-                onClick={actions.deployUnit}>
-                Deploy Unit
-            </button>
-            <button
-                disabled={conditions.isEndTurnDisabled}
-                className={`btn btn--success ${noMovesLeft ? 'btn--jumping' : ''}`}
-                onClick={actions.endTurn}>
-                End Turn
-            </button>
+            {conditions.isEnemyTurn ? (
+                <div className="turn-indicator turn-indicator--enemy">
+                    {!conditions.isLoading ? '' : loadingIcon}
+                    Enemy Turn
+                </div>
+            ) : (
+                <button
+                    disabled={conditions.isEndTurnDisabled}
+                    className={`btn btn--success ${noMovesLeft ? 'btn--jumping' : ''}`}
+                    onClick={actions.endTurn}>
+                    End Turn
+                </button>
+            )}
         </>
     );
 
@@ -82,7 +68,8 @@ const BattlegroundPanel = ({
                 <CardSelect
                     mana={mana}
                     selectedCard={selectedCard}
-                    action={actions.handleCardSelect}
+                    selectCard={actions.handleCardSelect}
+                    deployCard={actions.deployUnit}
                 />
             )}
 

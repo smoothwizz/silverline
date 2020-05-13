@@ -24,6 +24,7 @@ const CardsShowcase = () => {
 
         return (
             card.label.toLowerCase().indexOf(term) > -1 ||
+            card.type.toLowerCase().indexOf(term) > -1 ||
             card.faction.toLowerCase().indexOf(term) > -1
         );
     };

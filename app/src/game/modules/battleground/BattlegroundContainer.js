@@ -12,7 +12,7 @@ import Battleground from './Battleground';
 import utilsService from '../../services/utils';
 import eventsService from '../../services/events';
 
-const ANIMATION_DURATION = 2000;
+const ANIMATION_DURATION = 1200;
 const defaultCard = CARD_TYPES[0];
 const defaultLane = LANES[0];
 const defaultBaseStrength = {
@@ -186,8 +186,6 @@ const BattlegroundContainer = () => {
         setCard(card);
     };
 
-    const isDeployUnitDisabled =
-        isLoading || baseStrength.user < 0 || baseStrength.enemy < 0 || mana <= 0;
     const isEndTurnDisabled = isLoading || baseStrength.user < 0 || baseStrength.enemy < 0;
 
     const actions = {
@@ -200,7 +198,6 @@ const BattlegroundContainer = () => {
 
     const conditions = {
         isAddValid,
-        isDeployUnitDisabled,
         isEndTurnDisabled,
         isEnemyTurn,
         isGameOver,
