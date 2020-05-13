@@ -9,18 +9,6 @@ describe('service:currentState ', () => {
         expect(typeof currentState).toBe('object');
     });
 
-    test('actions.addEvent() adds an event to the events list', () => {
-        const initialEventsLength = currentState.events.length;
-        const event = {
-            text: 'test',
-            log: 'log'
-        };
-        actions.addEvent(event);
-
-        expect(currentState.events.length).toBe(initialEventsLength + 1);
-        expect(initialState.events.length).toBe(0);
-    });
-
     test('actions.addUnit() adds an unit to the units list', () => {
         const mockUnit = {
             id: 0,
@@ -36,12 +24,12 @@ describe('service:currentState ', () => {
         expect(currentState.units[team].length).toBe(1);
     });
 
-    test('actions.incrementTurn() increases the turn with 1', () => {
-        const initialTurn = currentState.turns;
-        actions.incrementTurn();
-        const result = currentState.turns;
+    test('actions.incrementRound() increases the turn with 1', () => {
+        const initialRound = currentState.round;
+        actions.incrementRound();
+        const result = currentState.round;
 
-        expect(result).toBe(initialTurn + 1);
+        expect(result).toBe(initialRound + 1);
     });
 
     test('actions.getUnitById() returns the correct unit', () => {

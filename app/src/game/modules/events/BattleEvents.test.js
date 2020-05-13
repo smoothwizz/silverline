@@ -5,7 +5,7 @@ import BattleEvents from './BattleEvents';
 describe('FightSim:', () => {
 
   test('renders the events list', () => {
-    const { getByTestId } = render(<BattleEvents events={[]} />);
+    const { getByTestId } = render(<BattleEvents />);
     const eventsList = getByTestId('events-list');
 
     expect(eventsList).toBeInTheDocument();

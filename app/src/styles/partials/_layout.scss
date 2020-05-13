@@ -5,10 +5,11 @@ body,
   /* needed for proper layout */
 }
 
+
 body {
-  background: #eef0f8;
-  background: -webkit-linear-gradient(to right, #eef0f8, #dadce4);
-  background: linear-gradient(to right, #eef0f8, #dadce4);
+  background: $body-bg;
+  background: -webkit-linear-gradient(to right, $body-bg, darken($body-bg, 5%));
+  background: linear-gradient(to right, $body-bg, darken($body-bg, 5%));
   overscroll-behavior: none;
 }
 
@@ -22,7 +23,6 @@ main {
   flex: 1 1 auto;
   padding: 1em;
   position: relative;
-  overflow-y: auto;
   width: $container-width;
   margin: 0 auto;
 }

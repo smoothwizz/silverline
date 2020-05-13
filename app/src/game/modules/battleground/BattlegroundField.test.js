@@ -9,6 +9,7 @@ test('renders tile', () => {
             enemyUnits={[]}
             baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
+            actions={{}}
         />
     );
     const elem = getByTestId('tile-00');
@@ -23,6 +24,7 @@ test('renders base strength', () => {
             enemyUnits={[]}
             baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
+            actions={{}}
         />
     );
     const userBase = getByTestId('team-base--user');

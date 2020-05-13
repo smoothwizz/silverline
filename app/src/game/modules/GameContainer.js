@@ -9,17 +9,17 @@ const GameContainer = () => (
     <>
         <nav className="game-menu">
             <span className="game-menu__toggle" data-testid="game-menu">
-                MENU
+                Game
             </span>
             <ul className="game-menu__dropdown">
+                <li>
+                    <Link to="./">Battleground</Link>
+                </li>
                 <li>
                     <Link to="cards">All Cards</Link>
                 </li>
                 <li>
                     <Link to="sim">Fight Sim</Link>
-                </li>
-                <li>
-                    <Link to="./">Battleground</Link>
                 </li>
             </ul>
         </nav>

@@ -10,7 +10,6 @@ const BattlegroundPanel = ({
     alert,
     selectedLane,
     selectedCard,
-    events,
     mana,
     conditions,
     actions
@@ -40,6 +39,12 @@ const BattlegroundPanel = ({
 
     const activeGameBar = (
         <>
+            <button
+                data-testid="restart-game"
+                className="btn btn--primary restart-game"
+                onClick={actions.resetGame}>
+                Restart
+            </button>
             {turnIndicator}
             {manaIndicator}
             {laneSelect}
@@ -55,18 +60,11 @@ const BattlegroundPanel = ({
                 onClick={actions.endTurn}>
                 End Turn
             </button>
-            <button
-                data-testid="restart-game"
-                className="btn btn--primary restart-game"
-                onClick={actions.resetGame}>
-                Restart
-            </button>
         </>
     );
 
     return (
         <div className="battleground__panel">
-            <h1> Battleground </h1>
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
             <div data-testid="game-bar" className="game-bar">
                 {conditions.isGameOver && (
@@ -88,7 +86,7 @@ const BattlegroundPanel = ({
                 />
             )}
 
-            {events.length > 0 && <BattleEvents events={events} />}
+            <BattleEvents />
         </div>
     );
 };

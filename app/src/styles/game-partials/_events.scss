@@ -1,31 +1,53 @@
-.events-list {
-    background: wheat;
+$events-bg: #ffffff;
+
+.events {
+    background: $events-bg;
     padding: 1em;
-    line-height: 1.5em;
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
 
-    .event {
-        animation: fadeIn 1.5s forwards;
+    h2 {
+        margin-top: 0;
+    }
 
-        &+.event {
-            margin-top: 4px;
-        }
+    &__list {
+        line-height: 1.5em;
+        display: flex;
+        flex-direction: column;
+        overflow: scroll;
 
-        &__log {
-            background: darken(wheat, 5%);
-            margin: 4px 16px;
-        }
+        .event {
+            animation: fadeIn 1.5s forwards;
+            background: darken($events-bg, 1%);
 
-        .event-toggle {
-            padding: 0;
-            margin: 0;
-            position: relative;
+            &:nth-child(even) {
+                background: darken($events-bg, 3%);
 
-            svg {
+                &.event--generic {
+                    background: $events-bg;
+                }
+            }
+
+            &--generic {
+                border-bottom: 3px solid $primary-color;
+                background: $events-bg;
+                font-size: 1.2em;
+                padding: 8px 0 0;
+                margin-bottom: 4px;
+                width: fit-content;
+            }
+
+            &__log {
+                margin: 4px 16px;
+            }
+
+            .event-toggle {
+                padding: 0;
+                margin: 0;
                 position: relative;
-                top: 4px;
+
+                svg {
+                    position: relative;
+                    top: 4px;
+                }
             }
         }
     }

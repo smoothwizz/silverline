@@ -5,7 +5,14 @@ import { NO_OF_ROWS } from '../../constants/turn';
 import Tile from './Tile';
 import TeamBase from './TeamBase';
 
-const BattlegroundField = ({ baseStrength, enemyUnits, userUnits, isGameOver, selectedLane }) => {
+const BattlegroundField = ({
+    baseStrength,
+    enemyUnits,
+    userUnits,
+    isGameOver,
+    selectedLane,
+    actions
+}) => {
     const createField = () => {
         let field = [];
 
@@ -18,7 +25,8 @@ const BattlegroundField = ({ baseStrength, enemyUnits, userUnits, isGameOver, se
                         row={i}
                         selectedLane={selectedLane}
                         enemyUnits={enemyUnits}
-                        userUnits={userUnits}></Tile>
+                        userUnits={userUnits}
+                        action={actions.selectLane}></Tile>
                 );
             }
         }
@@ -40,7 +48,8 @@ BattlegroundField.propTypes = {
     userUnits: PropTypes.array,
     enemyUnits: PropTypes.array,
     isGameOver: PropTypes.bool,
-    selectedLane: PropTypes.object
+    selectedLane: PropTypes.object,
+    actions: PropTypes.object
 };
 
 export default BattlegroundField;

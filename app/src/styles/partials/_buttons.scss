@@ -37,7 +37,7 @@
 
     &--primary {
         @include button-bg($primary-color);
-        color: var(--light-text);
+        color: $primary-text-color;
     }
 
     &--jumping {

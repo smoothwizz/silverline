@@ -1,8 +1,7 @@
 header {
-    background: #302b63;
-    background: -webkit-linear-gradient(to right, #302b63, #342b9c);
-    background: linear-gradient(to right, #302b63, #342b9c);
-
+    background: $header-bg;
+    background: -webkit-linear-gradient(to right, $header-bg, lighten($header-bg, 5%));
+    background: linear-gradient(to right, $header-bg, lighten($header-bg, 5%));
     color: var(--light-text);
 
     .container {
@@ -21,6 +20,7 @@ header {
         display: flex;
 
         a {
+
             &:link,
             &:visited {
                 border: 2px solid transparent;

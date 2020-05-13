@@ -2,8 +2,7 @@ import { INITIAL_MANA_PER_TURN, INITIAL_BASE_STRENGTH } from '../constants/turn'
 import utilsService from './utils';
 
 let currentState = {
-    events: [],
-    turns: 0,
+    round: 0,
     mana: {
         user: INITIAL_MANA_PER_TURN,
         enemy: INITIAL_MANA_PER_TURN
@@ -22,7 +21,6 @@ let currentState = {
 const initialState = utilsService.copyObject(currentState);
 
 let nextId = {
-    event: 0,
     user: 0,
     enemy: 0
 };
@@ -33,34 +31,11 @@ let nextId = {
 const resetState = () => {
     currentState = initialState;
     nextId = {
-        event: 0,
         user: 0,
         enemy: 0
     };
 
     return;
-};
-
-/**
- * Add event
- *
- * @param {string} text
- * @param {string} log
- */
-const addEvent = (text, log) => {
-    log = log || '';
-    const event = {
-        id: nextId.event,
-        text: text,
-        log: log
-    };
-
-    if (actions.isGameOver()) {
-        return;
-    }
-
-    currentState.events = [event, ...currentState.events];
-    nextId.event++;
 };
 
 /**
@@ -153,10 +128,10 @@ const setBaseStrength = (value, team) => {
 };
 
 /**
- * Increase the number of turns
+ * Increase the number of rounds
  */
-const incrementTurn = () => {
-    currentState.turns++;
+const incrementRound = () => {
+    currentState.round++;
 };
 
 /**
@@ -211,10 +186,9 @@ const getUnitById = (id, team) => {
 };
 
 const actions = {
-    addEvent,
     addUnit,
     getUnitById,
-    incrementTurn,
+    incrementRound,
     isGameOver,
     markUnitAsDead,
     moveUnits,

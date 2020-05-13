@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Unit from './Unit';
 
-const Tile = ({ lane, row, selectedLane, enemyUnits, userUnits }) => {
+const Tile = ({ lane, row, selectedLane, enemyUnits, userUnits, action }) => {
     const isAliveUnit = unit => {
         return unit.isAlive && unit.lane === lane && unit.row === 0;
     };
@@ -31,7 +31,7 @@ const Tile = ({ lane, row, selectedLane, enemyUnits, userUnits }) => {
     }`;
 
     return (
-        <div key={tileId} className={tileClass} data-testid={tileId}>
+        <div onClick={() => action(lane)} key={tileId} className={tileClass} data-testid={tileId}>
             {userUnit && <Unit unit={userUnit} team="user" />}
             {enemyUnit && <Unit unit={enemyUnit} team="enemy" />}
         </div>
@@ -43,7 +43,8 @@ Tile.propTypes = {
     row: PropTypes.number,
     selectedLane: PropTypes.object,
     enemyUnits: PropTypes.array,
-    userUnits: PropTypes.array
+    userUnits: PropTypes.array,
+    action: PropTypes.func
 };
 
 export default Tile;

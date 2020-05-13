@@ -1,6 +1,7 @@
 import { CARD_TYPES } from '../constants/cards';
 import LANES from '../constants/lanes';
 
+import eventsService from './events';
 import utilsService from './utils';
 import fightService from './fight';
 import { currentState, actions } from './gameState';
@@ -158,16 +159,17 @@ const attackBase = (unit, team, opposingTeam) => {
     let text = '',
         isBaseDestroyed;
     const unitCard = CARD_TYPES.find(card => card.id === unit.cardId),
-        opposingTeamLabel = opposingTeam === 'user' ? 'Your' : 'Enemy';
+        opposingTeamLabel = opposingTeam === 'user' ? 'Your' : 'Enemy',
+        lifeLeft = currentState.baseStrength[opposingTeam] - unit.attack;
 
-    actions.setBaseStrength(currentState.baseStrength[opposingTeam] - unit.attack);
+    actions.setBaseStrength(lifeLeft, opposingTeam);
     isBaseDestroyed = currentState.baseStrength[opposingTeam] <= 0;
     text = `(${LANES[unit.lane].label}) ${unitCard.label} (#${unit.id})
             ${isBaseDestroyed ? 'destroyed' : 'attacked'}
             ${opposingTeamLabel} base. ${isBaseDestroyed ? '' : `-${unit.attack} HP`}`;
 
     actions.markUnitAsDead(unit, team);
-    actions.addEvent(text);
+    eventsService.addEvent(text, 'fight');
 
     if (isBaseDestroyed) {
         actions.setGameOver(true);
@@ -208,7 +210,7 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
         actions.updateUnitLife(opposingUnit, stats.opposingUnit.life, opposingTeam);
     }
 
-    actions.addEvent(text, log);
+    eventsService.addEvent(text, 'fight', log);
 };
 
 /**
@@ -226,25 +228,29 @@ const fight = team => {
     });
     let opposingUnits, isAttackingBase;
 
-    activeUnits.forEach(unit => {
+    for (let i = 0, len = activeUnits.length; i < len; i++) {
+        const unit = activeUnits[i];
+
+        if (currentState.gameOver) {
+            break;
+        }
+
         isAttackingBase = team === 'user' ? unit.row >= baseRow : unit.row <= baseRow;
         if (isAttackingBase) {
             attackBase(unit, team, opposingTeam);
 
-            return;
+            continue;
         }
         opposingUnits = getTeamUnitsOnTile(opposingTeam, unit.lane, unit.row);
         if (opposingUnits.length === 0) {
-            return;
+            continue;
         }
         opposingUnits.map(opposingUnit => attackUnit(unit, opposingUnit, team, opposingTeam));
-
-        return;
-    });
+    }
 };
 
 const increaseMana = team => {
-    const manaIncrease = 1 + parseInt(currentState.turns / 3);
+    const manaIncrease = 1 + parseInt(currentState.round / 3);
     const updatedMana = currentState.mana[team] + manaIncrease;
 
     actions.setMana(updatedMana, team);
@@ -272,12 +278,16 @@ const playUserTurn = () => {
  */
 
 const playEnemyTurn = () => {
+    if (currentState.gameOver) {
+        return;
+    }
+
     actions.removeDeadUnits();
     actions.moveUnits('enemy');
     fight('enemy');
     increaseMana('enemy');
-    actions.incrementTurn();
-    actions.addEvent(`Turn #${currentState.turns}`);
+    actions.incrementRound();
+    eventsService.addEvent(`Round #${currentState.round}`, 'generic');
 
     return currentState;
 };

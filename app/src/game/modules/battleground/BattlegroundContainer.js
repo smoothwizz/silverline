@@ -10,6 +10,7 @@ import LANES from '../../constants/lanes';
 import gameService from '../../services/game';
 import Battleground from './Battleground';
 import utilsService from '../../services/utils';
+import eventsService from '../../services/events';
 
 const ANIMATION_DURATION = 2000;
 const defaultCard = CARD_TYPES[0];
@@ -19,8 +20,7 @@ const defaultBaseStrength = {
     enemy: INITIAL_BASE_STRENGTH
 };
 const BattlegroundContainer = () => {
-    const [events, setEvents] = useState([]),
-        [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
+    const [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
         [enemyUnits, setEnemyUnits] = useState(utilsService.copyObject(gameService.getUnits('enemy'))),
         [isGameOver, setGameOver] = useState(gameService.getGameOverState()),
         [isLoading, setIsLoading] = useState(false),
@@ -134,7 +134,6 @@ const BattlegroundContainer = () => {
         updateBaseStrength(currentState.baseStrength);
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
-        setEvents(currentState.events);
         setMana(currentState.mana.user);
         setIsEnemyTurn(true);
 
@@ -149,7 +148,6 @@ const BattlegroundContainer = () => {
         updateBaseStrength(currentState.baseStrength);
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
-        setEvents(currentState.events);
 
         setTimeout(() => {
             setIsEnemyTurn(false);
@@ -161,8 +159,8 @@ const BattlegroundContainer = () => {
      * Reset Game State
      */
     const resetGame = () => {
+        eventsService.reset();
         gameService.reset();
-        setEvents([]);
         setUserUnits([]);
         setEnemyUnits([]);
         setGameOver(false);
@@ -178,7 +176,9 @@ const BattlegroundContainer = () => {
         setBaseStrength(defaultBaseStrength);
     };
 
-    const handleLaneSelect = lane => {
+    const handleLaneSelect = laneId => {
+        const lane = LANES.find(el => el.id === laneId);
+
         setLane(lane);
     };
 
@@ -208,7 +208,6 @@ const BattlegroundContainer = () => {
     };
 
     const battlePanelProps = {
-        events,
         mana,
         selectedLane,
         selectedCard,
@@ -222,7 +221,10 @@ const BattlegroundContainer = () => {
         selectedLane,
         baseStrength,
         userUnits,
-        enemyUnits
+        enemyUnits,
+        actions: {
+            selectLane: handleLaneSelect
+        }
     };
 
     return <Battleground battlePanelProps={battlePanelProps} battleFieldProps={battleFieldProps} />;

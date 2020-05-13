@@ -5,10 +5,11 @@
 
     &__panel {
         flex: 1;
-        margin-left: 32px;
+        margin-top: 48px;
     }
 
     &__field {
         flex: 0 0 ($tile-width * 4);
+        margin-left: 32px;
     }
 }

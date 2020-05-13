@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BattleEvent from './BattleEvent';
 
-const BattleEvents = ({ events }) => {
+import eventsService from '../../services/events';
+
+const BattleEvents = () => {
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        function updateEvents() {
+            setEvents(eventsService.getEvents(events));
+        }
+        updateEvents();
+    });
+
     return (
-        <div data-testid="events-list" className="events-list">
-            {events
-                .sort((a, b) => b.id - a.id)
-                .map(event => {
-                    return (
-                        <BattleEvent key={event.id} event={event} />
-                    );
-                })}
-        </div>
+        <section className="events" data-testid="events-list">
+            <h2>History</h2>
+            {events.length > 0 && (
+                <div className="events__list">
+                    {events
+                        .sort((a, b) => b.id - a.id)
+                        .map(event => {
+                            return <BattleEvent key={event.id} event={event} />;
+                        })}
+                </div>
+            )}
+        </section>
     );
 };
 

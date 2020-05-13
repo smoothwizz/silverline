@@ -9,7 +9,7 @@ const LaneSelect = ({ selectedLane, action }) => {
             ` ${selectedLane.id === lane.id ? 'lane--selected' : ''}` +
             ` lane--${lane.value}`;
         return (
-            <div className={laneClass} key={lane.id} onClick={() => action(lane)}>
+            <div className={laneClass} key={lane.id} onClick={() => action(lane.id)}>
                 {lane.label}
             </div>
         );
