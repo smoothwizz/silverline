@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LANES from '../../constants/lanes';
 import { NO_OF_ROWS } from '../../constants/turn';
-import Tile from './Tile';
 import TeamBase from './TeamBase';
+import TileContainer from './TileContainer';
 
 const BattlegroundField = ({
-    baseStrength,
     enemyUnits,
     userUnits,
-    isGameOver,
     selectedLane,
+    baseStrength,
+    isGameOver,
     actions
 }) => {
     const createField = () => {
@@ -18,24 +18,15 @@ const BattlegroundField = ({
 
         for (let rowIndex = 0; rowIndex < NO_OF_ROWS; rowIndex++) {
             for (let laneIndex = 0; laneIndex < LANES.length; laneIndex++) {
-
-                const tileUserUnits = userUnits.filter(
-                    unit => unit.isAlive && unit.row === rowIndex && unit.lane === laneIndex
-                );
-
-                const tileEnemyUnits = enemyUnits.filter(
-                    unit => unit.isAlive && unit.row === rowIndex && unit.lane === laneIndex
-                );
-
                 field.push(
-                    <Tile
+                    <TileContainer
                         key={`tile--${rowIndex}${laneIndex}`}
                         lane={laneIndex}
                         row={rowIndex}
                         selectedLane={selectedLane}
-                        enemyUnits={tileEnemyUnits}
-                        userUnits={tileUserUnits}
-                        action={actions.selectLane}></Tile>
+                        enemyUnits={enemyUnits}
+                        userUnits={userUnits}
+                        action={actions.selectLane}></TileContainer>
                 );
             }
         }
