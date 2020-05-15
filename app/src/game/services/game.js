@@ -1,4 +1,4 @@
-import { CARD_TYPES } from '../constants/cards';
+import { CARDS } from '../constants/cards';
 import LANES from '../constants/lanes';
 
 import eventsService from './events';
@@ -9,28 +9,13 @@ import { currentState, actions } from './gameState';
 import { NO_OF_ROWS, LAST_ROW_INDEX } from '../constants/turn';
 
 /**
- * Buff Card Stats according to the faction
+ * Apply buffs to cards
  *
  * @param {object} stats
- * @param {string} faction
  */
-const buffCardStats = (stats, faction) => {
-    // TODO Add buffs for faction
-    if (['sum', 'spr'].indexOf(faction) > -1) {
-        return {
-            attack: stats.attack,
-            life: stats.life,
-            pace: stats.pace
-        };
-    }
-
-    if (['win', 'aut'].indexOf(faction) > -1) {
-        return {
-            attack: stats.attack,
-            life: stats.life,
-            pace: stats.pace
-        };
-    }
+const applyBuffs = stats => {
+    //Apply buffs
+    return stats;
 };
 
 /**
@@ -44,9 +29,8 @@ const buffCardStats = (stats, faction) => {
 const createUnitFromCard = (card, laneId, team) => {
     const cardRow = team === 'user' ? 0 : LAST_ROW_INDEX;
     let cardStats = utilsService.copyObject(card.stats);
-    if (card.faction === LANES[laneId].value) {
-        cardStats = buffCardStats(cardStats, card.faction);
-    }
+
+    cardStats = applyBuffs(cardStats, card.faction);
 
     const unit = {
         lane: laneId,
@@ -94,6 +78,24 @@ const getTeamUnitsOnTile = (team, lane, row) => {
     return units;
 };
 
+/**
+ * Get Most Dangerous unit
+ *
+ * @param {string} team
+ * @param {number} lane
+ * @param {number} row
+ *
+ * @returns {object | false}
+ */
+const getMostDangerousUnit = (team, lane, row) => {
+    const opposingUnits = getTeamUnitsOnTile(team, lane, row);
+    if (opposingUnits.length === 0) {
+        return false;
+    }
+
+    return opposingUnits.reduce((prev, current) => (prev.attack > current.attack ? prev : current));
+};
+
 const selectEnemyUnits = () => {
     let leftMana = currentState.mana.enemy,
         hasMoves = true,
@@ -123,7 +125,7 @@ const selectEnemyUnits = () => {
      */
 
     const getAvailableCards = () => {
-        return CARD_TYPES.filter(card => card.cost <= leftMana);
+        return CARDS.filter(card => card.cost <= leftMana);
     };
 
     /**
@@ -186,7 +188,7 @@ const selectEnemyUnits = () => {
 const attackBase = (unit, team, opposingTeam) => {
     let text = '',
         isBaseDestroyed;
-    const unitCard = CARD_TYPES.find(card => card.id === unit.cardId),
+    const unitCard = CARDS.find(card => card.id === unit.cardId),
         opposingTeamLabel = opposingTeam === 'user' ? 'Your' : 'Enemy',
         lifeLeft = currentState.baseStrength[opposingTeam] - unit.attack;
 
@@ -198,6 +200,9 @@ const attackBase = (unit, team, opposingTeam) => {
 
     actions.markUnitAsDead(unit, team);
     eventsService.addEvent(text, 'fight');
+    if (isBaseDestroyed) {
+        eventsService.addEvent(`Game over. ${opposingTeamLabel} team lost.`, 'generic');
+    }
 
     if (isBaseDestroyed) {
         actions.setGameOver(true);
@@ -214,8 +219,8 @@ const attackBase = (unit, team, opposingTeam) => {
  */
 const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
     let text = '';
-    const unitCard = CARD_TYPES.find(card => card.id === unit.cardId);
-    const opposingCard = CARD_TYPES.find(card => card.id === opposingUnit.cardId);
+    const unitCard = CARDS.find(card => card.id === unit.cardId);
+    const opposingCard = CARDS.find(card => card.id === opposingUnit.cardId);
     const teamLabel = team === 'user' ? 'Your' : 'Enemy';
     const opposingTeamLabel = team === 'user' ? 'Enemy' : 'Your';
 
@@ -254,7 +259,7 @@ const fight = team => {
     const activeUnits = currentState.units[team].filter(unit => {
         return unit.isAlive;
     });
-    let opposingUnits, isAttackingBase;
+    let isAttackingBase;
 
     for (let i = 0, len = activeUnits.length; i < len; i++) {
         const unit = activeUnits[i];
@@ -263,17 +268,20 @@ const fight = team => {
             break;
         }
 
-        isAttackingBase = team === 'user' ? unit.row >= baseRow : unit.row <= baseRow;
+        isAttackingBase =
+            team === 'user' ? unit.row >= baseRow : unit.row <= baseRow;
         if (isAttackingBase) {
             attackBase(unit, team, opposingTeam);
 
             continue;
         }
-        opposingUnits = getTeamUnitsOnTile(opposingTeam, unit.lane, unit.row);
-        if (opposingUnits.length === 0) {
+
+        const opposingUnit = getMostDangerousUnit(opposingTeam, unit.lane, unit.row);
+        if (!opposingUnit) {
             continue;
         }
-        opposingUnits.map(opposingUnit => attackUnit(unit, opposingUnit, team, opposingTeam));
+
+        attackUnit(unit, opposingUnit, team, opposingTeam);
     }
 };
 
@@ -292,6 +300,7 @@ const increaseMana = team => {
 const playUserTurn = () => {
     actions.removeDeadUnits();
     actions.moveUnits('user');
+    eventsService.addEvent('Your units have moved.', 'game');
     fight('user');
     increaseMana('user');
     selectEnemyUnits();
@@ -307,15 +316,17 @@ const playUserTurn = () => {
 
 const playEnemyTurn = () => {
     if (currentState.gameOver) {
-        return;
+        return currentState;
     }
 
     actions.removeDeadUnits();
     actions.moveUnits('enemy');
+    eventsService.addEvent('Enemy units have moved.', 'game');
+
     fight('enemy');
     increaseMana('enemy');
     actions.incrementRound();
-    eventsService.addEvent(`Round #${currentState.round}`, 'generic');
+    eventsService.addEvent(`Round #${currentState.round} ended.`, 'generic');
 
     return currentState;
 };
@@ -339,7 +350,7 @@ const getUnits = team => {
  * @returns {object}
  */
 const getDefaultCard = () => {
-    return CARD_TYPES[0];
+    return CARDS[0];
 };
 
 /**

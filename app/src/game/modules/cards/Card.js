@@ -24,9 +24,9 @@ const Card = ({ card, mana, isSelected, selectCard, deployCard }) => {
 
     return (
         <div {...containerProps}>
-            <div data-testid="card" className={`card-title card-title--${card.faction}`}>
+            <div data-testid="card" className="card-title">
                 <span className="text--md">{card.label}</span>
-                <span className="text--sm">{card.type.toUpperCase()}</span>
+                <span className="text--xs">{card.type.toUpperCase()}</span>
             </div>
             <CardStats stats={card.stats} mana={card.cost} />
             {deployCard && (

@@ -124,7 +124,10 @@ const moveUnits = team => {
  * @param {string} team
  */
 const setBaseStrength = (value, team) => {
-    currentState.baseStrength[team] = value;
+    currentState.baseStrength = {
+        ...currentState.baseStrength,
+        [team]: value
+    };
 };
 
 /**

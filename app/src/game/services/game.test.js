@@ -1,5 +1,5 @@
 import gameService from './game';
-import {CARD_TYPES} from '../constants/cards';
+import {CARDS} from '../constants/cards';
 import LANES from '../constants/lanes';
 import { LAST_ROW_INDEX } from '../constants/turn';
 
@@ -7,7 +7,7 @@ describe('service:GameService ', () => {
     test('GameService: playTurn() adds an event', () => {});
 
     test('deployUnit() adds an unit', () => {
-        const defaultCard = CARD_TYPES[0];
+        const defaultCard = CARDS[0];
         const lane = LANES[0];
         let unitsLength = {
             before: gameService.getUnits('user').length
@@ -16,7 +16,7 @@ describe('service:GameService ', () => {
         unitsLength.after = gameService.getUnits('user').length;
 
         expect(typeof unit).toBe('object');
-        expect(unit.cardId).toBe(CARD_TYPES[0].id);
+        expect(unit.cardId).toBe(CARDS[0].id);
         expect(unitsLength.after).toBe(unitsLength.before + 1);
     });
 
@@ -39,19 +39,19 @@ describe('service:GameService ', () => {
     });
 
     test('createUnitFromCard() returns an unit object', () => {
-        const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'user');
+        const unit = gameService.createUnitFromCard(CARDS[0], 0, 'user');
 
-        expect(unit.attack).toBe(CARD_TYPES[0].stats.attack);
+        expect(unit.attack).toBe(CARDS[0].stats.attack);
     });
 
     test('createUnitFromCard() for user a card on first row', () => {
-        const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'user');
+        const unit = gameService.createUnitFromCard(CARDS[0], 0, 'user');
 
         expect(unit.row).toBe(0);
     });
 
     test('createUnitFromCard() for enemy a card on last row', () => {
-        const unit = gameService.createUnitFromCard(CARD_TYPES[0], 0, 'enemy');
+        const unit = gameService.createUnitFromCard(CARDS[0], 0, 'enemy');
 
         expect(unit.row).toBe(LAST_ROW_INDEX);
     });

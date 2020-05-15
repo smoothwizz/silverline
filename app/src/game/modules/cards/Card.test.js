@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Card from '../cards/Card';
-import {CARD_TYPES} from '../../constants/cards';
+import {CARDS} from '../../constants/cards';
 
 describe('Card', () => {
-    const selectedCard = CARD_TYPES[0];
+    const selectedCard = CARDS[0];
 
     test('renders card', () => {
         const props = {

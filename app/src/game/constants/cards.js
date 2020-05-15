@@ -1,14 +1,6 @@
-import CARDS_AUTUMN from './cardTypes/cardsAutumn';
-import CARDS_SPRING from './cardTypes/cardsSpring';
-import CARDS_SUMMER from './cardTypes/cardsSummer';
-import CARDS_WINTER from './cardTypes/cardsWinter';
+import CARDS_LIST from './cardsList';
 
-const CARD_TYPES = [
-    ...CARDS_AUTUMN.map(card => ({...card, faction: 'aut'})),
-    ...CARDS_SPRING.map(card => ({...card, faction: 'spr'})),
-    ...CARDS_SUMMER.map(card => ({...card, faction: 'sum'})),
-    ...CARDS_WINTER.map(card => ({...card, faction: 'win'}))
-].map((card, index) => {
+const CARDS = CARDS_LIST.map((card, index) => {
     return {
         ...card,
         id: index
@@ -17,4 +9,4 @@ const CARD_TYPES = [
 
 const MAX_CARD_HEALTH = 8;
 
-export {CARD_TYPES, MAX_CARD_HEALTH};
+export {CARDS, MAX_CARD_HEALTH};

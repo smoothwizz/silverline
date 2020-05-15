@@ -85,29 +85,11 @@
     .card-title {
         display: flex;
         flex-direction: column;
-        background: var(--dark-text);
-        color: var(--light-text);
+        background: $secondary-color;
+        color: $secondary-text-color;
         flex: 1;
         padding: 4px;
         text-align: center;
-
-        &--win {
-            background: $winter-tile-bg;
-        }
-
-        &--spr {
-            background: $winter-tile-bg;
-        }
-
-        &--sum {
-            background: $summer-tile-bg;
-            color: var(--dark-text);
-        }
-
-        &--aut {
-            background: $autumn-tile-bg;
-            color: var(--dark-text);
-        }
     }
 
     .stats {

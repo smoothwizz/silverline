@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import {CARD_TYPES} from '../../constants/cards';
+import {CARDS} from '../../constants/cards';
 import {
     ENEMY_TURN_DURATION,
     INITIAL_MANA_PER_TURN,
@@ -13,7 +13,7 @@ import utilsService from '../../services/utils';
 import eventsService from '../../services/events';
 
 const ANIMATION_DURATION = 1200;
-const defaultCard = CARD_TYPES[0];
+const defaultCard = CARDS[0];
 const defaultLane = LANES[0];
 const defaultBaseStrength = {
     user: INITIAL_BASE_STRENGTH,

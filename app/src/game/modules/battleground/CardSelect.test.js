@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import CardSelect from './CardSelect';
-import {CARD_TYPES} from '../../constants/cards';
+import {CARDS} from '../../constants/cards';
 
 describe('CardSelect', () => {
-    const selectedCard = CARD_TYPES[0];
+    const selectedCard = CARDS[0];
 
     test('container renders', () => {
         const { getByTestId } = render(<CardSelect selectedCard={selectedCard} action={() => {}} />);

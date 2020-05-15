@@ -1,7 +1,7 @@
 header {
-    background: $header-bg;
-    background: -webkit-linear-gradient(to right, $header-bg, lighten($header-bg, 5%));
-    background: linear-gradient(to right, $header-bg, lighten($header-bg, 5%));
+    background: $secondary-color;
+    background: -webkit-linear-gradient(to right, $secondary-color, lighten($secondary-color, 5%));
+    background: linear-gradient(to right, $secondary-color, lighten($secondary-color, 5%));
     color: var(--light-text);
 
     .container {

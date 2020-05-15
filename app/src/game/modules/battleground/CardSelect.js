@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { CARD_TYPES } from '../../constants/cards';
+import { CARDS } from '../../constants/cards';
 import Card from '../cards/Card';
 import CardSearchBar from '../cards/CardSearchBar';
 
@@ -36,8 +36,7 @@ const CardSelect = ({ selectedCard, mana, selectCard, deployCard }) => {
 
         return (
             card.label.toLowerCase().indexOf(term) > -1 ||
-            card.type.toLowerCase().indexOf(term) > -1 ||
-            card.faction.toLowerCase().indexOf(term) > -1
+            card.type.toLowerCase().indexOf(term) > -1
         );
     };
 
@@ -45,7 +44,7 @@ const CardSelect = ({ selectedCard, mana, selectCard, deployCard }) => {
         <div className="cards-with-search">
             <CardSearchBar term={searchTerm} action={handleSearchChange} />
             <div data-testid="cards-select" className="cards-select">
-                {CARD_TYPES.filter(filterBySearchTerm)
+                {CARDS.filter(filterBySearchTerm)
                     .sort((a, b) => a.cost - b.cost)
                     .map(card => getCard(card))}
             </div>

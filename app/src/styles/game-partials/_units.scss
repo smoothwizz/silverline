@@ -114,7 +114,7 @@
         height: 4px;
         margin-top: 4px;
         min-width: fit-content;
-        width: 90%;
+        width: $tile-width / 2;
 
         .health-bar {
             background: $health-missing-bg;
