@@ -58,10 +58,12 @@ const BattlegroundContainer = () => {
     /**
      * Validate card add
      *
+     * @param {object} card
+     *
      * @returns boolean
      */
-    const isAddValid = () => {
-        const isManaEnough = mana - selectedCard.cost >= 0;
+    const isAddValid = (card) => {
+        const isManaEnough = mana - card.cost >= 0;
         if (!isManaEnough) {
             showAlert('Not enough mana to deploy this card.');
 
@@ -89,12 +91,18 @@ const BattlegroundContainer = () => {
         return true;
     };
 
-    const deployUnit = () => {
-        if (!isAddValid()) {
+    /**
+     * Deploy a card on the lane
+     *
+     * @param {object} card
+     */
+    const deployUnit = (cardToDeploy) => {
+        if (!isAddValid(cardToDeploy)) {
             return;
         }
-        let updatedMana = mana - selectedCard.cost;
-        let addedUnit = gameService.deployUnit(selectedLane, selectedCard);
+        const updatedMana = mana - cardToDeploy.cost;
+        const addedUnit = gameService.deployUnit(selectedLane, cardToDeploy);
+        setCard(cardToDeploy);
         setUserUnits(userUnits.concat(addedUnit));
         setMana(updatedMana);
     };
@@ -216,6 +224,7 @@ const BattlegroundContainer = () => {
     const battleFieldProps = {
         isGameOver,
         selectedLane,
+        selectedCard,
         baseStrength,
         userUnits,
         enemyUnits,

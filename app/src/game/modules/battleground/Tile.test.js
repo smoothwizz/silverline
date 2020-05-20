@@ -10,7 +10,8 @@ describe('Tile:', () => {
             row: 0,
             enemyUnits: [],
             userUnits: [],
-            selectedLane: { id: 1 },
+            isTileLaneSelected: true,
+            isSelectedForDeploy: false,
             action: () => {}
         };
         const { getByTestId } = render(<Tile {...mockProps} />);

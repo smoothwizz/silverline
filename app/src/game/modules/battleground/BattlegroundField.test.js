@@ -9,6 +9,16 @@ test('renders tile', () => {
             enemyUnits={[]}
             baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
+            selectedCard={{
+                cost: 1,
+                label: 'Minion',
+                stats: {
+                    life: 1,
+                    attack: 1,
+                    pace: 1
+                },
+                type: 'infantry'
+            }}
             actions={{}}
         />
     );
@@ -24,6 +34,16 @@ test('renders base strength', () => {
             enemyUnits={[]}
             baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
+            selectedCard={{
+                cost: 1,
+                label: 'Minion',
+                stats: {
+                    life: 1,
+                    attack: 1,
+                    pace: 1
+                },
+                type: 'infantry',
+            }}
             actions={{}}
         />
     );

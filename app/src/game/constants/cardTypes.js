@@ -4,7 +4,8 @@ const CARD_TYPES = {
     infantry: 'Infantry',
     siege: 'Siege Unit',
     special: 'Special',
-    structure: 'Structure'
+    structure: 'Structure',
+    buffer: 'Magic Unit'
 };
 
 export default CARD_TYPES;

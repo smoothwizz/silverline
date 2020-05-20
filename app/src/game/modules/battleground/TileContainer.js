@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tile from './Tile';
 
-const TileContainer = ({ lane, row, userUnits, enemyUnits, selectedLane, action }) => {
+const TileContainer = ({
+    lane,
+    row,
+    userUnits,
+    enemyUnits,
+    selectedLane,
+    selectedCard,
+    action
+}) => {
     const tileUserUnits = userUnits.filter(
         unit => unit.isAlive && unit.row === row && unit.lane === lane
     );
@@ -18,20 +26,26 @@ const TileContainer = ({ lane, row, userUnits, enemyUnits, selectedLane, action 
     const isOwnUnitOnNextLineTile = unit => {
         return unit.isAlive && unit.lane === lane && unit.row === 1;
     };
+    const isTileLaneSelected = lane === selectedLane.id;
+    const isLaneRestricted =
+        userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
+        enemyUnits.filter(isAliveUnit).length > 0;
 
-    const isRestricted =
-        row < 1 &&
-        (userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
-            enemyUnits.filter(isAliveUnit).length > 0);
+    const isSelectedForDeploy =
+        !isLaneRestricted &&
+        Math.floor(selectedCard.stats.pace) === row &&
+        lane === selectedLane.id;
+    const isTileRestricted = row < 1 && isLaneRestricted;
 
     return (
         <Tile
             lane={lane}
             row={row}
-            selectedLane={selectedLane}
+            isTileLaneSelected={isTileLaneSelected}
+            isSelectedForDeploy={isSelectedForDeploy}
             enemyUnits={tileEnemyUnits}
             userUnits={tileUserUnits}
-            isRestricted={isRestricted}
+            isRestricted={isTileRestricted}
             action={action}></Tile>
     );
 };
@@ -42,6 +56,7 @@ TileContainer.propTypes = {
     userUnits: PropTypes.array.isRequired,
     enemyUnits: PropTypes.array.isRequired,
     selectedLane: PropTypes.object,
+    selectedCard: PropTypes.object,
     action: PropTypes.func
 };
 

@@ -1,4 +1,6 @@
 import { CARDS } from '../constants/cards';
+import CARD_TYPES from '../constants/cardTypes';
+
 import LANES from '../constants/lanes';
 
 import eventsService from './events';
@@ -6,16 +8,42 @@ import utilsService from './utils';
 import fightService from './fight';
 import { currentState, actions } from './gameState';
 
-import { NO_OF_ROWS, LAST_ROW_INDEX } from '../constants/turn';
+import { NUMBER_OF_ROWS, LAST_ROW_INDEX } from '../constants/turn';
 
+/**
+ * Get buff units
+ * 
+ * @returns {array}
+ */
+const getBuffUnits = team => {
+    return currentState.units[team].filter(unit => unit.isAlive && unit.isBuffer);
+};
 /**
  * Apply buffs to cards
  *
- * @param {object} stats
+ * @param {object} initialStats
+ * @param {array} buffUnits
  */
-const applyBuffs = stats => {
-    //Apply buffs
-    return stats;
+const getStatsWithBuff = (initialStats, buffUnits) => {
+    if (buffUnits.length === 0) {
+        return initialStats;
+    }
+
+    const lifeIncrease = buffUnits.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.life;
+    }, 0);
+
+    const attackIncrease = buffUnits.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.attack;
+    }, 0);
+
+    const updatedStats = {
+        ...initialStats,
+        attack: initialStats.attack + attackIncrease,
+        life: initialStats.life + lifeIncrease
+    };
+
+    return updatedStats;
 };
 
 /**
@@ -28,9 +56,13 @@ const applyBuffs = stats => {
  */
 const createUnitFromCard = (card, laneId, team) => {
     const cardRow = team === 'user' ? 0 : LAST_ROW_INDEX;
+    const isBuffer = card.type === CARD_TYPES.buffer;
     let cardStats = utilsService.copyObject(card.stats);
+    const buffUnits = getBuffUnits(team);
 
-    cardStats = applyBuffs(cardStats, card.faction);
+    if (buffUnits.length > 0) {
+        cardStats = getStatsWithBuff(cardStats, buffUnits);
+    }
 
     const unit = {
         lane: laneId,
@@ -39,7 +71,8 @@ const createUnitFromCard = (card, laneId, team) => {
         pace: cardStats.pace,
         row: cardRow,
         cardId: card.id,
-        isAlive: true
+        isAlive: true,
+        isBuffer: isBuffer
     };
 
     return unit;
@@ -255,7 +288,7 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
  */
 const fight = team => {
     const opposingTeam = team === 'user' ? 'enemy' : 'user';
-    const baseRow = team === 'user' ? NO_OF_ROWS : -1;
+    const baseRow = team === 'user' ? NUMBER_OF_ROWS : -1;
     const activeUnits = currentState.units[team].filter(unit => {
         return unit.isAlive;
     });
@@ -268,8 +301,7 @@ const fight = team => {
             break;
         }
 
-        isAttackingBase =
-            team === 'user' ? unit.row >= baseRow : unit.row <= baseRow;
+        isAttackingBase = team === 'user' ? unit.row >= baseRow : unit.row <= baseRow;
         if (isAttackingBase) {
             attackBase(unit, team, opposingTeam);
 

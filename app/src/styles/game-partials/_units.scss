@@ -15,14 +15,28 @@
         z-index: 2;
     }
 
+    &--lane-deploy {
+        &:after {
+            background: rgba($user-bg, .2);
+            border-radius: 50%;
+            border: 1px dashed #cecece;
+            content: ' ';
+            height: 16px;
+            position: absolute;
+            top: calc(50% - 3px);
+            width: 16px;
+            z-index: 3;
+        }
+    }
+
     &--restricted {
         &:after {
-            content: ' ';
             background-image: repeating-linear-gradient(45deg,
                     transparent,
                     transparent 8px,
                     rgba(255, 255, 255, 0.3) 8px,
                     rgba(255, 255, 255, 0.3) 16px);
+            content: ' ';
             height: 100%;
             position: absolute;
             width: 100%;
