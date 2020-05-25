@@ -7,10 +7,11 @@
     background: $cards-container-bg;
     display: flex;
     flex-direction: column;
-    margin: 8px 0;
+    margin: 0;
     padding: 1em;
 
     .search-bar {
+        margin-bottom: 0;
         width: 50%;
     }
 }
