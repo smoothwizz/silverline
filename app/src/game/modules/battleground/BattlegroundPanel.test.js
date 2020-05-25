@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import BattlegroundPanel from './BattlegroundPanel';
 import LANES from '../../constants/lanes';
-import {CARDS} from '../../constants/cards';
+import { CARDS } from '../../constants/cards';
 
 describe('BattlegroundPanel', () => {
     const actions = {
@@ -28,13 +28,15 @@ describe('BattlegroundPanel', () => {
         isGameOver: false
     };
 
+    const mana = { user: 1, cpu: 2 };
+
     test('container renders', () => {
         const { getByTestId } = render(
             <BattlegroundPanel
                 alert={{ text: '', type: 'error' }}
                 selectedLane={LANES[0]}
                 selectedCard={CARDS[0]}
-                mana={1}
+                mana={mana}
                 conditions={conditions}
                 actions={actions}
             />
@@ -50,8 +52,8 @@ describe('BattlegroundPanel', () => {
                 alert={{ text: '', type: 'error' }}
                 selectedLane={LANES[0]}
                 selectedCard={CARDS[0]}
-                mana={1}
-                conditions={{...conditions, isGameOver: true}}
+                mana={mana}
+                conditions={{ ...conditions, isGameOver: true }}
                 actions={actions}
             />
         );

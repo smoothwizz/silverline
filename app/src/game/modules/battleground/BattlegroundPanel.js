@@ -14,14 +14,15 @@ const BattlegroundPanel = ({ alert, selectedLane, selectedCard, mana, conditions
     );
 
     const laneSelect = <LaneSelect selectedLane={selectedLane} action={actions.handleLaneSelect} />;
+    const userMana = mana.user;
 
     const manaIndicator = (
-        <div className={`mana-indicator${mana === 0 ? ' mana-indicator--empty' : ''}`}>
-            <span>{mana}</span>
+        <div className={`mana-indicator${userMana === 0 ? ' mana-indicator--empty' : ''}`}>
+            <span>{userMana}</span>
         </div>
     );
 
-    const noMovesLeft = mana === 0;
+    const noMovesLeft = userMana === 0;
 
     const activeGameBar = (
         <>
@@ -66,7 +67,7 @@ const BattlegroundPanel = ({ alert, selectedLane, selectedCard, mana, conditions
 
             {!conditions.isGameOver && (
                 <CardSelect
-                    mana={mana}
+                    mana={userMana}
                     selectedCard={selectedCard}
                     selectCard={actions.handleCardSelect}
                     deployCard={actions.deployUnit}
@@ -82,7 +83,7 @@ BattlegroundPanel.propTypes = {
     selectedLane: PropTypes.object,
     selectedCard: PropTypes.object,
     events: PropTypes.array,
-    mana: PropTypes.number,
+    mana: PropTypes.object,
     conditions: PropTypes.object,
     actions: PropTypes.object
 };

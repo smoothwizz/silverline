@@ -2,9 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import BattlegroundField from './BattlegroundField';
 
+const mana = {user: 1, enemy: 1};
 test('renders tile', () => {
     const { getByTestId } = render(
         <BattlegroundField
+            mana={mana}
             userUnits={[]}
             enemyUnits={[]}
             baseStrength={{ user: 10, enemy: 10 }}
@@ -30,6 +32,7 @@ test('renders tile', () => {
 test('renders base strength', () => {
     const { getByTestId } = render(
         <BattlegroundField
+            mana={mana}
             userUnits={[]}
             enemyUnits={[]}
             baseStrength={{ user: 10, enemy: 10 }}

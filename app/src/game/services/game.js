@@ -12,12 +12,13 @@ import { NUMBER_OF_ROWS, LAST_ROW_INDEX } from '../constants/turn';
 
 /**
  * Get buff units
- * 
+ *
  * @returns {array}
  */
 const getBuffUnits = team => {
     return currentState.units[team].filter(unit => unit.isAlive && unit.isBuffer);
 };
+
 /**
  * Apply buffs to cards
  *
@@ -88,7 +89,6 @@ const deployUnit = (lane, card) => {
     const team = 'user';
     const unit = createUnitFromCard(card, lane.id, team);
 
-    actions.setMana(currentState.mana.user - card.cost, 'user');
     actions.addUnit(unit, 'user');
 
     return unit;
@@ -135,6 +135,7 @@ const selectEnemyUnits = () => {
         cardLaneId,
         selectedCard;
 
+    console.log(leftMana);
     /**
      * Get available lanes
      *
@@ -207,8 +208,6 @@ const selectEnemyUnits = () => {
         const unit = createUnitFromCard(selectedCard, cardLaneId, 'enemy');
         actions.addUnit(unit, 'enemy');
     } while (hasMoves);
-
-    actions.setMana(leftMana, 'enemy');
 };
 
 /**
@@ -318,7 +317,7 @@ const fight = team => {
 };
 
 const increaseMana = team => {
-    const manaIncrease = 1 + parseInt(currentState.round / 3);
+    const manaIncrease = 1;
     const updatedMana = currentState.mana[team] + manaIncrease;
 
     actions.setMana(updatedMana, team);
@@ -395,14 +394,24 @@ const getGameOverState = () => {
 };
 
 /**
+ * Get Mana
+ *
+ * @returns {object}
+ */
+const getMana = () => {
+    return currentState.mana;
+};
+
+/**
  * Reset game state
  */
 const reset = () => {
-    return actions.resetState();
+    actions.resetState();
 };
 
 const gameService = {
     getUnits,
+    getMana,
     getDefaultCard,
     getGameOverState,
     createUnitFromCard,

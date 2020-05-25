@@ -6,6 +6,7 @@ import TeamBase from './TeamBase';
 import TileContainer from './TileContainer';
 
 const BattlegroundField = ({
+    mana,
     enemyUnits,
     userUnits,
     selectedLane,
@@ -38,14 +39,15 @@ const BattlegroundField = ({
 
     return (
         <div className="battleground__field">
-            <TeamBase team="user" life={baseStrength.user} isGameOver={isGameOver} />
+            <TeamBase mana={mana.user} team="user" life={baseStrength.user} isGameOver={isGameOver} />
             <div className={`map${isGameOver ? ' map--destroyed' : ''}`}>{createField()}</div>
-            <TeamBase team="enemy" life={baseStrength.enemy} isGameOver={isGameOver} />
+            <TeamBase mana={mana.enemy} team="enemy" life={baseStrength.enemy} isGameOver={isGameOver} />
         </div>
     );
 };
 
 BattlegroundField.propTypes = {
+    mana: PropTypes.object,
     baseStrength: PropTypes.object,
     userUnits: PropTypes.array,
     enemyUnits: PropTypes.array,

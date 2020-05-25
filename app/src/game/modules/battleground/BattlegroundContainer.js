@@ -19,6 +19,10 @@ const defaultBaseStrength = {
     user: INITIAL_BASE_STRENGTH,
     enemy: INITIAL_BASE_STRENGTH
 };
+const defaultMana = {
+    user: INITIAL_MANA_PER_TURN,
+    enemy: INITIAL_MANA_PER_TURN
+};
 const BattlegroundContainer = () => {
     const [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
         [enemyUnits, setEnemyUnits] = useState(utilsService.copyObject(gameService.getUnits('enemy'))),
@@ -29,10 +33,10 @@ const BattlegroundContainer = () => {
             text: '',
             type: 'success'
         }),
-        [mana, setMana] = useState(INITIAL_MANA_PER_TURN),
+        [mana, setMana] = useState(utilsService.copyObject(defaultMana)),
         [selectedLane, setLane] = useState(defaultLane),
         [selectedCard, setCard] = useState(defaultCard),
-        [baseStrength, setBaseStrength] = useState(defaultBaseStrength);
+        [baseStrength, setBaseStrength] = useState(utilsService.copyObject(defaultBaseStrength));
 
     /**
      * Show an alert
@@ -63,7 +67,7 @@ const BattlegroundContainer = () => {
      * @returns boolean
      */
     const isAddValid = (card) => {
-        const isManaEnough = mana - card.cost >= 0;
+        const isManaEnough = mana.user - card.cost >= 0;
         if (!isManaEnough) {
             showAlert('Not enough mana to deploy this card.');
 
@@ -100,11 +104,15 @@ const BattlegroundContainer = () => {
         if (!isAddValid(cardToDeploy)) {
             return;
         }
-        const updatedMana = mana - cardToDeploy.cost;
         const addedUnit = gameService.deployUnit(selectedLane, cardToDeploy);
+        const leftMana = mana.user - cardToDeploy.cost;
+        console.log(`User: ${mana.user} -  Cost: ${cardToDeploy.cost} = ${leftMana}`);
         setCard(cardToDeploy);
+        setMana((prevMana) => ({
+            ...prevMana,
+            user: leftMana
+        }));
         setUserUnits(userUnits.concat(addedUnit));
-        setMana(updatedMana);
     };
 
     /**
@@ -142,7 +150,7 @@ const BattlegroundContainer = () => {
         updateBaseStrength(currentState.baseStrength);
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
-        setMana(currentState.mana.user);
+        setMana(currentState.mana);
         setIsEnemyTurn(true);
 
         setTimeout(() => {
@@ -156,6 +164,7 @@ const BattlegroundContainer = () => {
         updateBaseStrength(currentState.baseStrength);
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
+        setMana(currentState.mana);
 
         setTimeout(() => {
             setIsEnemyTurn(false);
@@ -178,7 +187,7 @@ const BattlegroundContainer = () => {
             text: '',
             type: 'success'
         });
-        setMana(INITIAL_MANA_PER_TURN);
+        setMana(defaultMana);
         setLane(defaultLane);
         setCard(defaultCard);
         setBaseStrength(defaultBaseStrength);
@@ -222,6 +231,7 @@ const BattlegroundContainer = () => {
     };
 
     const battleFieldProps = {
+        mana,
         isGameOver,
         selectedLane,
         selectedCard,

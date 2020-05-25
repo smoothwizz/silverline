@@ -6,6 +6,7 @@ import TeamBase from './TeamBase';
 describe('Base:', () => {
     test('renders Base', () => {
         const mockProps = {
+            mana: 1,
             team: 'user',
             life: 10
         };
