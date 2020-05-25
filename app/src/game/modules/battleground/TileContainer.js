@@ -30,19 +30,29 @@ const TileContainer = ({
     const isLaneRestricted =
         userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
         enemyUnits.filter(isAliveUnit).length > 0;
-
-    const isSelectedForDeploy =
-        !isLaneRestricted &&
-        Math.floor(selectedCard.stats.pace) === row &&
-        lane === selectedLane.id;
     const isTileRestricted = row < 1 && isLaneRestricted;
+
+    let isFinalPosition = false,
+        isMovePosition = false;
+
+    if (selectedCard) {
+        isFinalPosition =
+            !isLaneRestricted &&
+            Math.floor(selectedCard.stats.pace) === row &&
+            lane === selectedLane.id;
+        isMovePosition =
+            !isLaneRestricted &&
+            Math.floor(selectedCard.stats.pace) > row &&
+            lane === selectedLane.id;
+    }
 
     return (
         <Tile
             lane={lane}
             row={row}
             isTileLaneSelected={isTileLaneSelected}
-            isSelectedForDeploy={isSelectedForDeploy}
+            isFinalPosition={isFinalPosition}
+            isMovePosition={isMovePosition}
             enemyUnits={tileEnemyUnits}
             userUnits={tileUserUnits}
             isRestricted={isTileRestricted}

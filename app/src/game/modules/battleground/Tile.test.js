@@ -10,8 +10,9 @@ describe('Tile:', () => {
             row: 0,
             enemyUnits: [],
             userUnits: [],
+            isMovePosition: true,
             isTileLaneSelected: true,
-            isSelectedForDeploy: false,
+            isFinalPosition: false,
             action: () => {}
         };
         const { getByTestId } = render(<Tile {...mockProps} />);

@@ -15,17 +15,31 @@
         z-index: 2;
     }
 
-    &--lane-deploy {
+    &--final-pos {
         &:after {
-            background: rgba($user-bg, .2);
+            background: rgba($user-bg, .3);
             border-radius: 50%;
             border: 1px dashed #cecece;
             content: ' ';
-            height: 16px;
+            height: 14px;
             position: absolute;
-            top: calc(50% - 3px);
-            width: 16px;
+            top: calc(50% - 4px);
+            width: 14px;
             z-index: 3;
+        }
+    }
+
+    &--move-pos {
+        &:after {
+            background: rgba($user-bg, .1);
+            border-radius: 50%;
+            border: 1px dashed #cecece;
+            content: ' ';
+            height: 8px;
+            position: absolute;
+            top: calc(50% - 6px);
+            width: 8px;
+            z-index: 2;
         }
     }
 

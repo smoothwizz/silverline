@@ -6,16 +6,20 @@ const Tile = ({
     lane,
     row,
     isTileLaneSelected,
-    isSelectedForDeploy,
+    isFinalPosition,
+    isMovePosition,
     enemyUnits,
     userUnits,
     isRestricted,
     action
 }) => {
     const tileId = `tile-${lane}${row}`;
-    const tileClass = `tile${isRestricted ? ' tile--restricted' : ''}${
-        isTileLaneSelected ? ' tile--lane-selected' : ''
-    }${isSelectedForDeploy ? ' tile--lane-deploy' : ''}`;
+    const tileClass =
+        'tile' +
+        (isRestricted ? ' tile--restricted' : '') +
+        (isTileLaneSelected ? ' tile--lane-selected' : '') +
+        (isFinalPosition ? ' tile--final-pos' : '') +
+        (isMovePosition ? ' tile--move-pos' : '');
 
     return (
         <div onClick={() => action(lane)} className={tileClass} data-testid={tileId}>
@@ -33,7 +37,8 @@ Tile.propTypes = {
     lane: PropTypes.number,
     row: PropTypes.number,
     isTileLaneSelected: PropTypes.bool,
-    isSelectedForDeploy: PropTypes.bool,
+    isFinalPosition: PropTypes.bool,
+    isMovePosition: PropTypes.bool,
     enemyUnits: PropTypes.array,
     userUnits: PropTypes.array,
     isRestricted: PropTypes.bool,

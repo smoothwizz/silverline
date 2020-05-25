@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import {CARDS} from '../../constants/cards';
 import {
     ENEMY_TURN_DURATION,
     INITIAL_MANA_PER_TURN,
@@ -13,7 +12,6 @@ import utilsService from '../../services/utils';
 import eventsService from '../../services/events';
 
 const ANIMATION_DURATION = 1200;
-const defaultCard = CARDS[0];
 const defaultLane = LANES[0];
 const defaultBaseStrength = {
     user: INITIAL_BASE_STRENGTH,
@@ -35,7 +33,7 @@ const BattlegroundContainer = () => {
         }),
         [mana, setMana] = useState(utilsService.copyObject(defaultMana)),
         [selectedLane, setLane] = useState(defaultLane),
-        [selectedCard, setCard] = useState(defaultCard),
+        [selectedCard, setCard] = useState(null),
         [baseStrength, setBaseStrength] = useState(utilsService.copyObject(defaultBaseStrength));
 
     /**
@@ -165,7 +163,7 @@ const BattlegroundContainer = () => {
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
         setMana(currentState.mana);
-
+        setCard(null);
         setTimeout(() => {
             setIsEnemyTurn(false);
             setIsLoading(false);
@@ -189,7 +187,7 @@ const BattlegroundContainer = () => {
         });
         setMana(defaultMana);
         setLane(defaultLane);
-        setCard(defaultCard);
+        setCard(null);
         setBaseStrength(defaultBaseStrength);
     };
 
