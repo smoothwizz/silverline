@@ -149,6 +149,7 @@ const BattlegroundContainer = () => {
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
         setMana(currentState.mana);
+        setCard(null);
         setIsEnemyTurn(true);
 
         setTimeout(() => {
@@ -163,7 +164,6 @@ const BattlegroundContainer = () => {
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
         setMana(currentState.mana);
-        setCard(null);
         setTimeout(() => {
             setIsEnemyTurn(false);
             setIsLoading(false);
