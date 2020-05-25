@@ -2,6 +2,8 @@ $events-bg: #ffffff;
 
 .events {
     background: $events-bg;
+    max-height: 90vh;
+    overflow-y: scroll;
     padding: 1em;
 
     h2 {

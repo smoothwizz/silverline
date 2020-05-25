@@ -135,7 +135,6 @@ const selectEnemyUnits = () => {
         cardLaneId,
         selectedCard;
 
-    console.log(leftMana);
     /**
      * Get available lanes
      *

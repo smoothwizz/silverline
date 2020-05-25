@@ -104,7 +104,7 @@ const BattlegroundContainer = () => {
         }
         const addedUnit = gameService.deployUnit(selectedLane, cardToDeploy);
         const leftMana = mana.user - cardToDeploy.cost;
-        console.log(`User: ${mana.user} -  Cost: ${cardToDeploy.cost} = ${leftMana}`);
+
         setCard(cardToDeploy);
         setMana((prevMana) => ({
             ...prevMana,
@@ -148,7 +148,6 @@ const BattlegroundContainer = () => {
         updateBaseStrength(currentState.baseStrength);
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
-        setMana(currentState.mana);
         setCard(null);
         setIsEnemyTurn(true);
 
@@ -163,10 +162,14 @@ const BattlegroundContainer = () => {
         updateBaseStrength(currentState.baseStrength);
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
-        setMana(currentState.mana);
         setTimeout(() => {
             setIsEnemyTurn(false);
             setIsLoading(false);
+
+            if (!currentState.isGameOver) {
+                showAlert(`You now have ${currentState.mana.user} mana`, 'info');
+                setMana(currentState.mana);
+            }
         }, ANIMATION_DURATION);
     };
 

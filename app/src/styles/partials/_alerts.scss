@@ -1,8 +1,9 @@
 $alert-error-bg: #d9534f;
 $alert-success-bg: #457e37;
+$alert-info-bg: #00c6ff;
 
 .alert {
-    animation: fadeOut 2.5s ease-out;
+    animation: breathe 2s infinite, fadeOut 3s ease-in-out;
     position: fixed;
     top: 5%;
     width: fit-content;
@@ -22,6 +23,12 @@ $alert-success-bg: #457e37;
     &--success {
         background-color: $alert-success-bg;
         border: 1px solid darken($alert-success-bg, 5%);
+        color: var(--light-text);
+    }
+
+    &--info {
+        background-color: $alert-info-bg;
+        border: 1px solid darken($alert-info-bg, 5%);
         color: var(--light-text);
     }
 
