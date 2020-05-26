@@ -16,15 +16,18 @@ const BattleEvents = () => {
 
     return (
         <section className="events" data-testid="events-list">
-            <h2>History</h2>
             {events.length > 0 && (
-                <div className="events__list">
-                    {events
-                        .sort((a, b) => b.id - a.id)
-                        .map(event => {
-                            return <BattleEvent key={event.id} event={event} />;
-                        })}
-                </div>
+                <>
+                    <h2>History</h2>
+
+                    <div className="events__list">
+                        {events
+                            .sort((a, b) => b.id - a.id)
+                            .map(event => {
+                                return <BattleEvent key={event.id} event={event} />;
+                            })}
+                    </div>
+                </>
             )}
         </section>
     );
