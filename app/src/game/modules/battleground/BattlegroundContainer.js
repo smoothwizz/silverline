@@ -188,10 +188,10 @@ const BattlegroundContainer = () => {
             text: '',
             type: 'success'
         });
-        setMana(defaultMana);
+        setMana(utilsService.copyObject(defaultMana));
         setLane(defaultLane);
         setCard(null);
-        setBaseStrength(defaultBaseStrength);
+        setBaseStrength(utilsService.copyObject(defaultBaseStrength));
     };
 
     const handleLaneSelect = laneId => {
