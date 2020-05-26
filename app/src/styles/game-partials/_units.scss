@@ -7,7 +7,6 @@
     justify-content: center;
     height: $tile-height;
     position: relative;
-    width: $tile-width;
     transition: $game-transition;
 
     &--lane-selected {
@@ -135,7 +134,7 @@
         height: 4px;
         margin-top: 4px;
         min-width: fit-content;
-        width: $tile-width / 2;
+        width: 50%;
 
         .health-bar {
             background: $health-missing-bg;

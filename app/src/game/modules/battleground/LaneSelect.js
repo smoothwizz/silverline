@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import LANES from '../../constants/lanes';
 
 const LaneSelect = ({ selectedLane, action }) => {
+    const selectedLaneId = selectedLane ? selectedLane.id : null;
     const getLane = lane => {
         const laneClass =
             'lane' +
-            ` ${selectedLane.id === lane.id ? 'lane--selected' : ''}` +
+            ` ${selectedLaneId === lane.id ? 'lane--selected' : ''}` +
             ` lane--${lane.value}`;
         return (
             <div className={laneClass} key={lane.id} onClick={() => action(lane.id)}>
@@ -16,7 +17,7 @@ const LaneSelect = ({ selectedLane, action }) => {
     };
 
     return (
-        <div className="game-bar-container">
+        <div className="lane-select-container">
             <span className="label">Select a lane</span>
             <div data-testid="lane-select" className="lane-select">
                 {LANES.map(lane => getLane(lane))}

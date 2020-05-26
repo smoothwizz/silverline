@@ -26,7 +26,7 @@ const TileContainer = ({
     const isOwnUnitOnNextLineTile = unit => {
         return unit.isAlive && unit.lane === lane && unit.row === 1;
     };
-    const isTileLaneSelected = lane === selectedLane.id;
+    const isTileLaneSelected = lane === (selectedLane ? selectedLane.id : null) ;
     const isLaneRestricted =
         userUnits.filter(isOwnUnitOnNextLineTile).length > 0 ||
         enemyUnits.filter(isAliveUnit).length > 0;

@@ -1,11 +1,13 @@
 $stripe-bg: rgba(54, 54, 54, 0.2);
+$max-map-width: 800px;
 
 .battleground__field {
     .map {
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         display: grid;
-        grid-template-columns: $tile-width $tile-width $tile-width $tile-width;
-        margin: 8px 0;
+        grid-template-columns: 25% 25% 25% 25%;
+        margin: 8px auto;
+        max-width: $max-map-width;
 
         &--destroyed {
             animation-fill-mode: forwards;
@@ -19,13 +21,15 @@ $stripe-bg: rgba(54, 54, 54, 0.2);
 
     .team-base {
         border-radius: 8px;
-        clip-path: circle(50% at 50% 50%);
-        padding: 1em 0;
+        padding: 1em;
         color: var(--light-text);
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
+        margin: 8px auto;
+        width: 30%;
+        min-width: 300px;
 
         &--destroyed {
             animation-fill-mode: forwards;

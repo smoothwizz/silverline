@@ -13,7 +13,7 @@
         }
     }
 
-    .game-bar-container {
+    .lane-select-container {
         display: flex;
         flex-direction: column;
         margin: 0 4px;
@@ -104,5 +104,11 @@
         &--enemy {
             background: linear-gradient(-45deg, $enemy-bg, darken($enemy-bg, 10%), $enemy-bg, lighten($enemy-bg, 5%));
         }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .game-bar .lane-select-container {
+        display: none;
     }
 }

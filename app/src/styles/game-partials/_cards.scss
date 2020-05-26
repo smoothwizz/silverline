@@ -4,11 +4,16 @@
 }
 
 .cards-with-search {
+    animation: fadeIn 1.5s forwards;
     background: $cards-container-bg;
     display: flex;
     flex-direction: column;
     margin: 0;
     padding: 1em;
+
+    &--hidden {
+        display: none;
+    }
 
     .search-bar {
         margin-bottom: 0;
@@ -20,7 +25,6 @@
     display: flex;
     flex-direction: row;
     overflow: auto;
-    max-width: $card-select-container-width;
 
     &::-webkit-scrollbar-track {
         border-radius: 10px;
@@ -43,7 +47,7 @@
 .cards-showcase {
     background: $cards-container-bg;
     display: grid;
-    grid-template-columns: repeat($card-per-row, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax($card-width, 1fr));
     align-items: center;
     padding: 0 1em;
 
