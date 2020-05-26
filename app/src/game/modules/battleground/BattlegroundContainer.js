@@ -201,6 +201,9 @@ const BattlegroundContainer = () => {
     };
 
     const handleCardSelect = card => {
+        if (card.stats.pace > 1 && selectedLane.id === 0) {
+            showAlert('In winter, flying units have pace reduced to 1.', 'info');
+        }
         setCard(card);
     };
 

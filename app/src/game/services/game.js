@@ -24,12 +24,9 @@ const getBuffUnits = team => {
  *
  * @param {object} initialStats
  * @param {array} buffUnits
+ * @param {number} laneId
  */
-const getStatsWithBuff = (initialStats, buffUnits) => {
-    if (buffUnits.length === 0) {
-        return initialStats;
-    }
-
+const getStatsWithBuff = (initialStats, buffUnits, laneId) => {
     const lifeIncrease = buffUnits.reduce((accumulator, currentValue) => {
         return accumulator + currentValue.life;
     }, 0);
@@ -38,10 +35,13 @@ const getStatsWithBuff = (initialStats, buffUnits) => {
         return accumulator + currentValue.attack;
     }, 0);
 
+    const paceWithLaneBuff = LANES[laneId].value === 'win' && initialStats.pace > 1 ? 1 : initialStats.pace;
+
     const updatedStats = {
         ...initialStats,
         attack: initialStats.attack + attackIncrease,
-        life: initialStats.life + lifeIncrease
+        life: initialStats.life + lifeIncrease,
+        pace: paceWithLaneBuff
     };
 
     return updatedStats;
@@ -61,9 +61,7 @@ const createUnitFromCard = (card, laneId, team) => {
     let cardStats = utilsService.copyObject(card.stats);
     const buffUnits = getBuffUnits(team);
 
-    if (buffUnits.length > 0) {
-        cardStats = getStatsWithBuff(cardStats, buffUnits);
-    }
+    cardStats = getStatsWithBuff(cardStats, buffUnits, laneId);
 
     const unit = {
         lane: laneId,
