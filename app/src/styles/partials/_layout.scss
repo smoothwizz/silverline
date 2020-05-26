@@ -1,35 +1,45 @@
-html,
-body,
-#root {
+html, body {
   height: 100%;
-  /* needed for proper layout */
-}
-
-
-body {
+  overscroll-behavior: none;
   background: $body-bg;
   background: -webkit-linear-gradient(to right, $body-bg, darken($body-bg, 5%));
   background: linear-gradient(to right, $body-bg, darken($body-bg, 5%));
-  overscroll-behavior: none;
 }
 
 #root {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 main {
   color: var(--dark-text);
-  flex: 1 1 auto;
+  flex: 1 0 auto;
   padding: 1em;
   position: relative;
-  width: $container-width;
-  margin: 0 auto;
+
+  &:after {
+    content: '\00a0'; /* &nbsp; */
+    display: block;
+    margin-top: var(--space);
+    height: 0px;
+    visibility: hidden;
+  }
 }
 
-.container {
-  max-width: $container-width;
-  margin: 0 auto;
+@media (--break-lg) {
+  main {
+    padding-top: var(--space-lg);
+
+    &:after {
+      margin-top: var(--space-lg);
+    }
+  }
+}
+
+header,
+footer {
+  flex: none;
 }
 
 footer {
@@ -40,7 +50,3 @@ footer {
   padding: 1em;
 }
 
-.container {
-  max-width: 1366px;
-  margin: 0 auto;
-}

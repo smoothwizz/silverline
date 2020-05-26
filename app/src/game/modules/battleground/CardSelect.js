@@ -4,7 +4,7 @@ import { CARDS } from '../../constants/cards';
 import Card from '../cards/Card';
 import CardSearchBar from '../cards/CardSearchBar';
 
-const CardSelect = ({ selectedCard, mana, selectCard, deployCard }) => {
+const CardSelect = ({ selectedCard, mana, selectCard, deployCard, isCardSelectMode }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const getCard = card => {
@@ -41,7 +41,7 @@ const CardSelect = ({ selectedCard, mana, selectCard, deployCard }) => {
     };
 
     return (
-        <div className="cards-with-search">
+        <div className={`cards-with-search ${isCardSelectMode ? '' : 'cards-with-search--hidden'}`}>
             <CardSearchBar term={searchTerm} action={handleSearchChange} />
             <div data-testid="cards-select" className="cards-select">
                 {CARDS.filter(filterBySearchTerm)
@@ -56,7 +56,8 @@ CardSelect.propTypes = {
     selectedCard: PropTypes.object,
     mana: PropTypes.number,
     selectCard: PropTypes.func,
-    deployCard: PropTypes.func
+    deployCard: PropTypes.func,
+    isCardSelectMode: PropTypes.bool
 };
 
 export default CardSelect;

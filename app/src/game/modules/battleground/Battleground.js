@@ -1,20 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BattlegroundField from './BattlegroundField';
-import BattlegroundPanel from './BattlegroundPanel';
+import CardSelect from './CardSelect';
+import GameBar from './GameBar';
+import BattleEvents from '../events/BattleEvents';
 
-const Battleground = ({ battlePanelProps, battleFieldProps }) => {
+const Battleground = ({ cardSelectProps,  battleFieldProps, gameBarProps, isGameOver, isCardSelectMode }) => {
     return (
         <div className="battleground" data-testid="battleground">
+            <GameBar {...gameBarProps} />
+            {!isGameOver && (
+                <CardSelect {...cardSelectProps}
+                />
+            )}
             <BattlegroundField {...battleFieldProps} />
-            <BattlegroundPanel {...battlePanelProps} />
+            <BattleEvents />
         </div>
     );
 };
 
 Battleground.propTypes = {
-    battlePanelProps: PropTypes.object,
-    battleFieldProps: PropTypes.object
+    battleFieldProps: PropTypes.object,
+    cardSelectProps: PropTypes.object,
+    gameBarProps: PropTypes.object,
+    isGameOver: PropTypes.bool,
+    isCardSelectMode: PropTypes.bool
 };
 
 export default Battleground;

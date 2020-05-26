@@ -22,17 +22,22 @@ const defaultMana = {
     enemy: INITIAL_MANA_PER_TURN
 };
 const BattlegroundContainer = () => {
-    const [userUnits, setUserUnits] = useState(utilsService.copyObject(gameService.getUnits('user'))),
-        [enemyUnits, setEnemyUnits] = useState(utilsService.copyObject(gameService.getUnits('enemy'))),
+    const [userUnits, setUserUnits] = useState(
+            utilsService.copyObject(gameService.getUnits('user'))
+        ),
+        [enemyUnits, setEnemyUnits] = useState(
+            utilsService.copyObject(gameService.getUnits('enemy'))
+        ),
         [isGameOver, setGameOver] = useState(gameService.getGameOverState()),
         [isLoading, setIsLoading] = useState(false),
+        [isCardSelectMode, setCardSelectMode] = useState(false),
         [isEnemyTurn, setIsEnemyTurn] = useState(false),
         [alert, setAlert] = useState({
             text: '',
             type: 'success'
         }),
         [mana, setMana] = useState(utilsService.copyObject(defaultMana)),
-        [selectedLane, setLane] = useState(defaultLane),
+        [selectedLane, setLane] = useState(null),
         [selectedCard, setCard] = useState(null),
         [baseStrength, setBaseStrength] = useState(utilsService.copyObject(defaultBaseStrength));
 
@@ -64,7 +69,7 @@ const BattlegroundContainer = () => {
      *
      * @returns boolean
      */
-    const isAddValid = (card) => {
+    const isAddValid = card => {
         const isManaEnough = mana.user - card.cost >= 0;
         if (!isManaEnough) {
             showAlert('Not enough mana to deploy this card.');
@@ -98,7 +103,7 @@ const BattlegroundContainer = () => {
      *
      * @param {object} card
      */
-    const deployUnit = (cardToDeploy) => {
+    const deployUnit = cardToDeploy => {
         if (!isAddValid(cardToDeploy)) {
             return;
         }
@@ -106,7 +111,7 @@ const BattlegroundContainer = () => {
         const leftMana = mana.user - cardToDeploy.cost;
 
         setCard(cardToDeploy);
-        setMana((prevMana) => ({
+        setMana(prevMana => ({
             ...prevMana,
             user: leftMana
         }));
@@ -149,6 +154,8 @@ const BattlegroundContainer = () => {
         setUserUnits(currentState.units.user);
         setEnemyUnits(currentState.units.enemy);
         setCard(null);
+        setLane(null);
+        setCardSelectMode(false);
         setIsEnemyTurn(true);
 
         setTimeout(() => {
@@ -167,7 +174,10 @@ const BattlegroundContainer = () => {
             setIsLoading(false);
 
             if (!currentState.isGameOver) {
-                showAlert(`Your mana increased. You now have ${currentState.mana.user} mana.`, 'info');
+                showAlert(
+                    `Your mana increased. You now have ${currentState.mana.user} mana.`,
+                    'info'
+                );
                 setMana(currentState.mana);
             }
         }, ANIMATION_DURATION);
@@ -198,6 +208,9 @@ const BattlegroundContainer = () => {
         const lane = LANES.find(el => el.id === laneId);
 
         setLane(lane);
+        if (!isCardSelectMode) {
+            setCardSelectMode(true);
+        }
     };
 
     const handleCardSelect = card => {
@@ -225,15 +238,6 @@ const BattlegroundContainer = () => {
         isLoading
     };
 
-    const battlePanelProps = {
-        mana,
-        selectedLane,
-        selectedCard,
-        alert,
-        actions,
-        conditions
-    };
-
     const battleFieldProps = {
         mana,
         isGameOver,
@@ -247,7 +251,32 @@ const BattlegroundContainer = () => {
         }
     };
 
-    return <Battleground battlePanelProps={battlePanelProps} battleFieldProps={battleFieldProps} />;
+    const cardSelectProps = {
+        mana: mana.user,
+        selectedCard,
+        selectCard: actions.handleCardSelect,
+        deployCard: actions.deployUnit,
+        isCardSelectMode
+    };
+
+    const gameBarProps = {
+        selectedLane,
+        userMana: mana.user,
+        conditions,
+        actions
+    };
+
+    return (
+        <>
+            {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
+            <Battleground
+                battleFieldProps={battleFieldProps}
+                gameBarProps={gameBarProps}
+                cardSelectProps={cardSelectProps}
+                isGameOver={conditions.isGameOver}
+            />
+        </>
+    );
 };
 
 export default BattlegroundContainer;
