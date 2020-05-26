@@ -18,7 +18,7 @@ $game-transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     --text-scale-ratio: 1.2;
 
     /* type scale */
-    --text-xs: calc(1em / (var(--text-scale-ratio) * var(--text-scale-ratio)));
+    --text-xs: 10px;
     --text-sm: calc(1em / var(--text-scale-ratio));
     --text-md: calc(1em * var(--text-scale-ratio));
     --text-lg: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio));
