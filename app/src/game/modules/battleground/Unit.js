@@ -1,17 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CARDS, MAX_CARD_HEALTH } from '../../constants/cards';
+import { CARDS, CARD_ICONS, MAX_CARD_HEALTH } from '../../constants/cards';
 import utilsService from '../../services/utils';
 import Tooltip from '../../widgets/Tooltip';
 
 const Unit = ({ unit, team }) => {
     const unitCard = CARDS.find(card => card.id === unit.cardId);
     const unitClass = `unit unit--${team} ${unit.isAlive ? '' : 'unit--dead'}`;
+    const getIcon = label => {
+        if (Object.prototype.hasOwnProperty.call(CARD_ICONS, label)) {
+            return CARD_ICONS[label];
+        }
+
+        return CARD_ICONS.default;
+    };
+
     const unitLabel = (
-        <div data-testid="unit-label" className="unit__label">
+        <div data-testid="unit-label" className="unit__icon" title={`#${unit.id} ${unitCard.label}`}>
             <Tooltip
                 text={`${unit.life} HP / ${unit.attack} ATK`}
-                toggleText={unitCard.label}
+                toggleText={getIcon(unitCard.name)}
                 isIconVisible={false}
                 type="game"
             />
@@ -31,12 +39,10 @@ const Unit = ({ unit, team }) => {
             </div>
         </div>
     );
-    const unitIcon = <span className="unit__icon" title={`#${unit.id}`}></span>;
 
     return (
         <div className={unitClass}>
             {unitLabel}
-            {unitIcon}
             {healthBar}
         </div>
     );

@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { FaInfoCircle } from 'react-icons/fa';
 
 const Tooltip = ({ text, toggleText, isIconVisible, type }) => {
-    if (!toggleText) {
-        isIconVisible = true;
-    }
-
     return (
         <div data-testid="tooltip" className={`tooltip ${type ? `tooltip--${type}` : ''}`}>
             {isIconVisible && <FaInfoCircle className="tooltip__toggle"></FaInfoCircle>}

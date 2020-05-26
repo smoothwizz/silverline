@@ -6,7 +6,6 @@ $stripe-bg: rgba(54, 54, 54, 0.2);
         display: grid;
         grid-template-columns: $tile-width $tile-width $tile-width $tile-width;
         margin: 8px 0;
-        transform: skewX(3deg);
 
         &--destroyed {
             animation-fill-mode: forwards;

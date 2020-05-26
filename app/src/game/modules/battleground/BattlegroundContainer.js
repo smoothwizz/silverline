@@ -167,7 +167,7 @@ const BattlegroundContainer = () => {
             setIsLoading(false);
 
             if (!currentState.isGameOver) {
-                showAlert(`You now have ${currentState.mana.user} mana`, 'info');
+                showAlert(`Your mana increased. You now have ${currentState.mana.user} mana.`, 'info');
                 setMana(currentState.mana);
             }
         }, ANIMATION_DURATION);

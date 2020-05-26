@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CardStats from './CardStats';
+import { CARD_ICONS } from '../../constants/cards';
 
 const Card = ({ card, mana, isSelected, selectCard, deployCard }) => {
     const cardClass =
         'card' +
         (isSelected ? ' card--selected' : '') +
         (card.cost > mana ? ' card--unavailable' : '');
+    const getIcon = label => {
+        if (Object.prototype.hasOwnProperty.call(CARD_ICONS, label)) {
+            return CARD_ICONS[label];
+        }
+
+        return CARD_ICONS.default;
+    };
     let containerProps;
 
     if (selectCard) {
@@ -25,10 +33,14 @@ const Card = ({ card, mana, isSelected, selectCard, deployCard }) => {
     return (
         <div {...containerProps}>
             <div data-testid="card" className="card-title">
-                <span className="text--md">{card.label}</span>
+                <span className="text--md">
+                    {card.label}
+                    <i>{getIcon(card.name)}</i>
+                </span>
                 <span className="text--xs">{card.type.toUpperCase()}</span>
             </div>
-            <CardStats stats={card.stats} mana={card.cost} />
+            <CardStats cardType={card.type} stats={card.stats} mana={card.cost} />
+           
             {deployCard && (
                 <button
                     disabled={card.cost > mana}

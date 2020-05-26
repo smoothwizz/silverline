@@ -3,6 +3,7 @@ import CARD_TYPES from './cardTypes';
 const CARDS_LIST = [
     {
         cost: 1,
+        name: 'minion',
         label: 'Minion',
         stats: {
             life: 1,
@@ -13,6 +14,7 @@ const CARDS_LIST = [
     },
     {
         cost: 2,
+        name: 'swordsman',
         label: 'Swordsman',
         stats: {
             life: 1,
@@ -23,6 +25,7 @@ const CARDS_LIST = [
     },
     {
         cost: 3,
+        name: 'bowman',
         label: 'Bowman',
         stats: {
             life: 1,
@@ -33,7 +36,8 @@ const CARDS_LIST = [
     },
     {
         cost: 4,
-        label: 'Longbowman',
+        name: 'crossbowman',
+        label: 'Crossbowman',
         stats: {
             life: 2,
             attack: 4,
@@ -43,6 +47,7 @@ const CARDS_LIST = [
     },
     {
         cost: 2,
+        name: 'horseman',
         label: 'Horseman',
         stats: {
             life: 3,
@@ -53,6 +58,7 @@ const CARDS_LIST = [
     },
     {
         cost: 3,
+        name: 'knight',
         label: 'Knight',
         stats: {
             life: 5,
@@ -63,6 +69,7 @@ const CARDS_LIST = [
     },
     {
         cost: 4,
+        name: 'royal_knight',
         label: 'Royal Knight',
         stats: {
             life: 7,
@@ -73,6 +80,7 @@ const CARDS_LIST = [
     },
     {
         cost: 4,
+        name: 'royal_archer',
         label: 'Royal Archer',
         stats: {
             life: 3,
@@ -83,6 +91,7 @@ const CARDS_LIST = [
     },
     {
         cost: 5,
+        name: 'defense_tower',
         label: 'Defense Tower',
         stats: {
             life: 20,
@@ -93,6 +102,7 @@ const CARDS_LIST = [
     },
     {
         cost: 5,
+        name: 'battering_ram',
         label: 'Battering Ram',
         stats: {
             life: 1,
@@ -103,6 +113,7 @@ const CARDS_LIST = [
     },
     {
         cost: 6,
+        name: 'ballista',
         label: 'Ballista',
         stats: {
             life: 2,
@@ -113,6 +124,7 @@ const CARDS_LIST = [
     },
     {
         cost: 7,
+        name: 'eagle',
         label: 'Eagle',
         stats: {
             life: 4,
@@ -123,7 +135,8 @@ const CARDS_LIST = [
     },
     {
         cost: 7,
-        label: 'Pigeon',
+        name: 'hummingbird',
+        label: 'Hummingbird',
         stats: {
             life: 1,
             attack: 1,
@@ -133,16 +146,18 @@ const CARDS_LIST = [
     },
     {
         cost: 9,
+        name: 'assassin',
         label: 'Assassin',
         stats: {
             life: 1,
-            attack: 4,
+            attack: 3,
             pace: 3
         },
         type: CARD_TYPES.special
     },
     {
         cost: 10,
+        name: 'king',
         label: 'King',
         stats: {
             life: 10,
@@ -153,6 +168,7 @@ const CARDS_LIST = [
     },
     {
         cost: 5,
+        name: 'light_wizard',
         label: 'Light Wizard',
         stats: {
             life: 1,
@@ -163,6 +179,7 @@ const CARDS_LIST = [
     },
     {
         cost: 5,
+        name: 'dark_wizard',
         label: 'Dark Wizard',
         stats: {
             life: 0,
