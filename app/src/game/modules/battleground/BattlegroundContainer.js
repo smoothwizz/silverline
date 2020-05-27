@@ -12,7 +12,6 @@ import utilsService from '../../services/utils';
 import eventsService from '../../services/events';
 
 const ANIMATION_DURATION = 1200;
-const defaultLane = LANES[0];
 const defaultBaseStrength = {
     user: INITIAL_BASE_STRENGTH,
     enemy: INITIAL_BASE_STRENGTH
@@ -115,6 +114,11 @@ const BattlegroundContainer = () => {
             ...prevMana,
             user: leftMana
         }));
+
+        if (leftMana <= 0) {
+            setCardSelectMode(false);
+        }
+
         setUserUnits(userUnits.concat(addedUnit));
     };
 
@@ -199,7 +203,7 @@ const BattlegroundContainer = () => {
             type: 'success'
         });
         setMana(utilsService.copyObject(defaultMana));
-        setLane(defaultLane);
+        setLane(null);
         setCard(null);
         setBaseStrength(utilsService.copyObject(defaultBaseStrength));
     };

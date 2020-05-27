@@ -5,7 +5,7 @@ import CardSelect from './CardSelect';
 import GameBar from './GameBar';
 import BattleEvents from '../events/BattleEvents';
 
-const Battleground = ({ cardSelectProps,  battleFieldProps, gameBarProps, isGameOver, isCardSelectMode }) => {
+const Battleground = ({ cardSelectProps,  battleFieldProps, gameBarProps, isGameOver }) => {
     return (
         <div className="battleground" data-testid="battleground">
             <GameBar {...gameBarProps} />
@@ -23,8 +23,7 @@ Battleground.propTypes = {
     battleFieldProps: PropTypes.object,
     cardSelectProps: PropTypes.object,
     gameBarProps: PropTypes.object,
-    isGameOver: PropTypes.bool,
-    isCardSelectMode: PropTypes.bool
+    isGameOver: PropTypes.bool
 };
 
 export default Battleground;
