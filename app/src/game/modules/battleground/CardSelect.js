@@ -28,15 +28,15 @@ const CardSelect = ({ selectedCard, mana, selectCard, deployCard, isCardSelectMo
     };
 
     const filterBySearchTerm = card => {
-        const term = searchTerm.toLowerCase();
+        const regex = new RegExp(searchTerm, 'i');
 
-        if (term.length === 0) {
+        if (searchTerm.length === 0) {
             return true;
         }
 
         return (
-            card.label.toLowerCase().indexOf(term) > -1 ||
-            card.type.toLowerCase().indexOf(term) > -1
+            card.label.match(regex) ||
+            card.type.match(regex)
         );
     };
 
