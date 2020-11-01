@@ -161,6 +161,8 @@ const selectEnemyUnits = () => {
 
     /**
      * Get available lane id
+     *
+     * @returns {number}
      */
     const getAvailableLaneId = () => {
         const availableLanes = getAvailableLanes();
@@ -276,7 +278,7 @@ const attackUnit = (unit, opposingUnit, team, opposingTeam) => {
 };
 
 /**
- * Start fight for give team
+ * Start fight for given team
  *
  * @param {string} team
  *
@@ -313,6 +315,11 @@ const fight = team => {
     }
 };
 
+/**
+ * Increase mana for given team
+ *
+ * @param {string} team
+ */
 const increaseMana = team => {
     const manaIncrease = 1;
     const updatedMana = currentState.mana[team] + manaIncrease;
