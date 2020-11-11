@@ -13,9 +13,7 @@ const TeamBase = ({ mana, life, team, isGameOver }) => {
     return (
         <div
             data-testid={`team-base--${team}`}
-            className={`team-base team-base--${team} ${
-                isBaseDestroyed ? 'team-base--destroyed' : ''
-            }`}>
+            className={`team-base team-base--${team}`}>
             <h3 className="team-base__title">
                 <Tooltip
                     text={`${mana} mana`}

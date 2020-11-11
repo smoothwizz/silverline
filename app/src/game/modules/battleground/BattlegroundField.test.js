@@ -6,10 +6,8 @@ const mana = {user: 1, enemy: 1};
 test('renders tile', () => {
     const { getByTestId } = render(
         <BattlegroundField
-            mana={mana}
             userUnits={[]}
             enemyUnits={[]}
-            baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
             selectedCard={{
                 cost: 1,
@@ -29,13 +27,11 @@ test('renders tile', () => {
     expect(elem).toBeInTheDocument();
 });
 
-test('renders base strength', () => {
+test('renders field', () => {
     const { getByTestId } = render(
         <BattlegroundField
-            mana={mana}
             userUnits={[]}
             enemyUnits={[]}
-            baseStrength={{ user: 10, enemy: 10 }}
             selectedLane={{ id: 1 }}
             selectedCard={{
                 cost: 1,
@@ -50,9 +46,7 @@ test('renders base strength', () => {
             actions={{}}
         />
     );
-    const userBase = getByTestId('team-base--user');
-    const enemyBase = getByTestId('team-base--enemy');
+    const field = getByTestId('battleground-field');
 
-    expect(userBase).toBeInTheDocument();
-    expect(enemyBase).toBeInTheDocument();
+    expect(field).toBeInTheDocument();
 });

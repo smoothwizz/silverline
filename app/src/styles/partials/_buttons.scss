@@ -48,6 +48,14 @@
         align-self: center;
     }
 
+    &--icon {
+        background: transparent;
+        border: none;
+        color: #222222;
+        width: 32px;
+        padding: 8px;
+    }
+
     &--text {
         border: none;
         background: none;

@@ -62,6 +62,13 @@ const BattlegroundContainer = () => {
     };
 
     /**
+     * Minimize the card select dialog
+     */
+    const minimizeCardSelection = () => {
+        setCardSelectMode(false);
+    };
+
+    /**
      * Validate card add
      *
      * @param {object} card
@@ -243,11 +250,9 @@ const BattlegroundContainer = () => {
     };
 
     const battleFieldProps = {
-        mana,
         isGameOver,
         selectedLane,
         selectedCard,
-        baseStrength,
         userUnits,
         enemyUnits,
         actions: {
@@ -255,12 +260,19 @@ const BattlegroundContainer = () => {
         }
     };
 
+    const scoreBarProps = {
+        mana,
+        baseStrength,
+        isGameOver
+    };
+
     const cardSelectProps = {
         mana: mana.user,
         selectedCard,
         selectCard: actions.handleCardSelect,
         deployCard: actions.deployUnit,
-        isCardSelectMode
+        isCardSelectMode,
+        minimizeSelection: minimizeCardSelection
     };
 
     const gameBarProps = {
@@ -275,6 +287,7 @@ const BattlegroundContainer = () => {
             {alert.text && <div className={`alert alert--${alert.type}`}>{alert.text}</div>}
             <Battleground
                 battleFieldProps={battleFieldProps}
+                scoreBarProps={scoreBarProps}
                 gameBarProps={gameBarProps}
                 cardSelectProps={cardSelectProps}
                 isGameOver={conditions.isGameOver}

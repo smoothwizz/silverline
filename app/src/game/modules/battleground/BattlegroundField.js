@@ -2,16 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LANES from '../../constants/lanes';
 import { NUMBER_OF_ROWS } from '../../constants/turn';
-import TeamBase from './TeamBase';
 import TileContainer from './TileContainer';
 
 const BattlegroundField = ({
-    mana,
     enemyUnits,
     userUnits,
     selectedLane,
     selectedCard,
-    baseStrength,
     isGameOver,
     actions
 }) => {
@@ -38,10 +35,8 @@ const BattlegroundField = ({
     };
 
     return (
-        <div className="battleground__field">
-            <TeamBase mana={mana.user} team="user" life={baseStrength.user} isGameOver={isGameOver} />
+        <div data-testid="battleground-field" className="battleground__field">
             <div className={`map${isGameOver ? ' map--destroyed' : ''}`}>{createField()}</div>
-            <TeamBase mana={mana.enemy} team="enemy" life={baseStrength.enemy} isGameOver={isGameOver} />
         </div>
     );
 };

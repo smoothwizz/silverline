@@ -1,4 +1,60 @@
 .battleground {
     animation: fadeIn .8s ease-in;
     justify-content: space-around;
+
+    .scorebar {
+        display: flex;
+    }
+
+    .team-base {
+        border-radius: 8px;
+        padding: 1em;
+        color: var(--light-text);
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin: 8px auto;
+
+        &--user {
+            background: $user-bg;
+        }
+
+        &--enemy {
+            background: $enemy-bg;
+        }
+
+        &__title {
+            color: var(--light-text);
+            margin-top: 0;
+            margin-right: 8px;
+        }
+
+        &__health {
+            background: #ffffff;
+            border-radius: 8px;
+            flex: 0 0 30%;
+            height: 1.2em;
+            padding: 1px;
+            position: relative;
+        }
+
+        &__health-text {
+            font-size: 0.8em;
+            color: var(--light-text);
+            line-height: 1em;
+            margin-left: 8px;
+        }
+
+        &__health-percentage {
+            background: #2ecc75;
+            border-radius: 8px;
+            display: block;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: $health-bar-transition;
+        }
+    }
 }
