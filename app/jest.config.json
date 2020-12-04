@@ -3,12 +3,17 @@
  "testRegex": "/*.test.js$",
  "collectCoverage": true,
  "coverageReporters": ["lcov"],
+ "coveragePathIgnorePatterns": [
+  "<rootDir>/node_modules/",
+  "<rootDir>/src/index.js",
+  "<rootDir>/src/serviceWorker.js"
+ ],
  "coverageDirectory": "test-coverage",
  "coverageThreshold": {
   "global": {
-  "branches": 0,
-  "functions": 0,
-  "lines": 0,
+  "branches": 50,
+  "functions": 50,
+  "lines": 50,
   "statements": 0
   }
  },
